@@ -27,21 +27,11 @@ import { useRouter, useRoute } from 'vue-router'
 
 <style scoped>
 nav {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-left: 0px;
   width: 212px;
-  height: 831px;
+  height: 100vh;
   background: #FFFFFF;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  font-family: 'Figtree';
 }
 
 ul {
@@ -51,29 +41,19 @@ ul {
 }
 
 li {
-  font-family: 'Figtree';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
   gap: 12px;
   display: flex;
-  align-items: center;
   color: #172230;
   flex: none;
-  order: 1;
-  flex-grow: 1;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   padding: 4px 11px;
   padding-top: 7px;
   padding-bottom: 7px;
 }
 
 li:hover {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  background: #ECECEF;
+  background: orange;
   border-radius: 20px;
   color: #2A1005;
 }
@@ -86,27 +66,17 @@ li:active {
 .nav-logo {
   width: 100%;
   height: 100%;
+  padding: 32px;
 }
 
 .nav-menu {
   position: relative;
-  top: -180px;
+  top: -70px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  gap: 4px;
-  order: 1;
-  flex-grow: 0;
 }
 
 .nav-details {
   position: relative;
-  top: -104px;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  order: 2;
-  flex-grow: 0;
+  top: 0;
 }
 </style>
