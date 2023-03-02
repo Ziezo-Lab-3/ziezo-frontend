@@ -3,24 +3,24 @@ import { useRouter, useRoute } from 'vue-router'
 </script>
 
 <template>
-  <nav>
+    <nav>
         <div class="nav-logo">
-        <img src="../public/images/Logo.png" alt="Ziezo Logo">
+            <img src="/images/Logo.svg" alt="Ziezo Logo">
         </div>
         <div class="nav-menu">
-        <ul>
-            <li><img src="../public/images/icon_home.png" alt="Ziezo Home"> Thuispagina</li>
-            <li><img src="../public/images/icon_comment.png" alt="Ziezo Berichten">Berichten</li>
-            <li><img src="../public/images/icon_wrench.png" alt="Ziezo Klusjes">Mijn Klusjes</li>
-            <li><img src="../public/images/icon_user.png" alt="Ziezo Profiel">Profiel</li>
-        </ul>
+            <ul>
+                <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
+                <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
+                <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
+                <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
+            </ul>
         </div>
         <div class="nav-details">
-        <ul>
-          <li><img src="../public/images/icon_question-circle.png" alt="Ziezo Hulp">Hulp Nodig?</li>
-          <li><img src="../public/images/icon_info-circle.png" alt="Ziezo Contact">Contact Info</li>
-          <li><img src="../public/images/icon_cog.png" alt="Ziezo Instellingen">Instellingen</li>
-        </ul>
+            <ul>
+                <li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li>
+                <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
+                <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
+            </ul>
         </div>
     </nav>
 </template>
@@ -73,13 +73,13 @@ li:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #EF7946;
+  background: #ECECEF;
   border-radius: 20px;
+  color: #2A1005;
 }
 
 li:active {
-  background: #EF7946;
-  opacity: 0.2;
+  background: hsla(18, 84%, 61%, 0.2);
   color: #2A1005;
 }
 
