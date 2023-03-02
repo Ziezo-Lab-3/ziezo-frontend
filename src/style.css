@@ -1,4 +1,6 @@
 :root {
+  /**USE FIGTREE as font*/
+  --font: 'Figtree', cursive;
 }
 
 /**center <main> in middle of screen*/
@@ -21,15 +23,16 @@ main{
   flex-direction: column;
   justify-content: center;
   height: min-content;
+  align-items: center;
 }
 
 main h1{
   text-align: center;
   margin: 0px;
   padding: 0px;
-  font-size: 36;
+  font-size: 36px;
   font-weight: bold;
-  margin-top: 24px;
+  text-align: center;
 }
 
 form {
@@ -47,4 +50,10 @@ form button{
   color: white;
   border-radius: 25;
   border: none;
+}
+
+form button,form input{
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 25px;
 }
