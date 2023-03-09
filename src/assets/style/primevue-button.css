@@ -1,0 +1,38 @@
+.p-button {
+    border-radius: 2rem;
+    background: var(--primary);
+    border: 1px solid transparent;
+    text-align: center;
+}
+.p-button:enabled:active,
+.p-button:enabled:hover {
+    background: var(--primary-dark-1);
+    border: 1px solid transparent;
+}
+.p-button:enabled:focus {
+    background: var(--primary-light-1);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+.p-button:enabled:hover:focus {
+    background: var(--primary-dark-1);
+    border: 1px solid var(--primary);
+}
+
+.p-button.p-button-danger {
+    border-radius: 2rem;
+    background: var(--danger);
+    border: 1px solid transparent;
+}
+.p-button.p-button-danger:enabled:active,
+.p-button.p-button-danger:enabled:hover {
+    background: var(--danger-hover);
+    border: 1px solid transparent;
+}
+.p-button.p-button-danger:enabled:focus {
+    background: var(--danger-focus);
+    box-shadow: 0 0 0 0.2rem var(--danger-faded);
+}
+.p-button.p-button-danger:enabled:hover:focus {
+    background: var(--danger-hover);
+    border: 1px solid var(--danger);
+}
