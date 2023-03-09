@@ -2,7 +2,7 @@
 
 /* Primevue Custom Styling */
 @import url('./assets/style/primevue-button.css');
-@import url('./assets/style/primevue-input-text.css');
+@import url('./assets/style/primevue-input.css');
 
 body {
     background: var(--background);
