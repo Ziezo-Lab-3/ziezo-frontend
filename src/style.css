@@ -52,10 +52,20 @@ main h1{
   align-items: center;
   margin: auto;
   text-align: left;
+  width: 220px;
 }
 
 #logIn label, #logIn div{
   width: 100%;
+  
+}
+
+input{
+  width: 95%;
+}
+
+div input{
+  width: fit-content;
 }
 
 a {
