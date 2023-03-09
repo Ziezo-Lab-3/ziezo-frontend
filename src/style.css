@@ -15,23 +15,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
 
 body {
   margin: 0;
@@ -39,6 +22,58 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+main{
+  /**white background, center of screen, center all content*/
+  background-color: white;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+  /**center all children*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  height: max-content;
+  border-radius: 20px;
+}
+
+main h1{
+  font-size: 2.5em;
+}
+
+/**center children of form*/
+#logIn{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-align: left;
+}
+
+#logIn label, #logIn div{
+  width: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
 h1 {
