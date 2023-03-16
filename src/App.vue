@@ -20,12 +20,25 @@ const toggleMenu = () => {
     </div>
     <div id="nav_mobile">
         <Sidebar v-model:visible="menuOpen" position="bottom" class="p-sidebar-md">
+            <template #header>
+                <div class="nav-logo" >
+                    <img src="/images/Logo.svg" alt="Ziezo Logo">
+                </div>
+            </template>
             <Navigation></Navigation>
         </Sidebar>
-        <div id="menu_toggle" @click="() => menuOpen = !menuOpen"><i class="pi pi-bars" style="font-size: 2rem"></i></div>
+        <div id="menu_toggle" @click="() => menuOpen = !menuOpen"><i class="pi pi-bars" style="font-size: 1.5rem"></i></div>
     </div>
 </template>
 
+<style scoped>
+.nav-logo {
+    width: calc(100vw - 4rem);
+    display: flex;
+    justify-content: center;
+    padding-left: 2rem;
+}
+</style>
 <style>
 #app {
     display: grid;
@@ -48,10 +61,11 @@ const toggleMenu = () => {
 #menu_toggle {
     position: fixed;
     bottom: 1rem;
-    right: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 100;
     cursor: pointer;
-    background-color: var(--primary);
+    background-color: var(--secondary);
     border-radius: 50%;
     padding: 1rem;
     color: white;
