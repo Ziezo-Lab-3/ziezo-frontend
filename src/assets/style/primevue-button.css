@@ -2,6 +2,7 @@
     border-radius: 2rem;
     background: var(--primary);
     border: 1px solid transparent;
+    text-align: center;
 }
 .p-button:enabled:active,
 .p-button:enabled:hover {

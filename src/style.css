@@ -1,9 +1,13 @@
-@import url('./assets/style/style-colors.css');
+@import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
 
+@import url('./assets/style/style-colors.css');
 /* Primevue Custom Styling */
 @import url('./assets/style/primevue-button.css');
-@import url('./assets/style/primevue-input-text.css');
+@import url('./assets/style/primevue-input.css');
 
 body {
+    margin: 0px;
     background: var(--background);
+    font-family: 'Figtree', cursive;
+    font-weight: light;
 }
