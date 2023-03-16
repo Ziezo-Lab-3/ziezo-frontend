@@ -1,7 +1,3 @@
-<script setup>
-import { useRouter, useRoute } from 'vue-router'
-</script>
-
 <template>
     <nav>
         <div class="nav-logo">
@@ -33,6 +29,7 @@ nav {
   height: 100vh;
   background: #FFFFFF;
   padding: 1rem;
+  justify-content: space-between;
 }
 
 ul {
@@ -50,7 +47,6 @@ li {
   color: #172230;
   margin-bottom: .5rem;
   padding: .5rem 1.25rem;
-  transition: all .2s linear;
   cursor: pointer;
 }
 
@@ -71,11 +67,5 @@ li:active {
     /* Retain source image aspect ratio */
     width: 100%;
     height: auto;
-}
-
-.nav-menu {
-}
-
-.nav-details {
 }
 </style>
