@@ -1,21 +1,36 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 import Navigation from './components/Navigation.vue';
 import Sidebar from 'primevue/sidebar';
 
 const menuOpen = ref(false);
+const content = ref(null);
+
+const contentScroll = ref(0);
+
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
-    console.log(menuOpen.value);
 }
+
+onMounted(() => {
+    content.value.addEventListener('scroll', () => {
+        const newScroll = content.value.scrollTop;
+        if (newScroll > contentScroll.value) {
+            document.getElementById('menu_toggle').classList.add('hidden');
+        } else {
+            document.getElementById('menu_toggle').classList.remove('hidden');
+        }
+        contentScroll.value = newScroll;
+    })
+});
 </script>
 
 <template>
     <div id="nav_sidebar">
         <Navigation></Navigation>
     </div>
-    <div id="content">
+    <div id="content" ref="content">
         <RouterView></RouterView>
     </div>
     <div id="nav_mobile">
@@ -69,6 +84,13 @@ const toggleMenu = () => {
     border-radius: 50%;
     padding: 1rem;
     color: white;
+    opacity:100;
+    transition: all .3s ease;
+}
+
+#menu_toggle.hidden {
+    opacity: 0;
+    bottom: -4rem;
 }
 
 @media (max-width: 768px) {
