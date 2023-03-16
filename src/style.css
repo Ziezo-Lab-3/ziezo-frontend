@@ -10,3 +10,10 @@ body {
     font-family: 'Figtree', cursive;
     font-weight: light;
 }
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 1rem;
+}
