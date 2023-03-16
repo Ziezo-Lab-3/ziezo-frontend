@@ -1,3 +1,6 @@
+<script setup>
+import { RouterLink } from 'vue-router';
+</script>
 <template>
     <nav>
         <div class="nav-logo">
@@ -5,22 +8,39 @@
         </div>
         <div class="nav-menu">
             <ul>
-                <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
-                <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
-                <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
-                <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
+                <RouterLink to="/">
+                    <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
+                </RouterLink>
+                <RouterLink to="/messages">
+                    <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
+                </RouterLink>
+                <RouterLink to="/jobs">
+                    <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
+                </RouterLink>
+                <RouterLink to="/profile">
+                    <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
+                </RouterLink>
             </ul>
         </div>
         <div class="nav-details">
             <ul>
-                <li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li>
-                <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
-                <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
+                <a><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
+                <RouterLink to="/contact">
+                    <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
+                </RouterLink>
+                <RouterLink to="/settings">
+                    <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
+                </RouterLink>
             </ul>
         </div>
     </nav>
 </template>
-
+<style>
+.nav-menu a,
+.nav-details a {
+    text-decoration: none !important;
+}
+</style>
 <style scoped>
 nav {
     display: flex;
@@ -47,7 +67,10 @@ li {
     color: #172230;
     margin-bottom: .5rem;
     padding: .5rem 1.25rem;
-    cursor: pointer;
+}
+
+.router-link-active li {
+    background-color: var(--gray-100);
 }
 
 li:hover {
@@ -84,11 +107,5 @@ li:active {
         margin: 0;
         margin-bottom: 1rem;
     }
-
-    li:not(:last-child) {
-        border-radius: 0;
-        border-bottom: 1px solid var(--secondary);
-    }
-
 }
 </style>

@@ -10,7 +10,7 @@ const pizza = ref("");
 </script>
 <template>
     <Card class="p-m-4">
-        <template #title>Home</template>
+        <template #title>Test Area</template>
         <template #content>
             <div class="stack">
                 <Button>Coole knop</Button>
@@ -44,12 +44,3 @@ const pizza = ref("");
         </template>
     </Card>
 </template>
-
-<style scoped>
-.stack {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    gap: 1rem;
-}
-</style>
