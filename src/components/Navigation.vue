@@ -1,7 +1,3 @@
-<script setup>
-import { useRouter, useRoute } from 'vue-router'
-</script>
-
 <template>
     <nav>
         <div class="nav-logo">
@@ -27,39 +23,39 @@ import { useRouter, useRoute } from 'vue-router'
 
 <style scoped>
 nav {
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 100vh;
-  background: #FFFFFF;
-  padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 100vh;
+    background: #FFFFFF;
+    padding: 1rem;
+    justify-content: space-between;
 }
 
 ul {
-  list-style: none;
-  text-align: left;
-  padding-left: 0rem;
+    list-style: none;
+    text-align: left;
+    padding-left: 0rem;
 }
 
 li {
-  display: flex;
-  flex: none;
-  border-radius: 20px;
-  align-items: center;
-  gap: 1rem;
-  color: #172230;
-  margin-bottom: .5rem;
-  padding: .5rem 1.25rem;
-  transition: all .2s linear;
-  cursor: pointer;
+    display: flex;
+    flex: none;
+    border-radius: 20px;
+    align-items: center;
+    gap: 1rem;
+    color: #172230;
+    margin-bottom: .5rem;
+    padding: .5rem 1.25rem;
+    cursor: pointer;
 }
 
 li:hover {
-  background: var(--primary-faded);
+    background: var(--primary-faded);
 }
 
 li:active {
-  background: var(--primary-faded);
+    background: var(--primary-faded);
 }
 
 .nav-logo {
@@ -73,9 +69,26 @@ li:active {
     height: auto;
 }
 
-.nav-menu {
-}
+@media screen and (max-width: 768px) {
+    .nav-logo {
+        display: none;
+    }
 
-.nav-details {
+    nav {
+        width: 100%;
+        padding: 0;
+        height: fit-content;
+    }
+
+    ul::not(:last-child) {
+        margin: 0;
+        margin-bottom: 1rem;
+    }
+
+    li:not(:last-child) {
+        border-radius: 0;
+        border-bottom: 1px solid var(--secondary);
+    }
+
 }
 </style>

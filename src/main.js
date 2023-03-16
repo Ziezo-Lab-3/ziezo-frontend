@@ -29,6 +29,7 @@ import 'primeicons/primeicons.css';
 const app = createApp(App);
 
 app.use(PrimeVue);
+
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('InputNumber', InputNumber);
