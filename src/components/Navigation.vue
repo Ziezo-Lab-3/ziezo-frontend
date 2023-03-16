@@ -29,54 +29,53 @@ import { useRouter, useRoute } from 'vue-router'
 nav {
   display: flex;
   flex-direction: column;
-  width: 212px;
+  width: 220px;
   height: 100vh;
   background: #FFFFFF;
+  padding: 1rem;
 }
 
 ul {
   list-style: none;
   text-align: left;
-  padding: 16px;
+  padding-left: 0rem;
 }
 
 li {
-  gap: 12px;
   display: flex;
-  color: #172230;
   flex: none;
-  margin-bottom: 8px;
-  padding: 4px 11px;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  border-radius: 20px;
+  align-items: center;
+  gap: 1rem;
+  color: #172230;
+  margin-bottom: .5rem;
+  padding: .5rem 1.25rem;
+  transition: all .2s linear;
+  cursor: pointer;
 }
 
 li:hover {
-  align-items: center;
-  background: orange;
-  border-radius: 20px;
-  color: #2A1005;
+  background: var(--primary-faded);
 }
 
 li:active {
-  background: hsla(18, 84%, 61%, 0.2);
-  color: #2A1005;
+  background: var(--primary-faded);
 }
 
 .nav-logo {
-  width: 100%;
-  height: 100%;
-  padding: 32px;
+    width: 100%;
+    padding: 0rem 1rem;
+}
+
+.nav-logo img {
+    /* Retain source image aspect ratio */
+    width: 100%;
+    height: auto;
 }
 
 .nav-menu {
-  position: relative;
-  top: -70px;
-  width: 100%;
 }
 
 .nav-details {
-  position: relative;
-  top: 0;
 }
 </style>
