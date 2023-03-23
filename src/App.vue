@@ -99,6 +99,7 @@ onMounted(() => {
     }
 
     #content {
+        padding: 1rem;
         border-radius: 0;
         grid-column: 1;
     }
