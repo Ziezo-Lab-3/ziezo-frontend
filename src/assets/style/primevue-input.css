@@ -115,3 +115,18 @@
     border-color: var(--primary-dark-1);
 }
 
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: var(--primary);
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: var(--primary);
+}
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+    background-color: var(--primary-dark-1);
+}
+
+.p-inputswitch.p-focus .p-inputswitch-slider {
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
