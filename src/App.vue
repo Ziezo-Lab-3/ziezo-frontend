@@ -4,27 +4,22 @@ import { useRouter, useRoute } from 'vue-router'
 </script>
 
 <template>
-    <nav>
-        <div class="nav-logo">
-            <img src="../public/images/Logo.png" alt="Ziezo Logo">
+    <img src="./assets/Ziezo.png" alt="Ziezo logo">
+    <h1>Inloggen</h1>
+    <form id="logIn" action="login.php" method="post">
+        
+        <label for="email">Email Adres</label>
+        <input type="email" name="email" id="email" placeholder="email@adres.be" required>
+        <label for="password">Wachtwoord</label>
+        <input type="password" name="password" id="password" placeholder="wachtwoord" required>
+        <div>
+            <label for="showpw">Toon wachtwoord:</label>
+            <input name="showpw" type="checkbox" onclick="showPW()">
         </div>
-        <div class="nav-menu">
-            <ul>
-                <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
-                <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
-                <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
-                <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
-            </ul>
-        </div>
-        <div class="nav-details">
-            <ul>
-                <li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li>
-                <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
-                <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
-            </ul>
-        </div>
-    </nav>
-    <RouterView></RouterView>
+        <input type="submit" value="Inloggen">
+        <a href="aanmelden.html">Account aanmaken</a>
+    </form>
+    <a href="herstel_wachtwoord.html">Wachtwoord vergeten?</a>
 </template>
 
 <style scoped>
