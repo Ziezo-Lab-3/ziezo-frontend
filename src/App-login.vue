@@ -6,16 +6,24 @@ import { useRouter, useRoute } from 'vue-router'
 <template>
     <main>
         <img src="./assets/Ziezo.png" alt="Ziezo logo">
-        <h1>Wachtwoord <br> vergeten?</h1>
-        <p>Geef je email adres, en we <br> sturen je zo snel mogelijk een <br> email om een nieuw <br> wachtwoord in te stellen.</p>
+        <h1>Inloggen</h1>
         <form id="logIn" action="login.php" method="post">
+        
             <label for="email">Email Adres</label>
             <input type="email" name="email" id="email" placeholder="email@adres.be" required>
-            <input type="submit" value="Verzenden">
+            <label for="password">Wachtwoord</label>
+            <input type="password" name="password" id="password" placeholder="wachtwoord" required>
+            <div>
+                <label for="showpw">Toon wachtwoord:</label>
+                <input name="showpw" type="checkbox" onclick="showPW()">
+            </div>
+            <input type="submit" value="Inloggen">
+            <a href="#">Account aanmaken</a>
         </form>
-        <a href="#">Ik weet mijn wachtwoord nog</a>
+        <a href="#">Wachtwoord vergeten?</a>
     </main>
 </template>
+
 
 <style scoped>
 nav {
