@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router';
                 <RouterLink to="/">
                     <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
                 </RouterLink>
-                <RouterLink to="/messages">
+                <RouterLink to="/message">
                     <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
                 </RouterLink>
                 <RouterLink to="/jobs">

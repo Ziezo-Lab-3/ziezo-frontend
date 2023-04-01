@@ -6,7 +6,8 @@ const fruitLijst = ref(['appel', 'banaan', 'peer']);
 const favFruit = ref('appel');
 const mijnFruit = ref(['peer']);
 const isVegetarian = ref(false);
-const pizza = ref("");
+const ingredient = ref("none");
+const logIngredient = () => { console.log(ingredient.value) }
 </script>
 <template>
     <Card class="p-m-4">
@@ -28,13 +29,14 @@ const pizza = ref("");
                 </div>
                 <div class="flex flex-wrap gap-3">
                     <div class="flex align-items-center">
-                        <RadioButton v-model="pizza" inputId="ingredient1" name="pizza" />
+                        <RadioButton v-model="ingredient" inputId="ingredient1" name="cheese" value="cheese"/>
                         <label for="ingredient1" class="ml-2">Cheese</label>
                     </div>
                     <div class="flex align-items-center">
-                        <RadioButton v-model="pizza" inputId="ingredient2" name="pizza" />
+                        <RadioButton v-model="ingredient" inputId="ingredient2" name="mushroom" value="mushroom" />
                         <label for="ingredient2" class="ml-2">Mushroom</label>
                     </div>
+                    <p @click="logIngredient" ><b>Ingredient: </b>{{ ingredient }}</p>
                 </div>
                 <span>Turn on the music
                     <InputSwitch v-model="musicIsOn" />
