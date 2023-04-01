@@ -1,8 +1,17 @@
+.p-component {
+    font-family: 'figtree';
+}
+
 /* Input Fields */
 .p-inputtext {
     font-family: 'figtree';
     border-radius: 2rem;
     padding: 0.5rem 1rem;
+}
+
+.p-inputtextarea {
+    border-radius: 1.5rem;
+    padding: 1rem;
 }
 
 .p-inputtext:enabled:active,
@@ -66,3 +75,43 @@
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-multiselect-item.p-highlight:hover {
     background-color: var(--primary-faded-2);
 }
+
+/* Checkbox */
+.p-checkbox .p-checkbox-box.p-highlight {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: var(--primary);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+    background-color: var(--primary-dark-1);
+    border-color: var(--primary-dark-1);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    background-color: var(--primary-dark-1);
+    border-color: var(--primary-dark-1);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+    border-color: var(--primary-dark-1);
+}
+
