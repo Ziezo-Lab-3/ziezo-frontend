@@ -9,7 +9,10 @@
 body {
     margin: 0px;
     font-family: 'Figtree', cursive;
-    font-weight: light;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 175%;
+    letter-spacing: -0.25px;
 }
 
 .stack {
@@ -17,6 +20,10 @@ body {
     flex-direction: column;
     width: fit-content;
     gap: 1rem;
+}
+
+.img-fit {
+    object-fit: cover;
 }
 
 a:has(.p-button) {
