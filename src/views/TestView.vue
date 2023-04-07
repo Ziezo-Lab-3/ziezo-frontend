@@ -10,7 +10,7 @@ const ingredient = ref("none");
 const logIngredient = () => { console.log(ingredient.value) }
 </script>
 <template>
-    <Card class="p-m-4">
+    <Card class="p-m-4 p-major">
         <template #title>Test Area</template>
         <template #content>
             <div class="stack">
