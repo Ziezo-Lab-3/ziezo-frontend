@@ -18,3 +18,7 @@ body {
     width: fit-content;
     gap: 1rem;
 }
+
+a:has(.p-button) {
+    text-decoration: none;
+}
