@@ -52,4 +52,6 @@
     --gray-850: #2a2e34;
     --gray-900: #212529;
     --gray-950: #1c2125;
+
+    --box-shadow-card: 0px 0px 1.5rem rgba(0, 0, 0, 0.1);
 }

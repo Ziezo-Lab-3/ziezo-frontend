@@ -4,6 +4,7 @@
 /* Primevue Custom Styling */
 @import url('./assets/style/primevue-button.css');
 @import url('./assets/style/primevue-input.css');
+@import url('./assets/style/primevue-components.css');
 
 body {
     margin: 0px;
