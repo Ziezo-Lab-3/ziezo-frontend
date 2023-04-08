@@ -19,6 +19,7 @@ import SplitButton from 'primevue/splitbutton';
 import Card from 'primevue/card';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Dialog from 'primevue/dialog';
+import Steps from 'primevue/steps';
 
 import './style.css';
 import 'primeicons/primeicons.css';
@@ -42,5 +43,6 @@ app.use(SplitButton);
 app.use(Card);
 app.use(ConfirmDialog);
 app.use(Dialog);
+app.use(Steps);
 
 createApp(App).mount('#app');
