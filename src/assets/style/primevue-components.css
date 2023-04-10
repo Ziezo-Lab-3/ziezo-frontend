@@ -10,3 +10,13 @@
 .p-card.p-major .p-card-content {
     padding: 1rem 2rem;
 }
+
+.p-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--gray-200);
+    padding: 1rem;
+}
+
+.p-dialog .p-dialog-content {
+    max-height: 400px;
+    padding: 1rem 1.5rem;
+}

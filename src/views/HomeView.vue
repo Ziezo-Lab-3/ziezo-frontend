@@ -1,5 +1,24 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { useDialog } from 'primevue/usedialog';
+import { defineAsyncComponent } from 'vue';
+import DynamicDialog from 'primevue/dynamicdialog';
+
+const DialogNewJob = defineAsyncComponent(() => import('../components/DialogNewJob.vue'));
+const dialog = useDialog();
+
+const openNewJobDialog = () => {
+    const dialogRef = dialog.open(DialogNewJob, {
+        props: {
+            header: 'Klusje plaatsen',
+            style: { width: '50vw' },
+            breakpoints: { '960px': '75vw', '640px': '90vw' },
+            modal: true,
+            closable: false,
+        }
+    });
+}
+
 </script>
 <template>
     <div class="w-full h-full flex justify-content-center align-items-center">
@@ -11,14 +30,13 @@ import { RouterLink } from 'vue-router';
             <template #title>Hulp nodig?</template>
             <template #content>
                 <p style="margin-top: 0px">
-                    Onze klussers staan paraat! Door een klusje te plaatsen, kan je meteen zoeken naar de klusser die jij
-                    nodig
-                    hebt.
+                    Onze klussers staan paraat! Door een klusje te plaatsen, kan je meteen zoeken
+                    naar de klusser die jij nodig hebt.
                 </p>
             </template>
             <template #footer>
                 <div class="flex justify-content-around pb-4">
-                    <Button label="Plaats een klusje" />
+                    <Button label="Plaats een klusje" @click="openNewJobDialog" />
                 </div>
             </template>
         </Card>
@@ -30,9 +48,8 @@ import { RouterLink } from 'vue-router';
             <template #title>Ik ga helpen!</template>
             <template #content>
                 <p style="margin-top: 0px">
-                    Wat fijn dat jij een van onze klussers wil worden! We hebben klusjes in verschillende sectoren, neem
-                    snel
-                    een kijkje!
+                    Wat fijn dat jij een van onze klussers wil worden! We hebben klusjes in verschillende
+                    sectoren, neem snel een kijkje!
                 </p>
             </template>
             <template #footer>
@@ -44,6 +61,7 @@ import { RouterLink } from 'vue-router';
             </template>
         </Card>
     </div>
+    <DynamicDialog />
 </template>
 
 <style></style>
