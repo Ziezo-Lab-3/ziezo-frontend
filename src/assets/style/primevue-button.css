@@ -36,3 +36,33 @@
     background: var(--danger-hover);
     border: 1px solid var(--danger);
 }
+
+.p-button.p-button-secondary, 
+.p-button.p-button-secondary * {
+    transition-timing-function: ease-out;
+}
+.p-button.p-button-secondary {
+    background: white;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+}
+
+.p-button.p-button-secondary:enabled:active,
+.p-button.p-button-secondary:enabled:hover {
+    background: var(--secondary);
+    border: 1px solid var(--secondary);
+    color: white;
+}
+
+.p-button.p-button-secondary:enabled:focus {
+    background: var(--secondary);
+    border: 1px solid var(--secondary);
+    color: white;
+    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
+}
+
+.p-button.p-button-secondary:enabled:hover:focus {
+    background: var(--secondary);
+    border: 1px solid var(--secondary);
+    color: white;
+}

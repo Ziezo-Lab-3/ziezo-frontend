@@ -1,23 +1,12 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { useDialog } from 'primevue/usedialog';
-import { defineAsyncComponent } from 'vue';
-import DynamicDialog from 'primevue/dynamicdialog';
+import { reactive } from 'vue';
+import DialogNewJob from '../components/DialogNewJob.vue';
 
-const DialogNewJob = defineAsyncComponent(() => import('../components/DialogNewJob.vue'));
-const dialog = useDialog();
-
-const openNewJobDialog = () => {
-    const dialogRef = dialog.open(DialogNewJob, {
-        props: {
-            header: 'Klusje plaatsen',
-            style: { width: '50vw' },
-            breakpoints: { '960px': '75vw', '640px': '90vw' },
-            modal: true,
-            closable: false,
-        }
-    });
-}
+/* Component State */
+const state = reactive({
+    newJobDialogVisible: false
+});
 
 </script>
 <template>
@@ -36,7 +25,7 @@ const openNewJobDialog = () => {
             </template>
             <template #footer>
                 <div class="flex justify-content-around pb-4">
-                    <Button label="Plaats een klusje" @click="openNewJobDialog" />
+                    <Button label="Plaats een klusje" @click="() => state.newJobDialogVisible = true" />
                 </div>
             </template>
         </Card>
@@ -61,7 +50,7 @@ const openNewJobDialog = () => {
             </template>
         </Card>
     </div>
-    <DynamicDialog />
+    <DialogNewJob :visible="state.newJobDialogVisible" />
 </template>
 
 <style></style>

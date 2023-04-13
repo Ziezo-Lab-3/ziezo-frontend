@@ -12,11 +12,16 @@
 }
 
 .p-dialog .p-dialog-header {
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 1px solid var(--gray-100);
     padding: 1rem;
 }
 
 .p-dialog .p-dialog-content {
     max-height: 400px;
     padding: 1rem 1.5rem;
+}
+
+.p-dialog .p-dialog-footer {
+    border-top: 1px solid var(--gray-100);
+    padding: 1rem;
 }
