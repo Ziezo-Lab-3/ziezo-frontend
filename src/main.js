@@ -3,6 +3,8 @@ import App from './App.vue';
 import PrimeVue from 'primevue/config';
 import router from "./router";
 
+import DialogService from 'primevue/dialogservice';
+
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
@@ -49,5 +51,6 @@ app.component('ConfirmDialog', ConfirmDialog);
 app.component('Dialog', Dialog);
 
 app.use(router);
+app.use(DialogService);
 
 app.mount('#app');
