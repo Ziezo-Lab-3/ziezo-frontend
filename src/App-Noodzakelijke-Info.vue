@@ -27,17 +27,33 @@ const items = ref([
 <template>
     <main>
         <img src="./assets/Ziezo.png" alt="Ziezo logo">
-        <h1>Email Verifiëren</h1>
+        <h1>Noodzakelijke Info</h1>
         <div>
             <div class="card">
                 <Steps :model="items" :readonly="false" aria-label="Form Steps" />
             </div>
-            <p>We hebben je een email gestuurd met een 6 letter code. <br> Voer deze code hieronder in om verder te gaan.</p>
+            <p>We hebben nog wat extra informatie nodig voor we je account kunnen aanmaken.</p>
             <form id="logIn" action="login.php" method="post">
-                <label for="code">code</label>
-                <input type="number" name="code" id="code" placeholder="0000" required>
+                <div class="name">
+                    <label for="voornaam">Voornaam</label>
+                    <input type="text" name="voornaam" id="voornaam" placeholder="Jonas" required>
+                    
+                    <label for="achternaam">Achternaam</label>
+                    <input type="text" name="achternaam" id="achternaam" placeholder="Beveren" required>
+                </div>
+                <div class="street">
+                    <label for="straat">Straat</label>
+                    <input type="text" name="straat" id="straat" placeholder="Boomstraat 21" required>
+                </div> 
+                <div class="city">
+                    <label for="stad">Stad</label>
+                    <input type="text" name="stad" id="stad" placeholder="Antwerpen" required>
+                    
+                    <label for="postcode">Postcode</label>
+                    <input type="text" name="postcode" id="postcode" placeholder="2000" required>
+                </div>
 
-                <input type="submit" value="Volgende">
+                <input type="submit" value="Account aanmaken">
             </form>
         </div>
     </main>
