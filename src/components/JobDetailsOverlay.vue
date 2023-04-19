@@ -1,14 +1,17 @@
 <template>
     <div class="overlay-wrapper">
-      <div class="overlay">
+      <div class="overlay" @click.self="closeOverlay">
         <div class="overlay-content">
           <img :src="job.image" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" />
         </div>
         <div class="overlay-content">
-          <div class="close-button" @click="closeOverlay">×</div>
+          <div class="close-button" @click.stop="closeOverlay">×</div>
           <h1>{{ job.name }}</h1>
-          <h3>{{ job.description }}</h3>
-          <p>Price: €{{ job.price }}/ u</p>
+          <h3>Beschrijving</h3>
+          <p>{{ job.description }}</p>
+          <p>Prijs: €{{ job.price }}/ u</p>
+          <h3>Adres</h3>
+          <p>Marsstraat 69, 2900 Schoten</p>
         </div>
       </div>
     </div>
@@ -41,7 +44,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,16 +81,18 @@
     right: 10px;
     font-size: 1.5rem;
     cursor: pointer;
+    z-index: 1;
   }
   
   .overlay-wrapper::after {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
   }
   </style>
   
