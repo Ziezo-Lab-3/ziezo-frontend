@@ -10,36 +10,58 @@
             <h3>{{ job.description }}</h3>
             <div class="price-and-button">
               <p class="price">€{{ job.price }}/ u</p>
-              <button>Details</button>
+              <button @click="openOverlay">Details</button>
             </div>
           </div>
         </div>
+      </div>
+      <div class="overlay">
+        <JobDetailsOverlay v-if="showOverlay" :job="job" @close-overlay="closeOverlay" />
       </div>
     </div>
   </template>
   
   <script>
+  import JobDetailsOverlay from "../components/JobDetailsOverlay.vue";
+  
   export default {
+    components: {
+      JobDetailsOverlay,
+    },
     props: {
       job: {
         type: Object,
-        required: true
+        required: true,
       },
       tileWidth: {
         type: Number,
-        default: 300 // default width for the tile
+        default: 300, // default width for the tile
       },
       imageWidth: {
         type: Number,
-        default: 280 // default width for the image
+        default: 280, // default width for the image
       },
       borderRadius: {
         type: Number,
-        default: 10 // default border radius for the tile and image
-      }
-    }
+        default: 10, // default border radius for the tile and image
+      },
+    },
+    data() {
+      return {
+        showOverlay: false,
+      };
+    },
+    methods: {
+      openOverlay() {
+        this.showOverlay = true;
+      },
+      closeOverlay() {
+        this.showOverlay = false;
+      },
+    },
   };
   </script>
+  
   <style>
   .job-tile {
     display: inline-block;
@@ -52,8 +74,7 @@
     overflow: hidden;
     text-align: left;
     margin-bottom: 10px;
-}
-
+  }
   
   .image-container {
     display: inline-block;
@@ -66,7 +87,6 @@
     height: 100%;
     object-fit: cover;
   }
-  
   .details-container {
     position: absolute;
     bottom: 0;
