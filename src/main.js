@@ -10,6 +10,7 @@ import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import InputMask from 'primevue/inputmask';
 import InputSwitch from 'primevue/inputswitch';
+import Image from 'primevue/image';
 import Password from 'primevue/password';
 import Dropdown from 'primevue/dropdown';
 import MultiSelect from 'primevue/multiselect';

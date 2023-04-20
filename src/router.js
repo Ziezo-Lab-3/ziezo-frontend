@@ -10,6 +10,7 @@ import SettingsView from "./views/SettingsView.vue";
 
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
+import LoginView from "./views/LoginView.vue";
 
 const routes = [
     {
@@ -51,6 +52,11 @@ const routes = [
         path: "/:pathMatch(.*)*",
         name: "Pagina Niet Gevonden",
         component: NotFoundView
+    },
+    {
+        path: "/Login",
+        name: "Login",
+        component: LoginView
     }
 ];
 
