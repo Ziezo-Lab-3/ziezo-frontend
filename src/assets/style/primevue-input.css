@@ -1,0 +1,138 @@
+.p-component {
+    font-family: 'figtree';
+}
+
+/* Input Fields */
+.p-inputtext {
+    font-family: 'figtree';
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+}
+
+.p-inputtextarea {
+    border-radius: 1.5rem;
+    padding: 1rem;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.p-inputtext:enabled:active,
+.p-inputtext:enabled:focus,
+.p-inputtext:enabled:hover {
+    border-color: var(--primary);
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-inputtext:enabled:invalid,
+.p-inputtext:enabled:invalid:focus,
+.p-inputtext:enabled:invalid:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+
+/* Dropdowns & Multiselects */
+.p-dropdown,
+.p-multiselect {
+    font-family: 'figtree';
+    border-radius: 2rem;
+}
+
+.p-dropdown:not(.p-disabled):hover,
+.p-multiselect:not(.p-disabled):hover {
+    border-color: var(--primary);
+}
+
+.p-dropdown:not(.p-disabled).p-focus,
+.p-multiselect:not(.p-disabled).p-focus {
+    border-color: var(--primary-light-1);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-dropdown .p-dropdown-trigger,
+.p-multiselect .p-multiselect-trigger {
+    width: 3rem;
+}
+
+.p-multiselect .p-multiselect-label {
+    padding: 0.5rem 1rem;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-focus.p-highlight {
+    background-color: var(--primary-faded);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+    background-color: var(--gray-100);
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-dropdown-item.p-highlight:hover,
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-dropdown-item.p-highlight.p-focus:hover,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-multiselect-item.p-highlight:hover {
+    background-color: var(--primary-faded-2);
+}
+
+/* Checkbox */
+.p-checkbox .p-checkbox-box.p-highlight {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: var(--primary);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+    background-color: var(--primary-dark-1);
+    border-color: var(--primary-dark-1);
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-radiobutton {
+    margin: 0 0.5rem 0 0;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    background-color: var(--primary-dark-1);
+    border-color: var(--primary-dark-1);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+    border-color: var(--primary-dark-1);
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: var(--primary);
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: var(--primary);
+}
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+    background-color: var(--primary-dark-1);
+}
+
+.p-inputswitch.p-focus .p-inputswitch-slider {
+    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+}

@@ -1,121 +1,114 @@
 <script setup>
-//import router view
-import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { RouterView } from 'vue-router';
+import Navigation from './components/Navigation.vue';
+import Sidebar from 'primevue/sidebar';
+
+const menuOpen = ref(false);
+const content = ref(null);
+
+const contentScroll = ref(0);
+
+const toggleMenu = () => {
+    menuOpen.value = !menuOpen.value;
+}
+
+onMounted(() => {
+    content.value.addEventListener('scroll', () => {
+        const newScroll = content.value.scrollTop;
+        if (newScroll > contentScroll.value) {
+            document.getElementById('menu_toggle').classList.add('hidden');
+        } else {
+            document.getElementById('menu_toggle').classList.remove('hidden');
+        }
+        contentScroll.value = newScroll;
+    })
+});
 </script>
 
 <template>
-    <nav>
-        <div class="nav-logo">
-            <img src="../public/images/Logo.png" alt="Ziezo Logo">
-        </div>
-        <div class="nav-menu">
-            <ul>
-                <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
-                <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
-                <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
-                <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
-            </ul>
-        </div>
-        <div class="nav-details">
-            <ul>
-                <li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li>
-                <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
-                <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
-            </ul>
-        </div>
-    </nav>
-    <RouterView></RouterView>
+    <div id="nav_sidebar">
+        <Navigation></Navigation>
+    </div>
+    <div id="content" ref="content">
+        <RouterView></RouterView>
+    </div>
+    <div id="nav_mobile">
+        <Sidebar v-model:visible="menuOpen" position="bottom" class="p-sidebar-md">
+            <template #header>
+                <div class="nav-logo" >
+                    <img src="/images/Logo.svg" alt="Ziezo Logo">
+                </div>
+            </template>
+            <Navigation></Navigation>
+        </Sidebar>
+        <div id="menu_toggle" @click="() => menuOpen = !menuOpen"><i class="pi pi-bars" style="font-size: 1.5rem"></i></div>
+    </div>
 </template>
 
 <style scoped>
-nav {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 0px;
-    padding: 24px 16px;
-    gap: 48px;
-    width: 212px;
-    height: 831px;
-    background: #FFFFFF;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    font-family: 'Figtree';
-}
-
-ul {
-    list-style: none;
-    text-align: left;
-}
-
-li {
-    font-family: 'Figtree';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    gap: 12px;
-    display: flex;
-    align-items: center;
-    color: #172230;
-    flex: none;
-    order: 1;
-    flex-grow: 1;
-    margin-bottom: 12px;
-}
-
-li:hover {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 16px;
-    gap: 12px;
-
-    position: static;
-    width: 180px;
-    height: 40px;
-    left: 20px;
-    top: 80px;
-
-    background: #ECECEF;
-    border-radius: 20px;
-}
-
-li:active {
-    background: #EF7946;
-    opacity: 0.2;
-    color: #2A1005;
-}
-
 .nav-logo {
-    width: 100%;
-    height: 100%;
-}
-
-.nav-menu {
-    position: relative;
-    top: -204px;
-    width: 100%;
+    width: calc(100vw - 4rem);
     display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 4px;
-    order: 1;
-    flex-grow: 0;
-}
-
-.nav-details {
-    position: relative;
-    top: -104px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    order: 2;
-    flex-grow: 0;
+    justify-content: center;
+    padding-left: 2rem;
 }
 </style>
+<style>
+#app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+}
+
+#content {
+    padding: 1rem 3rem;
+    height: calc(100vh);
+    overflow-y: auto;
+    background-color: var(--background);
+    border-radius: 2rem 0 0 2rem;
+    grid-column: 2;
+}
+
+#nav_mobile {
+    display: none;
+}
+
+#menu_toggle {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    cursor: pointer;
+    background-color: var(--secondary);
+    border-radius: 50%;
+    padding: 1rem;
+    color: white;
+    opacity:100;
+    transition: all .3s ease;
+}
+
+#menu_toggle.hidden {
+    opacity: 0;
+    bottom: -4rem;
+}
+
+@media (max-width: 768px) {
+    #app {
+        grid-template-columns: 1fr;
+    }
+
+    #content {
+        padding: 1rem;
+        border-radius: 0;
+        grid-column: 1;
+    }
+
+    #nav_sidebar {
+        display: none;
+    }
+
+    #nav_mobile {
+        display: inherit;
+    }
+}</style>
