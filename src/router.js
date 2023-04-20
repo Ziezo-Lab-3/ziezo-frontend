@@ -11,6 +11,7 @@ import SettingsView from "./views/SettingsView.vue";
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
 import LoginView from "./views/LoginView.vue";
+import ForgotPasswordView from "./views/ForgotPasswordView.vue";
 
 const routes = [
     {
@@ -57,6 +58,11 @@ const routes = [
         path: "/Login",
         name: "Login",
         component: LoginView
+    },
+    {
+        path: "/ForgotPassword",
+        name: "Wachtwoord vergeten",
+        component: ForgotPasswordView
     }
 ];
 

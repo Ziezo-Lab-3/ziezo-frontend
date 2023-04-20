@@ -48,7 +48,7 @@ export default {
                 <!--forgot password-->
                 <div class="p-field">
                 <!--div on click-->
-                    <RouterLink to="/ForgotPassword">
+                    <RouterLink to="/jobs">
                         <div class="link-simple">Wachtwoord vergeten?</div> 
                     </RouterLink>
                 </div>
