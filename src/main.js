@@ -1,6 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
+import router from "./router";
+
+import DialogService from 'primevue/dialogservice';
 
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
@@ -21,28 +24,34 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import Dialog from 'primevue/dialog';
 import Steps from 'primevue/steps';
 
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css';
 import './style.css';
 import 'primeicons/primeicons.css';
 
 const app = createApp(App);
-app.use(PrimeVue);
-app.use(Button);
-app.use(InputText);
-app.use(InputNumber);
-app.use(InputMask);
-app.use(InputSwitch);
-app.use(Password);
-app.use(Dropdown);
-app.use(MultiSelect);
-app.use(Calendar);
-app.use(Checkbox);
-app.use(RadioButton);
-app.use(ProgressSpinner);
-app.use(TextArea);
-app.use(SplitButton);
-app.use(Card);
-app.use(ConfirmDialog);
-app.use(Dialog);
-app.use(Steps);
 
-createApp(App).mount('#app');
+app.use(PrimeVue);
+
+app.component('Button', Button);
+app.component('InputText', InputText);
+app.component('InputNumber', InputNumber);
+app.component('InputMask', InputMask);
+app.component('InputSwitch', InputSwitch);
+app.component('Password', Password);
+app.component('Dropdown', Dropdown);
+app.component('MultiSelect', MultiSelect);
+app.component('Calendar', Calendar);
+app.component('Checkbox', Checkbox);
+app.component('RadioButton', RadioButton);
+app.component('ProgressSpinner', ProgressSpinner);
+app.component('TextArea', TextArea);
+app.component('SplitButton', SplitButton);
+app.component('Card', Card);
+app.component('ConfirmDialog', ConfirmDialog);
+app.component('Dialog', Dialog);
+
+app.use(router);
+app.use(DialogService);
+
+app.mount('#app');
