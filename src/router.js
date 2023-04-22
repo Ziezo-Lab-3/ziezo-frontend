@@ -14,6 +14,7 @@ import LoginView from "./views/LoginView.vue";
 import ForgotPasswordView from "./views/ForgotPasswordView.vue";
 import SignupView from "./views/SignupView.vue";
 import NewPasswordView from "./views/NewPasswordView.vue";
+import NewPasswordSuccesView from "./views/NewPasswordSuccesView.vue";
 
 const routes = [
     {
@@ -75,6 +76,11 @@ const routes = [
         path: "/NewPassword",
         name: "Nieuw Wachtwoord",
         component: NewPasswordView
+    },
+    {
+        path: "/NewPasswordSucces",
+        name: "Nieuw Wachtwoord geaccepteerd",
+        component: NewPasswordSuccesView
     }
 ];
 
