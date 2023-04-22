@@ -37,9 +37,7 @@ export default {
                     <InputText id="email" v-model="email" />
                 </div>
                 <div class="p-field">
-                <RouterLink to="/NewPassword">
                     <Button label="verzenden" @click="requestcode" />
-                </RouterLink>
                 </div>
                 <!--forgot password-->
                 <div class="p-field">
