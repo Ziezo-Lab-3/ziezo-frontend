@@ -9,7 +9,6 @@ export default {
 
     const requestcode = () => {
         console.log('requesting password reset code');
-        console.log(email.value);
         console.log(new_password.value);
         console.log(check_password.value);
     }
@@ -40,9 +39,7 @@ export default {
                     <InputText id="check_password" v-model="check_password" />
                 </div>
                 <div class="p-field">
-                    <RouterLink to="/">
-                        <Button label="verzenden" @click="requestcode" />
-                    </RouterLink>
+                    <Button label="verzenden" @click="requestcode" />
                 </div>
                 <!--forgot password-->
                 <div class="p-field">
