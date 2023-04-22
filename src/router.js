@@ -12,6 +12,7 @@ import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
 import LoginView from "./views/LoginView.vue";
 import ForgotPasswordView from "./views/ForgotPasswordView.vue";
+import SignupView from "./views/SignupView.vue";
 
 const routes = [
     {
@@ -63,6 +64,11 @@ const routes = [
         path: "/ForgotPassword",
         name: "Wachtwoord vergeten",
         component: ForgotPasswordView
+    },
+    {
+        path: "/Aanmelden",
+        name: "Aanmelden",
+        component: SignupView
     }
 ];
 
