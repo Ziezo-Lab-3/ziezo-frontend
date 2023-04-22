@@ -7,16 +7,16 @@ export default {
     const email = ref('');
     const password = ref('');
 
-    const login = () => {
-      console.log('login');
-      console.log(email.value);
-      console.log(password.value);
+    const requestcode = () => {
+        console.log('requesting password reset code');
+        console.log(email.value);
+        console.log(password.value);
     }
 
     return {
       email,
       password,
-      login
+      requestcode
     }
   }
 }
@@ -28,28 +28,24 @@ export default {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Inloggen</template>
+        <template #title>Wachtwoord vergeten?</template>
         <template #content>
+            Geef je email adres, en we sturen je zo snel mogelijk een email om een nieuw wachtwoord in te stellen.
             <div class="p-fluid">
                 <div class="p-field">
                     <label for="email">E-mailadres</label>
                     <InputText id="email" v-model="email" />
                 </div>
                 <div class="p-field">
-                    <label for="password">Wachtwoord</label>
-                    <Password id="password" v-model="password" />
-                </div>
-                <div class="p-field">
-                    <Button label="Inloggen" @click="login" />
-                </div>
                 <RouterLink to="/jobs">
-                    <Button class="p-button-secondary" label="Account aanmaken"/>
+                    <Button label="verzenden" @click="requestcode" />
                 </RouterLink>
+                </div>
                 <!--forgot password-->
                 <div class="p-field">
                 <!--div on click-->
-                    <RouterLink to="/jobs">
-                        <div class="link-simple">Wachtwoord vergeten?</div> 
+                    <RouterLink to="/Login">
+                        <div class="link-simple">Ik weet mijn wachtwoord nog</div> 
                     </RouterLink>
                 </div>
             </div>
