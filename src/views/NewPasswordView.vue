@@ -4,18 +4,18 @@ import { ref } from 'vue';
 export default {
   name: 'LoginView',
   setup() {
-    const email = ref('');
-    const password = ref('');
+    const new_password = ref('');
+    const check_password = ref('');
 
     const requestcode = () => {
         console.log('requesting password reset code');
         console.log(email.value);
-        console.log(password.value);
+        console.log(new_password.value);
+        console.log(check_password.value);
     }
-
     return {
-      email,
-      password,
+      new_password,
+      check_password,
       requestcode
     }
   }
@@ -28,18 +28,21 @@ export default {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Wachtwoord vergeten?</template>
+        <template #title>Nieuw wachtwoord</template>
         <template #content>
-            Geef je email adres, en we sturen je zo snel mogelijk een email om een nieuw wachtwoord in te stellen.
             <div class="p-fluid">
                 <div class="p-field">
-                    <label for="email">E-mailadres</label>
-                    <InputText id="email" v-model="email" />
+                    <label for="new_password">Nieuw wachtwoord</label>
+                    <InputText id="new_password" v-model="new_password" />
                 </div>
                 <div class="p-field">
-                <RouterLink to="/NewPassword">
-                    <Button label="verzenden" @click="requestcode" />
-                </RouterLink>
+                    <label for="check_password">Wachtwoord herhalen</label>
+                    <InputText id="check_password" v-model="check_password" />
+                </div>
+                <div class="p-field">
+                    <RouterLink to="/">
+                        <Button label="verzenden" @click="requestcode" />
+                    </RouterLink>
                 </div>
                 <!--forgot password-->
                 <div class="p-field">
