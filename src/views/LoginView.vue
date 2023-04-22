@@ -42,7 +42,7 @@ export default {
                 <div class="p-field">
                     <Button label="Inloggen" @click="login" />
                 </div>
-                <RouterLink to="/jobs">
+                <RouterLink to="/Aanmelden">
                     <Button class="p-button-secondary" label="Account aanmaken"/>
                 </RouterLink>
                 <!--forgot password-->
