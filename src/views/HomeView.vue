@@ -1,12 +1,10 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import DialogNewJob from '../components/DialogNewJob.vue';
 
 /* Component State */
-const state = reactive({
-    newJobDialogVisible: false
-});
+let newJobDialog = ref(false);
 
 </script>
 <template>
@@ -25,7 +23,7 @@ const state = reactive({
             </template>
             <template #footer>
                 <div class="flex justify-content-around pb-4">
-                    <Button label="Plaats een klusje" @click="() => state.newJobDialogVisible = true" />
+                    <Button label="Plaats een klusje" @click="() => newJobDialog = true" />
                 </div>
             </template>
         </Card>
@@ -50,7 +48,7 @@ const state = reactive({
             </template>
         </Card>
     </div>
-    <DialogNewJob :visible="state.newJobDialogVisible" />
+    <DialogNewJob v-on:close="newJobDialog = false" :visible="newJobDialog" />
 </template>
 
 <style></style>
