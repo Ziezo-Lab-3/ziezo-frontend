@@ -1,27 +1,39 @@
 <script>
 import { ref } from 'vue';
+import axios from 'axios';
 
 export default {
-  name: 'LoginView',
-  setup() {
-    const email = ref('');
-    const password = ref('');
-    const password2 = ref('');
-
-    const login = () => {
-      console.log('login');
-      console.log(email.value);
-      console.log(password.value);
-      console.log(password2.value);
-    }
-
+  data() {
     return {
-      email,
-      password,
-      login
+        email: '',
+        password: '',
+        password2: '',
+        checked: false
+    }
+  },
+  methods: {
+    signup() {
+        if(this.checked === true){
+            document.getElementById('checkbox--text').style.color = 'black';
+            if(this.password == this.password2){
+            document.getElementById('password2--text').style.color = 'black';
+            /**ajax */
+            }
+            else{
+                console.log("passwords don't match");
+            document.getElementById('password2--text').style.color = 'red';
+            }
+        }
+        else{
+            console.log("terms and conditions not accepted");
+            /**set text color of id checkbox--text to red  */
+            document.getElementById('checkbox--text').style.color = 'red';
+            
+        }
     }
   }
 }
+
 </script>
 <template>
     <Card class="p-m-4 p-major">
@@ -42,13 +54,13 @@ export default {
                     <Password id="password" v-model="password" />
                 </div>
                 <div class="p-field">
-                    <label for="password">Herhaal je wachtwoord</label>
-                    <Password id="password" v-model="password2" />
+                    <label for="password2" id="password2--text">Herhaal je wachtwoord</label>
+                    <Password id="password2" v-model="password2" />
                 </div>
                 <input type="checkbox" id="checkbox" v-model="checked" />
-                <label for="checkbox">Ik ga akkoord met de gebruiksvoorwaarden</label>
+                <label for="checkbox" id="checkbox--text">Ik ga akkoord met de gebruiksvoorwaarden</label>
                 <div class="p-field">
-                    <Button label="Account aanmaken" @click="login" />
+                    <Button label="Account aanmaken" @click="signup" />
                 </div>
                 <RouterLink to="/Login">
                     <Button class="p-button-secondary" label="Ik heb al een account"/>

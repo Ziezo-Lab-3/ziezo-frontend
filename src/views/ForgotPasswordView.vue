@@ -11,6 +11,8 @@ export default {
         console.log('requesting password reset code');
         console.log(email.value);
         console.log(password.value);
+        
+        console.log(window.location.host + '/NewPassword');
     }
 
     return {
