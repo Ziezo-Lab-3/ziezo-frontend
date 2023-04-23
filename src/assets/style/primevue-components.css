@@ -1,0 +1,27 @@
+.p-card {
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow-card);
+    overflow: hidden;
+}
+
+.p-card.p-major .p-card-title,
+.p-card.p-major .p-card-subtitle,
+.p-card.p-major .p-card-footer,
+.p-card.p-major .p-card-content {
+    padding: 1rem 2rem;
+}
+
+.p-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--gray-100);
+    padding: 1rem;
+}
+
+.p-dialog .p-dialog-content {
+    max-height: 400px;
+    padding: 1rem 1.5rem;
+}
+
+.p-dialog .p-dialog-footer {
+    border-top: 1px solid var(--gray-100);
+    padding: 1rem;
+}
