@@ -1,63 +1,3 @@
-<<<<<<< HEAD
-:root {
-  /**USE FIGTREE as font*/
-  --font: 'Figtree', cursive;
-}
-
-/**center <main> in middle of screen*/
-body{
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #fcf4f0;
-  align-items: center;
-}
-
-main{
-  width: 280px;
-  background-color: white;
-  border-radius: 5px;
-  padding: 32px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: min-content;
-  align-items: center;
-}
-
-main h1{
-  text-align: center;
-  margin: 0px;
-  padding: 0px;
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 12px;
-}
-form label{
-  margin-top: 12px;
-}
-form button{
-  margin-top: 24px;
-  background-color: #ef7946;
-  color: white;
-  border-radius: 25;
-  border: none;
-}
-
-form button,form input{
-  font-size: 18px;
-  padding: 8px;
-  border-radius: 25px;
-=======
 @import url('https://fonts.googleapis.com/css2?family=Figtree&display=swap');
 
 @import url('./assets/style/style-colors.css');
@@ -98,5 +38,4 @@ a:has(.p-button) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5rem;
->>>>>>> 089a19ea83c1c311dbcb39a122c4a3c82be16cc9
 }
