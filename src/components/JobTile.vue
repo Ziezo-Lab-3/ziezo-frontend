@@ -6,7 +6,7 @@
         </div>
         <div class="details-container">
           <div class="details-inner">
-            <h1>{{ job.name }}</h1>
+            <h2>{{ job.name }}</h2>
             <h3>{{ job.description }}</h3>
             <div class="price-and-button">
               <p class="price">€{{ job.price }}/ u</p>
@@ -90,8 +90,6 @@
   .details-container {
     position: absolute;
     bottom: 0;
-    left: 50%; /* Horizontally center the details */
-    transform: translate(-50%, 100%); /* Move the details below the image */
     width: 100%;
     background-color: #fff;
     padding: 20px;
@@ -101,9 +99,6 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
   }
   
-  .job-tile:hover .details-container {
-    transform: translate(-50%, 0); /* Move the details up */
-  }
   
   .details-inner {
     display: flex;
@@ -112,7 +107,7 @@
     height: 100%;
   }
   
-  .details-inner h1,
+  .details-inner h2,
   .details-inner h3,
   .details-inner p {
     margin-top: 0;
