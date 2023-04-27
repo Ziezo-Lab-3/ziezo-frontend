@@ -15,6 +15,10 @@ body {
     letter-spacing: -0.25px;
 }
 
+label {
+    font-size: 14px;
+}
+
 .stack {
     display: flex;
     flex-direction: column;
@@ -28,4 +32,10 @@ body {
 
 a:has(.p-button) {
     text-decoration: none;
+}
+
+.labelInput {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
 }
