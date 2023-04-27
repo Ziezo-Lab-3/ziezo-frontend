@@ -14,6 +14,6 @@ export const postKlusje = async (klusje, token) => {
 }
 
 export const getKlusjes = async (token) => {
-    const response = await fetch(`${URL}/klusjes`);
+    const response = await fetch(`${URL}/klusje`);
     return await response.json();
 }

@@ -18,6 +18,7 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import JobTile from '../components/JobTile.vue';
+  import { getKlusjes } from '../api/klusje';
   
   const searchTerm = ref('');
   const jobs = ref([]);
@@ -25,9 +26,9 @@
   // Fetch jobs from the API
   const fetchJobs = async () => {
     try {
-      const response = await fetch('http://localhost:27017/api/v1/klusje/');
-      const { data } = await response.json();
-      jobs.value = data;
+      const result = await getKlusjes();
+      console.log(result);
+      jobs.value = result.data;
     } catch (error) {
       console.error(error);
     }

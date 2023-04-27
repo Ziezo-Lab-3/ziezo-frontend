@@ -1,66 +1,52 @@
 <template>
-    <div class="job-tile" :style="{ width: tileWidth + 'px' }">
-      <div class="image-with-details" :style="{ width: imageWidth + 'px', height: imageWidth + 'px', borderRadius: borderRadius + 'px' }">
-        <div class="image-container">
-          <img :src="job.image" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" />
-        </div>
-        <div class="details-container">
-          <div class="details-inner">
-            <h2>{{ job.name }}</h2>
-            <h3>{{ job.description }}</h3>
-            <div class="price-and-button">
-              <p class="price">€{{ job.price }}/ u</p>
-              <button @click="openOverlay">Details</button>
-            </div>
+  <div class="job-tile" :style="{ width: tileWidth + 'px' }">
+    <div class="image-with-details" :style="{ width: imageWidth + 'px', height: imageWidth + 'px', borderRadius: borderRadius + 'px' }">
+      <div class="image-container">
+        <img :src="job.image" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" />
+      </div>
+      <div class="details-container">
+        <div class="details-inner">
+          <h2>{{ job.name }}</h2>
+          <h3>{{ job.description }}</h3>
+          <div class="price-and-button">
+            <p class="price">€{{ job.price }}/ u</p>
+            <Button label="Details" @click="showOverlay" class="p-button-secondary" />
           </div>
         </div>
       </div>
-      <div class="overlay">
-        <JobDetailsOverlay v-if="showOverlay" :job="job" @close-overlay="closeOverlay" />
-      </div>
     </div>
-  </template>
-  
-  <script>
-  import JobDetailsOverlay from "../components/JobDetailsOverlay.vue";
-  
-  export default {
-    components: {
-      JobDetailsOverlay,
-    },
-    props: {
-      job: {
-        type: Object,
-        required: true,
-      },
-      tileWidth: {
-        type: Number,
-        default: 300, // default width for the tile
-      },
-      imageWidth: {
-        type: Number,
-        default: 280, // default width for the image
-      },
-      borderRadius: {
-        type: Number,
-        default: 10, // default border radius for the tile and image
-      },
-    },
-    data() {
-      return {
-        showOverlay: false,
-      };
-    },
-    methods: {
-      openOverlay() {
-        this.showOverlay = true;
-      },
-      closeOverlay() {
-        this.showOverlay = false;
-      },
-    },
-  };
-  </script>
+    <div class="overlay">
+      <JobDetailsOverlay v-if="showOverlay" :job="job" @close-overlay="showOverlay = false" />
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import JobDetailsOverlay from "../components/JobDetailsOverlay.vue";
+
+const showOverlay = ref(false);
+
+const props = defineProps({
+  job: {
+    type: Object,
+    required: true,
+  },
+  tileWidth: {
+    type: Number,
+    default: 300, // default width for the tile
+  },
+  imageWidth: {
+    type: Number,
+    default: 280, // default width for the image
+  },
+  borderRadius: {
+    type: Number,
+    default: 10, // default border radius for the tile and image
+  },
+});
+
+</script>
   
   <style>
   .job-tile {
