@@ -1,10 +1,12 @@
 <script setup>
 import FileUpload from 'primevue/fileupload';
+import { postKlusje } from '../api/klusje';
 import { ref, reactive, watch, defineEmits, computed } from 'vue';
 const visible = ref(false);
 const emit = defineEmits(['close']);
 const props = defineProps({ visible: false });
 watch(() => props.visible, (val) => visible.value = val);
+const message = ref("");
 
 const close = () => {
     props.visible = false;
@@ -15,9 +17,20 @@ const close = () => {
     emit('close');
 }
 
-const accept = () => {
+const accept = async () => {
     console.log(state);
-    close();
+    let res = await postKlusje({
+        name: state.title,
+        description: state.description,
+        price: state.price,
+        image: "https://placehold.co/600x400"
+    }, localStorage.getItem('token'));
+    console.log(res);
+    if (res.status === "success")
+        close();
+    else {
+        message.value = "Er is iets fout gegaan bij het plaatsen van het klusje.";
+    }
 }
 
 const canPost = computed(() => {
@@ -47,7 +60,7 @@ const state = reactive({
         </div>
         <div class="labelInput">
             <label>Afbeeldingen</label>
-            <FileUpload :disabled="true" name="images[]" mode="advanced" accept="image/*" maxFileSize="1000000" :multiple="true" >
+            <FileUpload :disabled="true" name="images[]" mode="advanced" accept="image/*" :maxFileSize="1000000" :multiple="true" >
                 <template #empty>
                     <p>Sleep afbeeldingen naar hier om te uploaden.</p>
                 </template>
@@ -58,6 +71,7 @@ const state = reactive({
                 <Button label="Cancel" @click="close" class="p-button-secondary" />
                 <Button label="Plaats Klusje" @click="accept" :disabled="!canPost" />
             </div>
+            <div v-if="message != ''" style="color: var(--danger)">{{ message }}</div>
         </template>
     </Dialog>
 </template>

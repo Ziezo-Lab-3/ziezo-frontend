@@ -4,6 +4,10 @@
     border: 1px solid transparent;
     text-align: center;
 }
+.p-disabled, .p-component:disabled {
+    background-color: var(--gray-300);
+    color: var(--white);
+}
 .p-button:enabled:active,
 .p-button:enabled:hover {
     background: var(--primary-dark-1);
