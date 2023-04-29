@@ -3,7 +3,7 @@ import { ref } from 'vue';
 const API_URI = 'http://localhost:3000';
 const username = ref("");
 const password = ref("");
-
+const message = ref("");
 /**ajax */
 const signin = () => {
     fetch(`${API_URI}/api/v1/auth/signin`, {
@@ -45,7 +45,9 @@ const signin = () => {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Inloggen</template>
+        <template #title>
+            Inloggen
+        </template>
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">
@@ -56,6 +58,7 @@ const signin = () => {
                     <label for="password">Wachtwoord</label>
                     <Password id="password" v-model="password" />
                 </div>
+                <div style="color: var(--danger)" v-if="message !== ''">{{ message }}</div>
                 <div class="p-field">
                     <Button label="Inloggen" @click="signin" />
                 </div>
