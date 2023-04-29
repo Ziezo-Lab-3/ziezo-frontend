@@ -1,27 +1,61 @@
 <script>
 import { ref } from 'vue';
-import axios from 'axios';
+const API_URI = 'http://localhost:3000';
+
+/**ajax */
+const signup = () => {
+    fetch(`${API_URI}/api/v1/auth/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: username.value,
+            email: email.value,
+            password: password.value,
+        }),
+    })
+    // Converteer de response naar JSON
+    .then((response) => response.json())
+
+     // Verwerk de response
+    .then((response) => {
+        if (response.status === "success") {
+            // Sla de token op in de localStorage
+            localStorage.setItem("token", response.data.accessToken);
+            // Reset de velden
+            message.value = "";
+            router.push("/");
+        }
+        else if (response.status === "fail") {
+            message.value = response.message;
+            console.log("error:" + response.message);
+        }
+    });
+    
+};
 
 export default {
   data() {
     return {
         email: '',
+        username: '',
         password: '',
         password2: '',
         checked: false
     }
   },
   methods: {
-    signup() {
+    signupScript() {
         if(this.checked === true){
             document.getElementById('checkbox--text').style.color = 'black';
             if(this.password == this.password2){
-            document.getElementById('password2--text').style.color = 'black';
-            /**ajax */
+                document.getElementById('password2--text').style.color = 'black';
+            signup();
             }
             else{
                 console.log("passwords don't match");
-            document.getElementById('password2--text').style.color = 'red';
+                document.getElementById('password2--text').style.color = 'red';
             }
         }
         else{
@@ -48,6 +82,10 @@ export default {
                 <div class="p-field">
                     <label for="email">E-mailadres</label>
                     <InputText id="email" v-model="email" />
+                </div>  
+                <div class="p-field">
+                    <label for="username">Gebruikersnaam</label>
+                    <InputText id="username" v-model="username" />
                 </div>
                 <div class="p-field">
                     <label for="password">Wachtwoord</label>
@@ -60,7 +98,7 @@ export default {
                 <input type="checkbox" id="checkbox" v-model="checked" />
                 <label for="checkbox" id="checkbox--text">Ik ga akkoord met de gebruiksvoorwaarden</label>
                 <div class="p-field">
-                    <Button label="Account aanmaken" @click="signup" />
+                    <Button label="Account aanmaken" @click="signupScript" />
                 </div>
                 <RouterLink to="/Login">
                     <Button class="p-button-secondary" label="Ik heb al een account"/>

@@ -1,25 +1,54 @@
 <script>
 import { ref } from 'vue';
+const API_URI = 'http://localhost:3000';
+
+/**ajax */
+const signin = () => {
+    fetch(`${API_URI}/api/v1/auth/signin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: username.value,
+            password: password.value,
+        }),
+    })
+    // Converteer de response naar JSON
+    .then((response) => response.json())
+
+     // Verwerk de response
+    .then((response) => {
+        if (response.status === "success") {
+            // Sla de token op in de localStorage
+            localStorage.setItem("token", response.data.accessToken);
+            // Reset de velden
+            message.value = "";
+            router.push("/");
+        }
+        else if (response.status === "fail") {
+            message.value = response.message;
+            console.log("error:" + response.message);
+        }
+    });
+    
+};
 
 export default {
-  name: 'LoginView',
-  setup() {
-    const email = ref('');
-    const password = ref('');
-
-    const login = () => {
-      console.log('login');
-      console.log(email.value);
-      console.log(password.value);
-    }
-
+  data() {
     return {
-      email,
-      password,
-      login
+        username: '',
+        password: '',
     }
+  },
+  methods: {
+            signinScript() {
+                signin();
+            }
+    
   }
 }
+
 </script>
 <template>
     <Card class="p-m-4 p-major">
@@ -32,15 +61,15 @@ export default {
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">
-                    <label for="email">E-mailadres</label>
-                    <InputText id="email" v-model="email" />
+                    <label for="username">Gebruikersnaam</label>
+                    <InputText id="username" v-model="username" />
                 </div>
                 <div class="p-field">
                     <label for="password">Wachtwoord</label>
                     <Password id="password" v-model="password" />
                 </div>
                 <div class="p-field">
-                    <Button label="Inloggen" @click="login" />
+                    <Button label="Inloggen" @click="signinScript" />
                 </div>
                 <RouterLink to="/Aanmelden">
                     <Button class="p-button-secondary" label="Account aanmaken"/>
