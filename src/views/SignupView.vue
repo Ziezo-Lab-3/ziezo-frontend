@@ -13,11 +13,11 @@ const checked = ref(false);
 
 /**ajax */
 const signup = () => {
-    if(checked === true){
+    if(checked.value === true){
         document.getElementById('checkbox--text').style.color = 'black';
-        if(password == password2){
+        if(password.value == password2.value){
             document.getElementById('password2--text').style.color = 'black';
-            fetch(`${API_URI}/api/v1/auth/signup`, {
+            fetch(`${API_URI}/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,8 +85,8 @@ const signup = () => {
                     <label for="password2" id="password2--text">Herhaal je wachtwoord</label>
                     <Password id="password2" v-model="password2" />
                 </div>
-                <input type="checkbox" id="checkbox" v-model="checked" />
                 <!-- checkbox which keeps const checked updated -->
+                <input type="checkbox" id="checkbox" v-model="checked" />
                 <label for="checkbox" id="checkbox--text" >Ik ga akkoord met de gebruiksvoorwaarden</label>
                 <div class="p-field">
                     <Button label="Account aanmaken" @click="signup" />
