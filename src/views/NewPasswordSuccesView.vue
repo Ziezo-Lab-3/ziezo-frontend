@@ -1,21 +1,3 @@
-<script>
-import { ref } from 'vue';
-
-export default {
-  name: 'LoginView',
-  setup() {
-    const new_password = ref('');
-    const check_password = ref('');
-
-    const requestcode = () => {
-        console.log('New password accepted');
-    }
-    return {
-      requestcode
-    }
-  }
-}
-</script>
 <template>
     <Card class="p-m-4 p-major">
         <template #header>
@@ -38,6 +20,9 @@ export default {
 </template>
 
 <style scoped>
+.p-field, #checkbox {
+    margin-bottom: 0.75rem;
+}
 .Login-logo {
     width: 100%;
     display: flex;

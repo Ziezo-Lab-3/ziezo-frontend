@@ -54,6 +54,9 @@ export default {
 </template>
 
 <style scoped>
+.p-field, #checkbox {
+    margin-bottom: 0.75rem;
+}
 .Login-logo {
     width: 100%;
     display: flex;

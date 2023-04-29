@@ -1,24 +1,44 @@
-<script>
+<script setup>
 import { ref } from 'vue';
+const API_URI = import.meta.env.VITE_BACKEND_URL;
+const new_password = ref('');
+const check_password = ref('');
 
-export default {
-  name: 'LoginView',
-  setup() {
-    const new_password = ref('');
-    const check_password = ref('');
+const requestcode = () => {
+    if(new_password.value == check_password.value){
+        document.getElementById('check_password--text').style.color = 'black';
+        fetch(`${API_URI}/auth/requestcode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                new_password: new_password.value,
+            }),
+        })
+        // Converteer de response naar JSON
+        .then((response) => response.json())
 
-    const requestcode = () => {
-        console.log('requesting password reset code');
-        console.log(new_password.value);
-        console.log(check_password.value);
+        // Verwerk de response
+        .then((response) => {
+            if (response.status === "success") {
+                // Sla de token op in de localStorage
+                localStorage.setItem("token", response.data.accessToken);
+                // Reset de velden
+                message.value = "";
+                router.push("/");
+            }
+            else if (response.status === "fail") {
+                message.value = response.message;
+                console.log("error:" + response.message);
+            }
+        });
     }
-    return {
-      new_password,
-      check_password,
-      requestcode
+    else{
+        console.log("passwords don't match");
+        document.getElementById('check_password--text').style.color = 'red';
     }
-  }
-}
+};
 </script>
 <template>
     <Card class="p-m-4 p-major">
@@ -54,6 +74,9 @@ export default {
 </template>
 
 <style scoped>
+.p-field, #checkbox {
+    margin-bottom: 0.75rem;
+}
 .Login-logo {
     width: 100%;
     display: flex;
