@@ -66,9 +66,11 @@ const signin = () => {
                 <div class="p-field">
                     <Button label="Inloggen" @click="signin" />
                 </div>
-                <RouterLink to="/Aanmelden">
-                    <Button class="p-button-secondary" label="Account aanmaken"/>
-                </RouterLink>
+                <div class="p-field">
+                    <RouterLink to="/Aanmelden">
+                        <Button class="p-button-secondary" label="Account aanmaken"/>
+                    </RouterLink>
+                </div>
                 <!--forgot password-->
                 <div class="p-field">
                 <!--div on click-->
@@ -82,6 +84,9 @@ const signin = () => {
 </template>
 
 <style scoped>
+.p-field{
+    margin-bottom: 0.75rem;
+}
 .Login-logo {
     width: 100%;
     display: flex;
