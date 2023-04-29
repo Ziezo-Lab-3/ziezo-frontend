@@ -1,6 +1,8 @@
-<script>
+<script setup>
 import { ref } from 'vue';
 const API_URI = 'http://localhost:3000';
+const username = ref("");
+const password = ref("");
 
 /**ajax */
 const signin = () => {
@@ -34,20 +36,6 @@ const signin = () => {
     
 };
 
-export default {
-  data() {
-    return {
-        username: '',
-        password: '',
-    }
-  },
-  methods: {
-            signinScript() {
-                signin();
-            }
-    
-  }
-}
 
 </script>
 <template>
@@ -69,7 +57,7 @@ export default {
                     <Password id="password" v-model="password" />
                 </div>
                 <div class="p-field">
-                    <Button label="Inloggen" @click="signinScript" />
+                    <Button label="Inloggen" @click="signin" />
                 </div>
                 <RouterLink to="/Aanmelden">
                     <Button class="p-button-secondary" label="Account aanmaken"/>
