@@ -1,12 +1,16 @@
 <script setup>
 import { ref } from 'vue';
-const API_URI = 'http://localhost:3000';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const API_URI = import.meta.env.VITE_BACKEND_URL;
 const username = ref("");
 const password = ref("");
 const message = ref("");
+
 /**ajax */
 const signin = () => {
-    fetch(`${API_URI}/api/v1/auth/signin`, {
+    fetch(`${API_URI}/auth/signin`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
