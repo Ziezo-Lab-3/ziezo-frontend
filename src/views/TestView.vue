@@ -14,7 +14,7 @@ const logIngredient = () => { console.log(ingredient.value) }
         <template #title>Test Area</template>
         <template #content>
             <div class="stack">
-                <Button>Coole knop</Button>
+                <Button class="p-button-secondary">Coole knop</Button>
                 <InputText placeholder="Voer hier je naam in" />
                 <InputNumber placeholder="Voer hier je leeftijd in" />
                 <InputMask mask="+99 999 99 99 99" placeholder="Voer hier je telefoonnummer in" />

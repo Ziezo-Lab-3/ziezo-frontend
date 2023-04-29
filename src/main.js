@@ -22,6 +22,7 @@ import SplitButton from 'primevue/splitbutton';
 import Card from 'primevue/card';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Dialog from 'primevue/dialog';
+import Steps from 'primevue/steps';
 
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';

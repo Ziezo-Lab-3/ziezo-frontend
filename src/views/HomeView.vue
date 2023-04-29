@@ -48,7 +48,7 @@ let newJobDialog = ref(false);
             </template>
         </Card>
     </div>
-    <DialogNewJob v-on:close="newJobDialog = false" :visible="newJobDialog" />
+    <DialogNewJob v-on:close="() => newJobDialog = false" :visible="newJobDialog" />
 </template>
 
 <style></style>

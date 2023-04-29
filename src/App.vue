@@ -46,6 +46,45 @@ onMounted(() => {
     </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      passwordRepeat: '',
+      showPassword: false,
+      termsAgreed: false
+    }
+  },
+  methods: {
+    async createAccount() {
+      const data = {
+        email: this.email,
+        password: this.password,
+        passwordRepeat: this.passwordRepeat,
+        termsAgreed: this.termsAgreed
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/accounts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+
+        const responseData = await response.json()
+        console.log(responseData)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
+}
+</script>
+
 <style scoped>
 .nav-logo {
     width: calc(100vw - 4rem);
