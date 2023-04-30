@@ -1,4 +1,5 @@
 <script setup>
+import moment from 'moment';
 import { ref } from 'vue';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
@@ -24,8 +25,8 @@ const jobs = ref([
         <template #content>
             <TabView>
                 <TabPanel header="Zelf Geplaatste Klusjes">
-                    <DataTable :value="jobs" scrollable scrollHeight="flex">
-                        <Column header="">
+                    <DataTable :value="jobs" scrollable scrollHeight="flex" class="p-datatable-sm"  >
+                        <Column header="" style="min-width: cal(120px + 1rem)">
                             <template #body="slotProps">
                                 <img :src="slotProps.data.image" style="width: 120px; height: 80px;" />
                             </template>
@@ -41,7 +42,7 @@ const jobs = ref([
                         <Column field="category" header="Category" style="width: 120px"></Column>
                         <Column header="Geplaatst op" style="width: 120px">
                             <template #body="slotProps">
-                                {{ new Date(slotProps.data.createdAt) }}
+                                {{ moment(slotProps.data.createdAt).format('DD-MM-YYYY') }}
                             </template>
                         </Column>
                         <Column header="Labels"></Column>
@@ -64,6 +65,7 @@ const jobs = ref([
 }
 
 .description h2 {
-    height: 24px;
+    height: 28px;
+    overflow: hidden;
 }
 </style>
