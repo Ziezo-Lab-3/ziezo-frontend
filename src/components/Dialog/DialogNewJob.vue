@@ -1,6 +1,6 @@
 <script setup>
 import FileUpload from 'primevue/fileupload';
-import { postKlusje } from '../api/klusje';
+import { postKlusje } from '../../api/klusje';
 import { ref, reactive, watch, defineEmits, computed } from 'vue';
 const visible = ref(false);
 const emit = defineEmits(['close']);
