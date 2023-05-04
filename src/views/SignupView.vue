@@ -5,7 +5,8 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const API_URI = import.meta.env.VITE_BACKEND_URL;
 const email = ref("");
-const username = ref("");
+const name_first = ref("");
+const name_last = ref("");
 const password = ref("");
 const password2 = ref("");
 const message = ref("");
@@ -23,7 +24,8 @@ const signup = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username: username.value,
+                    name_first: name_first.value,
+                    name_last: name_last.value,
                     email: email.value,
                     password: password.value,
                 }),
@@ -74,8 +76,12 @@ const signup = () => {
                     <InputText id="email" v-model="email" />
                 </div>  
                 <div class="p-field">
-                    <label for="username">Gebruikersnaam</label>
-                    <InputText id="username" v-model="username" />
+                    <label for="name_first">Voornaam</label>
+                    <InputText id="name_first" v-model="name_first" />
+                </div>
+                <div class="p-field">
+                    <label for="name_last">Achternaam</label>
+                    <InputText id="name_last" v-model="name_last" />
                 </div>
                 <div class="p-field">
                     <label for="password">Wachtwoord</label>

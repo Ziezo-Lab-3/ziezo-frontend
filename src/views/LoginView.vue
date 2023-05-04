@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const API_URI = import.meta.env.VITE_BACKEND_URL;
-const username = ref("");
+const email = ref("");
 const password = ref("");
 const message = ref("");
 
@@ -16,7 +16,7 @@ const signin = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username: username.value,
+            email: email.value,
             password: password.value,
         }),
     })
@@ -55,8 +55,8 @@ const signin = () => {
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">
-                    <label for="username">Gebruikersnaam</label>
-                    <InputText id="username" v-model="username" />
+                    <label for="email">Email</label>
+                    <InputText id="email" v-model="email" />
                 </div>
                 <div class="p-field">
                     <label for="password">Wachtwoord</label>
