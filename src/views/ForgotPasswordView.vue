@@ -1,27 +1,16 @@
-<script>
+<script setup>
 import { ref } from 'vue';
+const API_URI = import.meta.env.VITE_BACKEND_URL;
+const email = ref('');
+const password = ref('');
 
-export default {
-  name: 'LoginView',
-  setup() {
-    const email = ref('');
-    const password = ref('');
+const requestcode = () => {
+    console.log('requesting password reset code');
+    console.log(email.value);
+    console.log(password.value);
+    console.log(window.location.host + '/NewPassword');
+};
 
-    const requestcode = () => {
-        console.log('requesting password reset code');
-        console.log(email.value);
-        console.log(password.value);
-        
-        console.log(window.location.host + '/NewPassword');
-    }
-
-    return {
-      email,
-      password,
-      requestcode
-    }
-  }
-}
 </script>
 <template>
     <Card class="p-m-4 p-major">
