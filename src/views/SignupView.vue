@@ -40,7 +40,7 @@ const signup = () => {
                     localStorage.setItem("token", response.data.accessToken);
                     // Reset de velden
                     message.value = "";
-                    router.push("/");
+                    router.push("/Login");
                 }
                 else if (response.status === "fail") {
                     message.value = response.message;
