@@ -43,6 +43,10 @@ const requestcode = () => {
 </template>
 
 <style scoped>
+.p-card{
+    margin: auto;
+}
+
 .p-field, #checkbox {
     margin-bottom: 0.75rem;
 }
