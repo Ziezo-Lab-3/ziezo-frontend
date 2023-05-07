@@ -1,4 +1,5 @@
 const URL = import.meta.env.VITE_BACKEND_URL;
+import { parseParams } from "./parseParams";
 
 /**
  * 
@@ -26,14 +27,20 @@ export const postKlusje = async (klusje, token) => {
  */
 export const getKlusjes = async (token, params) => {
     let suffix = "";
-    if (params) {
-        //Get all the keys and values from the filter object, and append them to the url.
-        for (const [key, value] of Object.entries(params)) {
-            suffix += `${key}=${value}&`;
-        }
-        //Remove the last & from the url.
-        suffix = suffix.slice(0, -1);
-    }
+    if (params) suffix = parseParams(params);
     const response = await fetch(`${URL}/klusje?${suffix}`);
     return await response.json();
 };
+
+/**
+ * 
+ * @param { string } token 
+ * @param { { first: number, last: number, filter: string} } params 
+ * @returns { { status: string, message: string, data: { count: number } } }
+ */
+export const getKlusjesCount = async (token, params) => {
+    let suffix = "";
+    if (params) suffix = parseParams(params);
+    const response = await fetch(`${URL}/klusje/count?${suffix}`);
+    return await response.json();
+}

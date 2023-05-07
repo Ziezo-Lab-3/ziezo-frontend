@@ -1,37 +1,81 @@
 <script setup>
 import moment from 'moment';
-import { ref } from 'vue';
+import { onMounted, reactive } from 'vue';
 import decodeJWT from '../js/decodeJWT';
-import { getKlusjes } from '../api/klusje';
+import { getKlusjes, getKlusjesCount } from '../api/klusje';
+import { getCategories } from '../api/category';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
 
+const state = reactive({
+    data: [],
+    totalDocumentCount: 0,
+    isLoadingData: false,
+    categories: []
+});
+const decodedToken = decodeJWT(localStorage.getItem('token'));
+
+const getCategory = (id) => {
+    return state.categories.find(el => el._id === id);
+}
+
 const getSeverity = (status) => {
-    if (status == "Klaar") return "success";
-    else if (status == "Bezig") return "warning";
-    else if (status == "Niet klaar") return "danger";
+    if (status == "open") return "success";
+    else if (status == "in progress") return "warning";
+    else if (status == "done") return "danger";
     else return "primary";
 }
 
-const data = ref([]);
-const isLoadingData = ref(false);
-const onLazyLoad = async (event) => {
-    const decoded = decodeJWT(localStorage.getItem('token'));
-    isLoadingData.value = true;
-    const lazyData = await getKlusjes(localStorage.getItem('token'), {
+const loadInitialData = async () => {
+    const token = localStorage.getItem('token');
+    let result = await getKlusjesCount(
+        token, {
+        filter: JSON.stringify({
+            user: decodedToken.id,
+        }),
+    });
+    if (result.status === "success") {
+        state.totalDocumentCount = result.data.count;
+    }
+    else {
+        console.error("JobView.vue onMounted(): ", result.message);
+    }
+    result = await getCategories(token);
+    if (result.status === "success") {
+        state.categories = result.data;
+    }
+    else {
+        console.error("JobView.vue onMounted(): " + result.message);
+    }
+};
+
+const loadKlusjesLazy = async (event) => {
+    if (state.data.length >= 20) return;
+    !state.isLoadingData && (state.isLoadingData = true);
+    const newData = await getKlusjes(localStorage.getItem('token'), {
         first: event.first,
         last: event.last,
         filter: JSON.stringify({
-            _id: decoded.id,
+            user: decodedToken.id,
         }),
     });
-    data.value.push(...lazyData.data);
-    isLoadingData.value = false;
+    if (newData.status === "success") {
+        const virtual = [...state.data];
+        const temp = [...virtual, ...newData.data];
+        state.data = temp;
+        state.isLoadingData = false;
+    }
+    else {
+        console.error(newData.message);
+    }
 }
 
+onMounted(() => {
+    loadInitialData();
+});
 </script>
 <template>
     <Card class="p-m-4 p-major">
@@ -39,17 +83,24 @@ const onLazyLoad = async (event) => {
         <template #content>
             <TabView>
                 <TabPanel header="Zelf Geplaatste Klusjes">
-                    <DataTable :value="data" scrollable scrollHeight="400px" class="p-datatable-sm table-jobs-self"
+                    <DataTable v-if="state.totalDocumentCount > 0"
+                        scrollHeight="500px" 
+                        :value="state.data"
+                        scrollable
                         :virtualScrollerOptions="{
-                                itemSize: 20,
-                                lazy: true,
-                                showLoader: true,
-                                loading: isLoadingData,
-                                onLazyLoad: onLazyLoad
-                            }">
+                            totalDocumentCount: state.totalDocumentCount,
+                            lazy: true,
+                            onLazyLoad: loadKlusjesLazy,
+                            itemSize: 108,
+                            delay: 200,
+                            showLoader: true,
+                            loading: state.isLoadingData,
+                            numToleratedItems: 10,
+                        }"
+                        class="p-datatable-sm table-jobs-self">
                         <Column header="" class="col-image">
                             <template #body="slotProps">
-                                <img :src="slotProps.data.image" style="width: 120px; height: 80px;" />
+                                <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" />
                             </template>
                         </Column>
                         <Column header="Klusje" class="col-job">
@@ -60,11 +111,15 @@ const onLazyLoad = async (event) => {
                                 </div>
                             </template>
                         </Column>
-                        <Column field="category" header="Category" style="width: 120px" class="col-category"></Column>
+                        <Column header="Categorie" class="col-category">
+                            <template #body="slotProps">
+                                <div>{{ getCategory(slotProps.data._id) }}</div>
+                            </template>
+                        </Column>
                         <Column header="Labels" class="col-label flex flex-column gap-1 justify-content-center">
                             <template #body="slotProps">
                                 <Tag severity="info" :value="'€ ' + slotProps.data.price"></Tag>
-                                <Tag :severity="getSeverity(slotProps.data.status)" :value="slotProps.data.status"></Tag>
+                                <Tag :severity="getSeverity(slotProps.data.state)" :value="slotProps.data.state"></Tag>
                             </template>
                         </Column>
                         <Column header="Geplaatst op" class="col-date">
