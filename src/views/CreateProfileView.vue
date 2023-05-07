@@ -46,6 +46,9 @@ const createProfile = () => {
 </template>
 
 <style scoped>
+.p-card{
+    margin: auto;
+}
 .p-field{
     margin-bottom: 0.75rem;
 }
