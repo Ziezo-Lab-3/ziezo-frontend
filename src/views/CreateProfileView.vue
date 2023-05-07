@@ -4,48 +4,18 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const API_URI = import.meta.env.VITE_BACKEND_URL;
-const email = ref("");
+/**get id out of URL */
+const url = window.location.href;
+const id = ref(url.split("?id=")[1]);
+console.log(id.value);
+
 const name_first = ref("");
 const name_last = ref("");
 const message = ref("");
 
-/** get var id from URL */
-/**
-const $route = useRouter();
-const id = $route.query.id;
-console.log(id);
-*/
-
-/**ajax */
+/** */
 const createProfile = () => {
-    fetch(`${API_URI}/auth/signup`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            name_first: name_first.value,
-            name_last: name_last.value,
-            email: email.value,
-        }),
-    })
-    // Converteer de response naar JSON
-    .then((response) => response.json())
-
-    // Verwerk de response
-    .then((response) => {
-        if (response.status === "success") {
-            // Sla de token op in de localStorage
-            localStorage.setItem("token", response.data.accessToken);
-            // Reset de velden
-            message.value = "";
-            router.push("/Login");
-        }
-        else if (response.status === "fail") {
-            message.value = response.message;
-            console.log("error:" + response.message);
-        }
-    });
+    router.push("/");
 };
 
 </script>
