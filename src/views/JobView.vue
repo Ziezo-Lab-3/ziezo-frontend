@@ -96,7 +96,7 @@ onMounted(() => {
 
                         <Column header="" class="col-image">
                             <template #body="slotProps">
-                                <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" />
+                                <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" class="job-image"/>
                             </template>
                         </Column>
 
@@ -155,6 +155,13 @@ onMounted(() => {
     max-height: 56px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.job-image {
+    object-fit: cover;
+    object-position: center;
+    background-image: url(../assets/images/Placeholder_2.png);
+    background-size: cover;
+    background-position: center;
 }
 </style>
 <style>
