@@ -1,5 +1,13 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const logout = () => {
+    localStorage.clear();
+    router.push('/Login');
+}
+
 </script>
 <template>
     <nav>
@@ -31,6 +39,7 @@ import { RouterLink } from 'vue-router';
                 <RouterLink to="/settings">
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
                 </RouterLink>
+                <a @click="logout"><li><i class="pi pi-sign-out" style="font-size: 1.4rem"></i>Afmelden</li></a>
             </ul>
         </div>
     </nav>
