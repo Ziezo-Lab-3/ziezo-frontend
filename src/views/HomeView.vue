@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
-import DialogNewJob from '../components/DialogNewJob.vue';
+import DialogNewJob from '../components/Dialog/DialogNewJob.vue';
 
 /* Component State */
 let newJobDialog = ref(false);

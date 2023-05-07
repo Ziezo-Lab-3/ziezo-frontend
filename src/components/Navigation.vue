@@ -65,7 +65,6 @@ li {
     align-items: center;
     gap: 1rem;
     color: #172230;
-    margin-bottom: .5rem;
     padding: .5rem 1.25rem;
 }
 

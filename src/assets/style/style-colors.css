@@ -4,7 +4,7 @@
     --primary: #ef7946;
     --primary-dark-1: #d2521b;
     --primary-light-1: #ff8f5f;
-    --primary-faded: #ef79464d;
+    --primary-faded: rgba(239, 121, 70, 0.2);
     --primary-faded-2: rgba(239, 121, 70, 0.45);
     
     --secondary: #255586;

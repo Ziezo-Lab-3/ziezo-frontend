@@ -22,6 +22,12 @@
     border-color: var(--primary);
 }
 
+.p-inputtext:enabled::placeholder,
+.p-inputtext:enabled::placeholder,
+.p-inputtext:enabled::placeholder {
+    color: var(--gray-400);
+}
+
 .p-inputtext:enabled:focus {
     box-shadow: 0 0 0 0.2rem var(--primary-faded);
 }
@@ -29,10 +35,14 @@
 .p-inputtext:enabled:invalid,
 .p-inputtext:enabled:invalid:focus,
 .p-inputtext:enabled:invalid:hover {
-    border-color: var(--danger);
     color: var(--danger);
 }
 
+.p-inputtext:disabled {
+    background-color: var(--gray-100);
+    border-color: var(--gray-100);
+    color: var(--gray-700);
+}
 
 /* Dropdowns & Multiselects */
 .p-dropdown,
