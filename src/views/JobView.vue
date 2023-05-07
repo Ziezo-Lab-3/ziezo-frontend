@@ -53,25 +53,23 @@ const loadInitialData = async () => {
 };
 
 const loadKlusjesLazy = async (event) => {
-    if (state.data.length >= 20) return;
-    !state.isLoadingData && (state.isLoadingData = true);
-    const newData = await getKlusjes(localStorage.getItem('token'), {
-        first: event.first,
-        last: event.last,
-        filter: JSON.stringify({
-            user: decodedToken.id,
-        }),
-    });
-    if (newData.status === "success") {
-        const virtual = [...state.data];
-        const temp = [...virtual, ...newData.data];
-        state.data = temp;
-        state.isLoadingData = false;
-    }
-    else {
-        console.error(newData.message);
-    }
-}
+  !state.isLoadingData && (state.isLoadingData = true);
+  const newData = await getKlusjes(localStorage.getItem('token'), {
+    first: state.data.length,
+    last: state.data.length + 10, // calculate last value
+    filter: JSON.stringify({
+      user: decodedToken.id,
+    }),
+  });
+  if (newData.status === "success") {
+    const virtual = [...state.data];
+    state.data = [...virtual, ...newData.data];
+    state.isLoadingData = false;
+  } else {
+    console.error(newData.message);
+  }
+};
+
 
 onMounted(() => {
     loadInitialData();
@@ -83,12 +81,8 @@ onMounted(() => {
         <template #content>
             <TabView>
                 <TabPanel header="Zelf Geplaatste Klusjes">
-                    <DataTable v-if="state.totalDocumentCount > 0"
-                        scrollHeight="500px" 
-                        :value="state.data"
-                        scrollable
+                    <DataTable v-if="state.totalDocumentCount > 0" scrollHeight="500px" :value="state.data" scrollable
                         :virtualScrollerOptions="{
-                            totalDocumentCount: state.totalDocumentCount,
                             lazy: true,
                             onLazyLoad: loadKlusjesLazy,
                             itemSize: 108,
@@ -96,13 +90,15 @@ onMounted(() => {
                             showLoader: true,
                             loading: state.isLoadingData,
                             numToleratedItems: 10,
-                        }"
-                        class="p-datatable-sm table-jobs-self">
+                            
+                        }" class="p-datatable-sm table-jobs-self">
+                        <!--
                         <Column header="" class="col-image">
                             <template #body="slotProps">
                                 <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" />
                             </template>
                         </Column>
+                        -->
                         <Column header="Klusje" class="col-job">
                             <template #body="slotProps">
                                 <div class="column description">
@@ -111,6 +107,7 @@ onMounted(() => {
                                 </div>
                             </template>
                         </Column>
+                        <!--
                         <Column header="Categorie" class="col-category">
                             <template #body="slotProps">
                                 <div>{{ getCategory(slotProps.data._id) }}</div>
@@ -127,6 +124,7 @@ onMounted(() => {
                                 {{ moment(slotProps.data.createdAt).format('DD-MM-YYYY') }}
                             </template>
                         </Column>
+                        -->
                     </DataTable>
                 </TabPanel>
                 <TabPanel header="Uitgevoerde Klusjes">
