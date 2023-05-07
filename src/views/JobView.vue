@@ -19,7 +19,8 @@ const state = reactive({
 const decodedToken = decodeJWT(localStorage.getItem('token'));
 
 const getCategory = (id) => {
-    return state.categories.find(el => el._id === id);
+    const category = state.categories.find((category) => category._id == id);
+    return category ? category.name : "Onbekend";
 }
 
 const getSeverity = (status) => {
@@ -110,7 +111,7 @@ onMounted(() => {
 
                         <Column header="Categorie" class="col-category">
                             <template #body="slotProps">
-                                <div>{{ getCategory(slotProps.data._id) }}</div>
+                                <div>{{ getCategory(slotProps.data.category) }}</div>
                             </template>
                         </Column>
                         <Column header="Labels" class="col-label flex flex-column gap-1 justify-content-center">
