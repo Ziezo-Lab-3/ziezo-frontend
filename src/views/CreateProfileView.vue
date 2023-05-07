@@ -5,41 +5,48 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const API_URI = import.meta.env.VITE_BACKEND_URL;
 const email = ref("");
-const password = ref("");
+const name_first = ref("");
+const name_last = ref("");
 const message = ref("");
 
+/** get var id from URL */
+/**
+const $route = useRouter();
+const id = $route.query.id;
+console.log(id);
+*/
+
 /**ajax */
-const signin = () => {
-    fetch(`${API_URI}/auth/signin`, {
+const createProfile = () => {
+    fetch(`${API_URI}/auth/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+            name_first: name_first.value,
+            name_last: name_last.value,
             email: email.value,
-            password: password.value,
         }),
     })
     // Converteer de response naar JSON
     .then((response) => response.json())
 
-     // Verwerk de response
+    // Verwerk de response
     .then((response) => {
         if (response.status === "success") {
             // Sla de token op in de localStorage
             localStorage.setItem("token", response.data.accessToken);
             // Reset de velden
             message.value = "";
-            router.push("/");
+            router.push("/Login");
         }
         else if (response.status === "fail") {
             message.value = response.message;
             console.log("error:" + response.message);
         }
     });
-    
 };
-
 
 </script>
 <template>
@@ -49,34 +56,19 @@ const signin = () => {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>
-            Inloggen
-        </template>
+        <template #title>Account aanmaken</template>
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">
-                    <label for="email">Email</label>
-                    <InputText id="email" v-model="email" />
+                    <label for="name_first">Voornaam</label>
+                    <InputText id="name_first" v-model="name_first" />
                 </div>
                 <div class="p-field">
-                    <label for="password">Wachtwoord</label>
-                    <Password id="password" v-model="password" />
-                </div>
-                <div style="color: var(--danger)" v-if="message !== ''">{{ message }}</div>
-                <div class="p-field">
-                    <Button label="Inloggen" @click="signin" />
+                    <label for="name_last">Achternaam</label>
+                    <InputText id="name_last" v-model="name_last" />
                 </div>
                 <div class="p-field">
-                    <RouterLink to="/Aanmelden">
-                        <Button class="p-button-secondary" label="Account aanmaken"/>
-                    </RouterLink>
-                </div>
-                <!--forgot password-->
-                <div class="p-field">
-                <!--div on click-->
-                    <RouterLink to="/ForgotPassword">
-                        <div class="link-simple">Wachtwoord vergeten?</div> 
-                    </RouterLink>
+                    <Button label="Opslaan" @click="createProfile" />
                 </div>
             </div>
         </template>
@@ -97,25 +89,5 @@ const signin = () => {
 .p-major{
     width: 100%;
     max-width: 400px;
-}
-.link-simple{
-    text-decoration: underline;
-    color: #000;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    text-align: center;
-}
-.link-simple:hover{
-    color: #000;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
 }
 </style>

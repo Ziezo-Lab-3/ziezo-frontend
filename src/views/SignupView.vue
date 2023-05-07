@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const API_URI = import.meta.env.VITE_BACKEND_URL;
 const email = ref("");
-const username = ref("");
 const password = ref("");
 const password2 = ref("");
 const message = ref("");
@@ -23,7 +22,6 @@ const signup = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username: username.value,
                     email: email.value,
                     password: password.value,
                 }),
@@ -38,7 +36,7 @@ const signup = () => {
                     localStorage.setItem("token", response.data.accessToken);
                     // Reset de velden
                     message.value = "";
-                    router.push("/");
+                    router.push('/CreateProfile' +'?id='+ response.data._id);
                 }
                 else if (response.status === "fail") {
                     message.value = response.message;
@@ -72,10 +70,6 @@ const signup = () => {
                 <div class="p-field">
                     <label for="email">E-mailadres</label>
                     <InputText id="email" v-model="email" />
-                </div>  
-                <div class="p-field">
-                    <label for="username">Gebruikersnaam</label>
-                    <InputText id="username" v-model="username" />
                 </div>
                 <div class="p-field">
                     <label for="password">Wachtwoord</label>
