@@ -53,21 +53,21 @@ const loadInitialData = async () => {
 };
 
 const loadKlusjesLazy = async (event) => {
-  !state.isLoadingData && (state.isLoadingData = true);
-  const newData = await getKlusjes(localStorage.getItem('token'), {
-    first: state.data.length,
-    last: state.data.length + 10, // calculate last value
-    filter: JSON.stringify({
-      user: decodedToken.id,
-    }),
-  });
-  if (newData.status === "success") {
-    const virtual = [...state.data];
-    state.data = [...virtual, ...newData.data];
-    state.isLoadingData = false;
-  } else {
-    console.error(newData.message);
-  }
+    !state.isLoadingData && (state.isLoadingData = true);
+    const newData = await getKlusjes(localStorage.getItem('token'), {
+        first: state.data.length,
+        last: state.data.length + 10, // calculate last value
+        filter: JSON.stringify({
+            user: decodedToken.id,
+        }),
+    });
+    if (newData.status === "success") {
+        const virtual = [...state.data];
+        state.data = [...virtual, ...newData.data];
+        state.isLoadingData = false;
+    } else {
+        console.error(newData.message);
+    }
 };
 
 
@@ -90,15 +90,15 @@ onMounted(() => {
                             showLoader: true,
                             loading: state.isLoadingData,
                             numToleratedItems: 10,
-                            
+
                         }" class="p-datatable-sm table-jobs-self">
-                        <!--
+
                         <Column header="" class="col-image">
                             <template #body="slotProps">
                                 <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" />
                             </template>
                         </Column>
-                        -->
+
                         <Column header="Klusje" class="col-job">
                             <template #body="slotProps">
                                 <div class="column description">
@@ -107,7 +107,7 @@ onMounted(() => {
                                 </div>
                             </template>
                         </Column>
-                        <!--
+
                         <Column header="Categorie" class="col-category">
                             <template #body="slotProps">
                                 <div>{{ getCategory(slotProps.data._id) }}</div>
@@ -124,7 +124,7 @@ onMounted(() => {
                                 {{ moment(slotProps.data.createdAt).format('DD-MM-YYYY') }}
                             </template>
                         </Column>
-                        -->
+
                     </DataTable>
                 </TabPanel>
                 <TabPanel header="Uitgevoerde Klusjes">
