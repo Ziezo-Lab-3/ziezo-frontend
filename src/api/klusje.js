@@ -12,7 +12,7 @@ export const postKlusje = async (klusje, token) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "access-token": token,
+            "x-access-token": token,
         },
         body: JSON.stringify(klusje),
     });
@@ -28,7 +28,11 @@ export const postKlusje = async (klusje, token) => {
 export const getKlusjes = async (token, params) => {
     let suffix = "";
     if (params) suffix = parseParams(params);
-    const response = await fetch(`${URL}/klusje?${suffix}`);
+    const response = await fetch(`${URL}/klusje?${suffix}`, {
+        headers: {
+            "x-access-token": token,
+        },
+    });
     return await response.json();
 };
 
@@ -41,6 +45,10 @@ export const getKlusjes = async (token, params) => {
 export const getKlusjesCount = async (token, params) => {
     let suffix = "";
     if (params) suffix = parseParams(params);
-    const response = await fetch(`${URL}/klusje/count?${suffix}`);
+    const response = await fetch(`${URL}/klusje/count?${suffix}`, {
+        headers: {
+            "x-access-token": token,
+        },
+    });
     return await response.json();
 }
