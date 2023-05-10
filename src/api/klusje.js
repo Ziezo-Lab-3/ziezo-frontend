@@ -17,3 +17,8 @@ export const getKlusjes = async (token) => {
     const response = await fetch(`${URL}/klusje`);
     return await response.json();
 }
+
+export const getKlusjeById = async (id, token) => {
+    const response = await fetch(`${URL}/klusje/${id}`);
+    return await response.json();
+}

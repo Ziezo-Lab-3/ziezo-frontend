@@ -1,12 +1,15 @@
 <script setup>
 import FileUpload from 'primevue/fileupload';
 import { postKlusje } from '../api/klusje';
-import { ref, reactive, watch, defineEmits, computed } from 'vue';
+import { ref, reactive, watch, defineEmits, computed, onMounted } from 'vue';
+import { getKlusjeById } from '../api/klusje'; // import the getKlusjeById function
+
 const visible = ref(false);
 const emit = defineEmits(['close']);
 const props = defineProps({ visible: false });
 watch(() => props.visible, (val) => visible.value = val);
 const message = ref("");
+const klusjeId = ref(null); // add a new ref to store the klusje ID
 
 const close = () => {
     props.visible = false;
@@ -43,35 +46,54 @@ const state = reactive({
     price: null,
     images: []
 });
+
+onMounted(async () => { // use onMounted to fetch the klusje data
+    const id = klusjeId.value;
+    if (id) {
+        const klusje = await getKlusjeById(id, localStorage.getItem('token'));
+        state.title = klusje.name;
+        state.description = klusje.description;
+        state.price = klusje.price;
+        state.images = [klusje.image];
+    }
+});
+
 </script>
+
 <template>
-    <Dialog :visible="visible" :closable="false" header="Klusje Plaatsen" modal :style="{width: '540px'}" :breakpoints="{  '580px': 'calc(100vw - 1rem)' }">
-        <div class="labelInput">
-            <label>Titel</label>
-            <InputText v-model="state.title" placeholder="Kleerkast assembleren" :required="true"/>
+    <Dialog
+      :visible="visible"
+      :closable="false"
+      header="Test"
+      modal
+      :style="{ width: '832px' }"
+      :breakpoints="{ '580px': 'calc(100vw - 1rem)' }"
+    >
+      <div class="labelInput">
+        <label>Titel</label>
+        <input v-model="state.title" />
+      </div>
+      <div class="labelInput">
+        <label>Beschrijving</label>
+        <textarea v-model="state.description"></textarea>
+      </div>
+      <div class="labelInput">
+        <label>Prijs</label>
+        <input type="number" v-model="state.price" />
+      </div>
+      <div class="labelInput">
+        <label>Adres</label>
+      </div>
+      <div class="labelInput">
+        <label>Aangemaakt: </label>
+      </div>
+      <template #footer>
+        <div class="flex justify-content-between">
+          <Button label="Cancel" @click="close" class="p-button-secondary" />
+          <Button label="Plaats Klusje" @click="accept" :disabled="!canPost" />
         </div>
-        <div class="labelInput">
-            <label>Beschrijving</label>
-            <TextArea v-model="state.description" placeholder="Ik heb hulp nodig met..." autoResize style="resize: none" :required="true" :minlength="24" />
-        </div>
-        <div class="labelInput">
-            <label>Prijs</label>
-            <InputNumber v-model="state.price" mode="currency" currency="EUR" placeholder="€15,00" :minFractionDigits="2" :maxFractionDigits="2" :min="5" :required="true"/>
-        </div>
-        <div class="labelInput">
-            <label>Afbeeldingen</label>
-            <FileUpload :disabled="true" name="images[]" mode="advanced" accept="image/*" :maxFileSize="1000000" :multiple="true" >
-                <template #empty>
-                    <p>Sleep afbeeldingen naar hier om te uploaden.</p>
-                </template>
-            </FileUpload>
-        </div>
-        <template #footer>
-            <div class="flex justify-content-between" >
-                <Button label="Cancel" @click="close" class="p-button-secondary" />
-                <Button label="Plaats Klusje" @click="accept" :disabled="!canPost" />
-            </div>
-            <div v-if="message != ''" style="color: var(--danger)">{{ message }}</div>
-        </template>
+  
+        <div v-if="message != ''" style="color: var(--danger)">{{ message }}</div>
+      </template>
     </Dialog>
-</template>
+  </template>

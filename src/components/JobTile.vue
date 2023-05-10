@@ -10,12 +10,12 @@
           <h3>{{ job.description }}</h3>
           <div class="price-and-button">
             <p class="price">€{{ job.price }}/ u</p>
-            <button label="Details" @click="showDialog = true" class="p-button-secondary" />
+            <Button label="Details" @click="showDialog = true" class="p-button-secondary"/>
           </div>
         </div>
       </div>
     </div>
-    <DialogJobView v-if="showDialog" :job="job" @close-dialog="showDialog = false" />
+    <DialogJobView v-on:close="() => showDialog = false" :visible="showDialog" />
   </div>
 </template>
 
@@ -117,19 +117,4 @@ const props = defineProps({
     font-size: 1.2rem;
   }
   
-  .details-inner button {
-    border-radius: 30px;
-    color: #255586;
-    background-color: #fff;
-    border: 2px solid #255586;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-  }
-  
-  .details-inner button:hover {
-    background-color: #255586;
-    color: #fff;
-    border-color: #fff;
-    cursor: pointer;
-  }
 </style>
