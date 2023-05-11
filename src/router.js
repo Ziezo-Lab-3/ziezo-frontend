@@ -17,6 +17,10 @@ import TestView from "./views/TestView.vue";
 
 const routes = [
     {
+        path: "/",
+        redirect: "/app",
+    },
+    {
         path: "/app",
         name: "Verifieer Gebruiker",
         component: AuthenticatedPageWrapper,
