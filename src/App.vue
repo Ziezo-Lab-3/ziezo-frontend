@@ -104,7 +104,6 @@ export default {
     height: calc(100vh);
     overflow-y: auto;
     background-color: var(--background);
-    border-radius: 2rem 0 0 2rem;
     grid-column: 2;
 }
 
