@@ -11,6 +11,8 @@ import SettingsView from "./views/SettingsView.vue";
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
 
+import BrowseView from "./views/BrowseView.vue";
+
 const routes = [
     {
         path: "/",
@@ -26,6 +28,12 @@ const routes = [
         path: "/jobs",
         name: "Mijn Klusjes",
         component: JobView,
+    },
+    {
+        path: "/browse",
+        name: "Zoeken",
+        component: BrowseView,
+
     },
     {
         path: "/profile",

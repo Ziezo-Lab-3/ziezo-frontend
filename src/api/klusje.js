@@ -19,6 +19,16 @@ export const postKlusje = async (klusje, token) => {
     return await response.json();
 };
 
+export const getKlusjeById = async (token, id) => {
+    const response = await fetch(`${URL}/klusje/${id}`, {
+        headers: {
+            "x-access-token": token,
+        },
+    });
+    return await response.json();
+};
+
+
 /**
  * 
  * @param { string } token 
