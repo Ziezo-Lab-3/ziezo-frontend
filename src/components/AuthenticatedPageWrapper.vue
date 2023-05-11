@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { RouterView, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import Navigation from './Navigation.vue';
 import Sidebar from 'primevue/sidebar';
-import decodeJWT from '../js/decodeJWT';
+import verifyToken from '../js/verifyToken';
 
 const router = useRouter();
 const menuOpen = ref(false);
@@ -12,9 +12,8 @@ const content = ref(null);
 const contentScroll = ref(0);
 
 onMounted(() => {
-    if (localStorage.getItem('token') === null) {
+    if (!verifyToken()) {
         router.push('/login');
-        console.log('no token');
         return;
     }
     content.value.addEventListener('scroll', () => {
@@ -28,13 +27,13 @@ onMounted(() => {
     })
 });
 
-onBeforeRouteUpdate(() => {
-    if (localStorage.getItem('token') === null) {
+onBeforeRouteUpdate((to, from, next) => {
+    if (!verifyToken()) {
         router.push('/login');
         return;
     }
-    console.log('route update');
-})
+    next();
+});
 </script>
 <template>
     <div id="nav_sidebar">
