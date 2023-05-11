@@ -16,8 +16,6 @@ import SignupView from "./views/auth/SignupView.vue";
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
 
-import BrowseView from "./views/BrowseView.vue";
-
 const routes = [
     {
         path: "/",

@@ -41,7 +41,7 @@ let newJobDialog = ref(false);
             </template>
             <template #footer>
                 <div class="flex justify-content-around pb-4">
-                    <RouterLink to="/browse">
+                    <RouterLink to="/app/browse">
                         <Button label="Zoek een klusje" />
                     </RouterLink>
                 </div>

@@ -15,8 +15,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import JobTile from '../components/JobTile.vue';
-import { getKlusjes } from '../api/klusje';
+import JobTile from '../../components/JobTile.vue';
+import { getKlusjes } from '../../api/klusje';
 
 const searchTerm = ref('');
 const jobs = ref([]);
