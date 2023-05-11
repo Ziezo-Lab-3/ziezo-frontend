@@ -22,37 +22,37 @@ const routes = [
         component: AuthenticatedPageWrapper,
         children: [
             {
-                path: "/",
+                path: "",
                 name: "Home",
                 component: HomeView,
             },
             {
-                path: "/message",
+                path: "message",
                 name: "Berichten",
                 component: MessageView,
             },
             {
-                path: "/jobs",
+                path: "jobs",
                 name: "Mijn Klusjes",
                 component: JobView,
             },
             {
-                path: "/profile",
+                path: "profile",
                 name: "Mijn Profiel",
                 component: ProfileView,
             },
             {
-                path: "/test",
+                path: "test",
                 name: "Test",
                 component: TestView,
             },
             {
-                path: "/contact",
+                path: "contact",
                 name: "Contact",
                 component: ContactView,
             },
             {
-                path: "/settings",
+                path: "settings",
                 name: "Instellingen",
                 component: SettingsView,
             },
