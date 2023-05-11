@@ -117,6 +117,8 @@ export default {
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
+    width: 3.5rem;
+    height: 3.5rem;
     z-index: 100;
     cursor: pointer;
     background-color: var(--secondary);

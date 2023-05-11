@@ -10,6 +10,12 @@ import SettingsView from "./views/SettingsView.vue";
 
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
+import LoginView from "./views/LoginView.vue";
+import ForgotPasswordView from "./views/ForgotPasswordView.vue";
+import SignupView from "./views/SignupView.vue";
+import NewPasswordView from "./views/NewPasswordView.vue";
+import NewPasswordSuccesView from "./views/NewPasswordSuccesView.vue";
+import CreateProfileView from "./views/CreateProfileView.vue";
 
 const routes = [
     {
@@ -51,6 +57,36 @@ const routes = [
         path: "/:pathMatch(.*)*",
         name: "Pagina Niet Gevonden",
         component: NotFoundView
+    },
+    {
+        path: "/Login",
+        name: "Login",
+        component: LoginView
+    },
+    {
+        path: "/ForgotPassword",
+        name: "Wachtwoord vergeten",
+        component: ForgotPasswordView
+    },
+    {
+        path: "/Aanmelden",
+        name: "Aanmelden",
+        component: SignupView
+    },
+    {
+        path: "/NewPassword",
+        name: "Nieuw Wachtwoord",
+        component: NewPasswordView
+    },
+    {
+        path: "/NewPasswordSucces",
+        name: "Nieuw Wachtwoord geaccepteerd",
+        component: NewPasswordSuccesView
+    },
+    {
+        path: "/CreateProfile",
+        name: "Profiel aanmaken",
+        component: CreateProfileView
     }
 ];
 
