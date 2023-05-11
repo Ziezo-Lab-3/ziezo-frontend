@@ -13,6 +13,7 @@ body {
     font-size: 16px;
     line-height: 175%;
     letter-spacing: -0.25px;
+    background-color: var(--background);
 }
 
 label {
@@ -38,4 +39,62 @@ a:has(.p-button) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5rem;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+}
+
+#content {
+    padding: 1rem 3rem;
+    height: calc(100vh);
+    overflow-y: auto;
+    grid-column: 2;
+}
+
+#nav_mobile {
+    display: none;
+}
+
+#menu_toggle {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3.5rem;
+    height: 3.5rem;
+    z-index: 100;
+    cursor: pointer;
+    background-color: var(--secondary);
+    border-radius: 50%;
+    padding: 1rem;
+    color: white;
+    opacity:100;
+    transition: all .3s ease;
+}
+
+#menu_toggle.hidden {
+    opacity: 0;
+    bottom: -4rem;
+}
+
+@media (max-width: 768px) {
+    #app {
+        grid-template-columns: 1fr;
+    }
+
+    #content {
+        padding: 1rem;
+        border-radius: 0;
+        grid-column: 1;
+    }
+
+    #nav_sidebar {
+        display: none;
+    }
+
+    #nav_mobile {
+        display: inherit;
+    }
 }

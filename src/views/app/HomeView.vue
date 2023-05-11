@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
-import DialogNewJob from '../components/Dialog/DialogNewJob.vue';
+import DialogNewJob from '../../components/Dialog/DialogNewJob.vue';
 
 /* Component State */
 let newJobDialog = ref(false);
@@ -11,7 +11,7 @@ let newJobDialog = ref(false);
     <div class="w-full h-full flex justify-content-center align-items-center flex-wrap gap-4">
         <Card class="p-m-4 mx-6" style="width: 360px">
             <template #header>
-                <img height="200" class="img-fit" src="../assets/images/senior_group_gardening@w360.webp"
+                <img height="200" class="img-fit" src="../../assets/images/senior_group_gardening@w360.webp"
                     alt="Senior group working in a garden">
             </template>
             <template #title>Hulp nodig?</template>
@@ -29,7 +29,7 @@ let newJobDialog = ref(false);
         </Card>
         <Card class="p-m-4 mx-6" style="width: 360px">
             <template #header>
-                <img height="200" class="img-fit" src="../assets/images/senior_man_working@w360.webp"
+                <img height="200" class="img-fit" src="../../assets/images/senior_man_working@w360.webp"
                     alt="Senior group working in a garden">
             </template>
             <template #title>Ik ga helpen!</template>
