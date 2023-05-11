@@ -8,16 +8,16 @@ import { RouterLink } from 'vue-router';
         </div>
         <div class="nav-menu">
             <ul>
-                <RouterLink to="/">
+                <RouterLink to="/app/">
                     <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
                 </RouterLink>
-                <RouterLink to="/message">
+                <RouterLink to="/app/message">
                     <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
                 </RouterLink>
-                <RouterLink to="/jobs">
+                <RouterLink to="/app/jobs">
                     <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
                 </RouterLink>
-                <RouterLink to="/profile">
+                <RouterLink to="/app/profile">
                     <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
                 </RouterLink>
             </ul>
@@ -25,10 +25,10 @@ import { RouterLink } from 'vue-router';
         <div class="nav-details">
             <ul>
                 <a><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
-                <RouterLink to="/contact">
+                <RouterLink to="/app/contact">
                     <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
                 </RouterLink>
-                <RouterLink to="/settings">
+                <RouterLink to="/app/settings">
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
                 </RouterLink>
             </ul>

@@ -1,9 +1,9 @@
 <script setup>
 import moment from 'moment';
 import { onMounted, reactive } from 'vue';
-import decodeJWT from '../js/decodeJWT';
-import { getKlusjes, getKlusjesCount } from '../api/klusje';
-import { getCategories } from '../api/category';
+import decodeJWT from '../../js/decodeJWT';
+import { getKlusjes, getKlusjesCount } from '../../api/klusje';
+import { getCategories } from '../../api/category';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import DataTable from 'primevue/datatable';

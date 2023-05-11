@@ -1,12 +1,17 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import HomeView from "./views/HomeView.vue";
-import MessageView from "./views/MessageView.vue";
-import JobView from "./views/JobView.vue";
-import ProfileView from "./views/ProfileView.vue";
+import AuthenticatedPageWrapper from "./components/AuthenticatedPageWrapper.vue";
 
-import ContactView from "./views/ContactView.vue";
-import SettingsView from "./views/SettingsView.vue";
+import HomeView from "./views/app/HomeView.vue";
+import MessageView from "./views/app/MessageView.vue";
+import JobView from "./views/app/JobView.vue";
+import ProfileView from "./views/app/ProfileView.vue";
+import ContactView from "./views/app/ContactView.vue";
+import SettingsView from "./views/app/SettingsView.vue";
+import BrowseView from "./views/app/BrowseView.vue";
+
+import LoginView from "./views/auth/LoginView.vue";
+import SignupView from "./views/auth/SignupView.vue";
 
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
@@ -16,50 +21,70 @@ import BrowseView from "./views/BrowseView.vue";
 const routes = [
     {
         path: "/",
-        name: "Home",
-        component: HomeView,
+        redirect: "/app",
     },
     {
-        path: "/message",
-        name: "Berichten",
-        component: MessageView,
+        path: "/app",
+        name: "Verifieer Gebruiker",
+        component: AuthenticatedPageWrapper,
+        children: [
+            {
+                path: "",
+                name: "Home",
+                component: HomeView,
+            },
+            {
+                path: "browse",
+                name: "Browse",
+                component: BrowseView,
+            },
+            {
+                path: "message",
+                name: "Berichten",
+                component: MessageView,
+            },
+            {
+                path: "jobs",
+                name: "Mijn Klusjes",
+                component: JobView,
+            },
+            {
+                path: "profile",
+                name: "Mijn Profiel",
+                component: ProfileView,
+            },
+            {
+                path: "test",
+                name: "Test",
+                component: TestView,
+            },
+            {
+                path: "contact",
+                name: "Contact",
+                component: ContactView,
+            },
+            {
+                path: "settings",
+                name: "Instellingen",
+                component: SettingsView,
+            },
+        ],
     },
     {
-        path: "/jobs",
-        name: "Mijn Klusjes",
-        component: JobView,
+        path: "/login",
+        name: "Login",
+        component: LoginView
     },
     {
-        path: "/browse",
-        name: "Zoeken",
-        component: BrowseView,
-
-    },
-    {
-        path: "/profile",
-        name: "Mijn Profiel",
-        component: ProfileView,
-    },
-    {
-        path: "/test",
-        name: "Test",
-        component: TestView,
-    },
-    {
-        path: "/contact",
-        name: "Contact",
-        component: ContactView,
-    },
-    {
-        path: "/settings",
-        name: "Instellingen",
-        component: SettingsView,
+        path: "/signup",
+        name: "Nieuwe Gebruiker",
+        component: SignupView
     },
     {
         path: "/:pathMatch(.*)*",
         name: "Pagina Niet Gevonden",
         component: NotFoundView
-    }
+    },
 ];
 
 const router = createRouter({
