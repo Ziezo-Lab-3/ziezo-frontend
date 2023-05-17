@@ -55,9 +55,14 @@ const state = reactive({
     ],
     users: [
         {
-            id: 1,
+            id: "aaaaaaaaaaaaaaaaaaaaaaaa",
             name: "Kaitlyn Ullrich",
             avatar: "https://randomuser.me/api/portraits/women/51.jpg"
+        },
+        {
+            id: "64009e396dd8fec7e85aa8b4",
+            name: "Test User",
+            avatar: "https://randomuser.me/api/portraits/men/18.jpg"
         }
     ],
     initialized: false,
