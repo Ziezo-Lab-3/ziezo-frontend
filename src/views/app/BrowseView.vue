@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import JobTile from '../../components/JobTile.vue';
 import { getKlusjes } from '../../api/klusje';
 
@@ -24,24 +24,39 @@ const jobs = ref([]);
 // Fetch jobs from the API
 const fetchJobs = async () => {
   try {
-    const result = await getKlusjes(null, { filter: searchTerm.value });
-    console.log(result);
-    jobs.value = result.data.map((klusje) => ({
-      _id: klusje._id,
-      name: klusje.name,
-      description: klusje.description,
-      price: klusje.price,
-      address: klusje.address,
-      category: klusje.category._id,
-      images: klusje.images,
-      state: klusje.state,
-      user: klusje.user,
-      helper: klusje.helper,
-    }));
+    const result = await getKlusjes(localStorage.getItem('token'), {
+      first: 0,
+      last: 10,
+    });
+    console.log('API response:', result); // Add this line to log the response
+
+    if (result.status === 'success') {
+      jobs.value = result.data;
+    } else {
+      console.error('BrowseView.vue onMounted(): ' + result.message);
+    }
   } catch (error) {
-    console.error(error);
+    console.error('BrowseView.vue onMounted(): ' + error);
   }
 };
+
+// Watch for changes in the search term
+watch(searchTerm, async (newTerm) => {
+  try {
+    const result = await getKlusjes(localStorage.getItem('token'), {
+      first: 0,
+      last: 10,
+      filter: JSON.stringify({}),
+    });
+    if (result.status === 'success') {
+      jobs.value = result.data;
+    } else {
+      console.error('BrowseView.vue onSearchTermChange(): ' + result.message);
+    }
+  } catch (error) {
+    console.error('BrowseView.vue onSearchTermChange(): ' + error);
+  }
+});
 
 onMounted(fetchJobs);
 </script>

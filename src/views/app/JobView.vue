@@ -159,7 +159,7 @@ onMounted(() => {
 .job-image {
     object-fit: cover;
     object-position: center;
-    background-image: url(../assets/images/Placeholder_2.png);
+    background-image: url(../../assets/images/Placeholder_2.png);
     background-size: cover;
     background-position: center;
 }

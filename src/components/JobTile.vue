@@ -2,12 +2,12 @@
   <div class="job-tile" :style="{ width: tileWidth + 'px' }">
     <div class="image-with-details" :style="{ width: imageWidth + 'px', height: imageWidth + 'px', borderRadius: borderRadius + 'px' }">
       <div class="image-container">
-        <img :src="job.images[0]" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" />
+        <img src ="./../assets/images/Placeholder_2.png" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" @error="handleImageError" />
       </div>
       <div class="details-container">
         <div class="details-inner">
           <h2>{{ job.name }}</h2>
-          <h3>{{ job.description }}</h3>
+          <p>{{ truncateDescription(job.description, 75) }}</p>
           <div class="price-and-button">
             <p class="price">€{{ job.price }}/ u</p>
             <Button label="Details" @click="showDialog = true" class="p-button-secondary"/>
@@ -43,6 +43,20 @@ const props = defineProps({
     default: 10, // default border radius for the tile and image
   },
 });
+
+// Method to handle image error and show the placeholder image
+const handleImageError = () => {
+  // Replace the image source with the placeholder image URL
+  job.images[0] = '../../assets/images/Placeholder_2.png';
+};
+
+// Method to truncate the description if it's longer than the specified limit
+const truncateDescription = (description, limit) => {
+  if (description && description.length > limit) {
+    return description.slice(0, limit) + '...';
+  }
+  return description;
+};
 </script>
 
 <style>
@@ -109,6 +123,7 @@ const props = defineProps({
   justify-content: space-between;
   align-items: center;
 }
+
 
 .price-and-button .price {
   margin-top: 0;
