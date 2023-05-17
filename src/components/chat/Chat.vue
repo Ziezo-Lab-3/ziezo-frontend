@@ -2,7 +2,64 @@
 import { reactive, onMounted } from 'vue';
 
 const state = reactive({
-    messages: [],
+    messages: [
+        {
+            id: 1,
+            message: "Hallo",
+            sender: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 2,
+            message: "Hey",
+            sender: "64009e396dd8fec7e85aa8b4",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 3,
+            message: "Bruh 1",
+            sender: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 4,
+            message: "Bruh 2",
+            sender: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 5,
+            message: "Bruh 3",
+            sender: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 6,
+            message: "Ik heb best wat ervaring in het klussen. Ik kan je helpen met het ophangen van een schilderij, het in elkaar zetten van een kast of het vervangen van een lamp. Ik heb een auto dus ik kan ook helpen met verhuizen.",
+            sender: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+        {
+            id: 7,
+            message: "Cool",
+            sender: "64009e396dd8fec7e85aa8b4",
+            chatGroup: "aaaaaaaaaaaaaaaaaaaaaaaa",
+            createdAt: "2021-10-01T12:00:00.000Z",
+        },
+    ],
+    users: [
+        {
+            id: 1,
+            name: "Kaitlyn Ullrich",
+            avatar: "https://randomuser.me/api/portraits/women/51.jpg"
+        }
+    ],
     initialized: false,
     isLoadingData: false,
     message: "",
@@ -21,12 +78,7 @@ const state = reactive({
         </div>
         <div v-else>
             <div v-for="message in state.messages" :key="message.id" class="chat__message">
-                <div class="chat__message__content">
-                    <p>{{ message.content }}</p>
-                </div>
-                <div class="chat__message__meta">
-                    <p>{{ message.createdAt }}</p>
-                </div>
+                
             </div>
         </div>
     </div>
