@@ -31,8 +31,8 @@ const state = reactive({
         </div>
     </div>
     <div class="chat__input">
-        <InputText v-model="value" placeholder="Aa" />
-        <Button label="Verstuur" />
+        <InputText v-model="state.message" placeholder="Aa" />
+        <Button icon="pi pi-send" aria-label="Send" />
     </div>
 </div>
 </template>
@@ -45,7 +45,7 @@ const state = reactive({
     display: grid;
     height: 3rem;
     grid-template-columns: 1fr auto;
-    grid-gap: 1rem;
+    grid-gap: .5rem;
     padding: .25rem;
 }
 </style>
