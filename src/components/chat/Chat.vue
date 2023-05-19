@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
 import decodeJWT from '../../js/decodeJWT';
 import Message from './Message.vue';
 
@@ -23,12 +23,27 @@ const getMessageFormat = (message) => {
     // Check if the message is the first or last message from the sender
     const isTop = !previous || (previous && previous.sender !== message.sender);
     const isBottom = next && next.sender !== message.sender;
-    
+
     // If the message is the first or last message in the list, return the correct format
     if (isTop && isBottom) return "single";
     if (isTop) return "top";
     if (isBottom) return "bottom";
     return "middle";
+}
+
+// Handle scroll behavior of chat__messages
+const scrollChat = () => {
+    const chatMessages = document.querySelector(".chat__messages");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+const trackScrollPosition = () => {
+    const chatMessages = document.querySelector(".chat__messages");
+    const scrollPosition = chatMessages.scrollTop;
+    const scrollHeight = chatMessages.scrollHeight;
+    const clientHeight = chatMessages.clientHeight;
+    const scrollBottom = scrollHeight - scrollPosition - clientHeight;
+    return scrollBottom;
 }
 
 onMounted(() => {
@@ -95,8 +110,14 @@ onMounted(() => {
             name: "Test User",
             avatar: "https://randomuser.me/api/portraits/men/18.jpg"
         }
-    ]
+    ];
     state.initialized = true;
+});
+
+watch(() => state.messages, () => {
+    setTimeout(() => {
+        scrollChat();
+    }, 500);
 });
 
 </script>
