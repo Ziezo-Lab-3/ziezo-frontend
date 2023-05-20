@@ -18,7 +18,6 @@ const getMessageFormat = (message) => {
     if (message === null) return;
     const previous = state.messages[index - 1];
     const next = state.messages[index + 1];
-    console.log(index)
 
     // Check if the message is the first or last message from the sender
     const isTop = !previous || (previous && previous.sender !== message.sender);
