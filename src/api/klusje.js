@@ -1,5 +1,5 @@
 const URL = import.meta.env.VITE_BACKEND_URL;
-import { parseParams } from "./parseParams";
+import { parseParams } from "../js/parseParams";
 
 /**
  * 
