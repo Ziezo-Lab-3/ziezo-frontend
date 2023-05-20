@@ -1,5 +1,7 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
+import { getChatGroups } from '../../api/chatGroup';
+import Avatar from '../Avatar.vue';
 
 const state = reactive({
     instances: [],
@@ -7,45 +9,12 @@ const state = reactive({
     isLoadingData: false,
 });
 
-onMounted(() => {
-    state.instances = [
-        {
-            id: 1,
-            name: "Kaitlyn Ullrich",
-            picture: "https://randomuser.me/api/portraits/women/51.jpg",
-            lastMessage: "Ik heb best wat ervaring in het klussen. Ik kan je helpen met het ophangen van een schilderij, het in elkaar zetten van een kast of het vervangen van een lamp. Ik heb een auto dus ik kan ook helpen met verhuizen.",
-            lastMessageDate: "2021-05-06T12:00:00.000Z",
-            unreadMessages: 2,
-            members: [
-                "64009e396dd8fec7e85aa8b4",
-                "645396145b0057fb60218836"
-            ]
-        },
-        {
-            id: 2,
-            picture: "https://randomuser.me/api/portraits/women/52.jpg",
-            name: "Marguerite Klaassen",
-            lastMessage: "Ik heb best wat ervaring in het klussen. Ik kan je helpen met het ophangen van een schilderij, het in elkaar zetten van een kast of het vervangen van een lamp. Ik heb een auto dus ik kan ook helpen met verhuizen.",
-            lastMessageDate: "2021-05-02T12:00:00.000Z",
-            unreadMessages: 20,
-            members: [
-                "64009e396dd8fec7e85aa8b4",
-                "64539b22a63851a707c6750d"
-            ]
-        },
-        {
-            id: 3,
-            picture: "https://randomuser.me/api/portraits/women/62.jpg",
-            name: "Jennifer Smith",
-            lastMessage: "Ik heb best wat ervaring in het klussen. Ik kan je helpen met het ophangen van een schilderij, het in elkaar zetten van een kast of het vervangen van een lamp. Ik heb een auto dus ik kan ook helpen met verhuizen.",
-            lastMessageDate: "2021-05-01T12:00:00.000Z",
-            unreadMessages: 0,
-            members: [
-                "64009e396dd8fec7e85aa8b4",
-                "64539b4b3a5f4a419e35b3a6"
-            ]
-        },
-    ];
+onMounted(async () => {
+    state.isLoadingData = true;
+    const chatGroups = await getChatGroups(localStorage.getItem('token'));
+    state.instances = chatGroups.data;
+    console.log(chatGroups);
+    state.isLoadingData = false;
     state.initialized = true;
 });
 </script>
@@ -59,7 +28,7 @@ onMounted(() => {
         </div>
         <div v-else>
             <div v-for="instance in state.instances" :key="instance.id" class="chat-link">
-                <img :src="instance.picture" :alt="instance.name" />
+                <Avatar :src="instance.avatar" :name="instance.name || '!'" width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>
                     <p>{{ instance.lastMessage }}</p>
@@ -97,18 +66,10 @@ onMounted(() => {
     background-color: #a4acc2;
 }
 
-.chat-link img {
-    flex: 0 1 auto;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-}
-
 .chat-link > div {
     margin-left: .5rem;
     width: calc(100% - 4.5rem); /* subtract the width of the image and padding from the container */
-    display: inline-block; /* added property */
-    box-sizing: border-box; /* added property */
+   
 }
 
 .chat-link > div > h3,
