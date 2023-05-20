@@ -1,14 +1,23 @@
 <script setup>
+import { reactive } from "vue";
 import Chat from "../../components/chat/Chat.vue";
 import ChatList from "../../components/chat/ChatList.vue";
+
+const state = reactive({
+    selectedChatGroup: null,
+});
+
+const updateSelection = (index) => {
+    state.selectedChatGroup = index;
+}
 </script>
 <template>
     <Card class="p-m-4 p-major">
         <template #title>Berichten</template>
         <template #content>
             <div class="message__wrapper">
-                <ChatList />
-                <Chat />
+                <ChatList @update-selection="updateSelection" />
+                <Chat :chatGroup="state.selectedChatGroup" />
             </div>
         </template>
     </Card>

@@ -3,6 +3,26 @@ import { reactive, onMounted, watch } from 'vue';
 import decodeJWT from '../../js/decodeJWT';
 import Message from './Message.vue';
 
+const props = defineProps({
+    /**
+     * The chat group to display the messages from
+     * @type {{
+            _id: String,
+            name: String,
+            members: Array,
+            avatar: String | null,
+            lastMessage: String | null,
+            unreadMessages: Number | null,
+            createdAt: String,
+            updatedAt: String | null,
+        }}
+     */
+    chatGroup: {
+        type: Object,
+        required: true,
+    },
+});
+
 const state = reactive({
     decodedJWT: null,
     messages: [],
@@ -112,7 +132,7 @@ watch(() => state.messages, () => {
 </script>
 <template>
 <div class="chat__wrapper">
-    <div class="chat__header"><h2>Chat</h2></div>
+    <div class="chat__header"><h2>{{ props.chatGroup ? props.chatGroup.name : "Chat" }}</h2></div>
     <div class="chat__messages">
         <div v-if="!state.initialized">
             Loading...

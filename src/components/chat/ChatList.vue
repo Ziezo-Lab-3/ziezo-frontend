@@ -3,6 +3,8 @@ import { reactive, onMounted } from 'vue';
 import { getChatGroups } from '../../api/chatGroup';
 import Avatar from '../Avatar.vue';
 
+const emit = defineEmits(['update-selection']);
+
 const state = reactive({
     instances: [],
     initialized: false,
@@ -10,15 +12,16 @@ const state = reactive({
     selectedChatGroup: null,
 });
 
-const onChatGroupClick = (index) => {
+const selectChatGroup = (index) => {
     state.selectedChatGroup = index;
+    emit('update-selection', state.instances[index]);
 }
 
 onMounted(async () => {
     state.isLoadingData = true;
     const chatGroups = await getChatGroups(localStorage.getItem('token'));
     state.instances = chatGroups.data;
-    if (chatGroups.data.length > 0) state.selectedChatGroup = 0;
+    if (chatGroups.data.length > 0) selectChatGroup(0);
     state.isLoadingData = false;
     state.initialized = true;
 });
@@ -32,8 +35,8 @@ onMounted(async () => {
             <p>Geen berichten</p>
         </div>
         <div v-else>
-            <div v-for="(instance, index) in state.instances" :key="instance.id" @click="() => onChatGroupClick(index)" :class="`chat-link ${index === state.selectedChatGroup ? 'chat-link--selected' : ''}`">
-                <Avatar :src="instance.avatar" :name="instance.name || '!'" width="48" />
+            <div v-for="(instance, index) in state.instances" :key="instance.id" @click="() => selectChatGroup(index)" :class="`chat-link ${index === state.selectedChatGroup ? 'chat-link--selected' : ''}`">
+                <Avatar :src="instance.avatar" :name="instance.name || '!'" :width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>
                     <p>{{ instance.lastMessage }}</p>
