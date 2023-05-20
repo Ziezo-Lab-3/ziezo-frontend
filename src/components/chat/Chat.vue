@@ -36,16 +36,6 @@ const scrollChat = () => {
     const chatMessages = document.querySelector(".chat__messages");
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-
-const trackScrollPosition = () => {
-    const chatMessages = document.querySelector(".chat__messages");
-    const scrollPosition = chatMessages.scrollTop;
-    const scrollHeight = chatMessages.scrollHeight;
-    const clientHeight = chatMessages.clientHeight;
-    const scrollBottom = scrollHeight - scrollPosition - clientHeight;
-    return scrollBottom;
-}
-
 onMounted(() => {
     state.decodedJWT = decodeJWT(localStorage.getItem("token"));
     state.messages = [

@@ -7,13 +7,18 @@ const state = reactive({
     instances: [],
     initialized: false,
     isLoadingData: false,
+    selectedChatGroup: null,
 });
+
+const onChatGroupClick = (index) => {
+    state.selectedChatGroup = index;
+}
 
 onMounted(async () => {
     state.isLoadingData = true;
     const chatGroups = await getChatGroups(localStorage.getItem('token'));
     state.instances = chatGroups.data;
-    console.log(chatGroups);
+    if (chatGroups.data.length > 0) state.selectedChatGroup = 0;
     state.isLoadingData = false;
     state.initialized = true;
 });
@@ -27,7 +32,7 @@ onMounted(async () => {
             <p>Geen berichten</p>
         </div>
         <div v-else>
-            <div v-for="instance in state.instances" :key="instance.id" class="chat-link">
+            <div v-for="(instance, index) in state.instances" :key="instance.id" @click="() => onChatGroupClick(index)" :class="`chat-link ${index === state.selectedChatGroup ? 'chat-link--selected' : ''}`">
                 <Avatar :src="instance.avatar" :name="instance.name || '!'" width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>
@@ -55,6 +60,12 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     width: 100%;
+    box-shadow: inset 0px 0px var(--primary);
+    transition: background-color .2s linear, box-shadow .2s linear;
+}
+
+.chat-link.chat-link--selected {
+    box-shadow: inset 4px 0px var(--primary);
 }
 
 .chat-link:hover {
