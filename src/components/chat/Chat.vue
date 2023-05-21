@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, onMounted, watch } from 'vue';
+import VirtualScroller from 'primevue/virtualscroller';
 import decodeJWT from '../../js/decodeJWT';
 import Message from './Message.vue';
 import { getMessages, postMessage } from '../../api/message';
@@ -48,19 +49,15 @@ const getMessageFormat = (message) => {
     return "middle";
 }
 
-const loadMessages = async (first, last) => {
-    state.initialized = false;
-    state.isLoadingData = true;
+const onLazyLoad = async () => {
+    !state.isLoadingData && (state.isLoadingData = true);
     const messages = await getMessages(localStorage.getItem("token"), {
-        first,
-        last,
+        first: state.messages.length,
+        last: state.messages.length + 10,
         filter: {
-            chatGroup: state.chatGroup._id
+            chatGroup: state.chatGroup?._id
         }
     });
-    state.messages = messages.data;
-    state.initialized = true;
-    state.isLoadingData = false;
 }
 
 // Handle scroll behavior of chat__messages
@@ -83,8 +80,6 @@ watch(() => state.messages, () => {
 watch(() => props.chatGroup, async () => {
     state.messages = [];
     state.chatGroup = props.chatGroup;
-    console.log(props.chatGroup);
-    await loadMessages(0, 10);
     scrollChat();
 });
 
@@ -96,17 +91,25 @@ watch(() => props.chatGroup, async () => {
         <div v-if="!state.initialized">
             Loading...
         </div>
-        <div v-else-if="state.messages?.length === 0">
-            <p class="chat__empty-message">Stuur een bericht en start de conversatie!</p>
-        </div>
-                <Message v-for="message in state.messages" :key="message.id"
+        <VirtualScroller v-else
+            :items="state.messages"
+            :itemSize="50"
+            :scrollHeight="500"
+            showLoader
+            :delay="250"
+            :loading="state.isLoadingData"
+            lazy
+            @lazy-load="onLazyLoad">
+            <template #item="{ message }">
+                <Message :text="message.message" 
                     :avatar="state.chatGroup.members.find(value => value.id === message.sender).avatar"
-                    :text="message.message" 
                     :self="message.sender === state.decodedJWT.id" 
                     :date="message.createdAt"
                     :name="state.chatGroup.members.find(value => value.id === message.sender).name"
                     :format="getMessageFormat(message)"
                 />
+            </template>
+        </VirtualScroller>
     </div>
     <div class="chat__input">
         <InputText v-model="state.message" placeholder="Aa" />
