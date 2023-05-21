@@ -4,7 +4,7 @@
     <template #content>
       <InputText v-model="searchTerm" placeholder="Zoek een klusje" />
       <div v-if="jobs.length" class="job-tiles-container">
-        <JobTile v-for="job in jobs" :key="job._id" :job="job" />
+        <JobTile v-for="job in jobs" :key="job._id" :job="job" @details="showKlusjeDetails(job._id)" />
       </div>
       <div v-else>
         Loading...
@@ -16,8 +16,9 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import JobTile from '../../components/JobTile.vue';
-import { getKlusjes } from '../../api/klusje';
+import { getKlusjes, getKlusjeById } from '../../api/klusje';
 
+const selectedKlusje = ref(null);
 const searchTerm = ref('');
 const jobs = ref([]);
 
@@ -57,6 +58,22 @@ watch(searchTerm, async (newTerm) => {
     console.error('BrowseView.vue onSearchTermChange(): ' + error);
   }
 });
+
+const showKlusjeDetails = async (klusjeId) => {
+  console.log("Klusje ID:", klusjeId);
+
+  try {
+    const response = await getKlusjeById(localStorage.getItem('token'), klusjeId);
+    if (response.status === 'success') {
+      selectedKlusje.value = response.data;
+      console.log('Selected Klusje:', response.data); // Add this line to log the job details
+    } else {
+      console.error('Error fetching klusje details:', response.message);
+    }
+  } catch (error) {
+    console.error('Error fetching klusje details:', error);
+  }
+};
 
 onMounted(fetchJobs);
 </script>
