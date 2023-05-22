@@ -9,12 +9,17 @@ import TabPanel from 'primevue/tabpanel';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
+import { ref } from 'vue';
+import DialogMyJobs from '../../components/Dialog/DialogMyJobs.vue';
+
 
 const state = reactive({
     data: [],
     totalDocumentCount: 0,
     isLoadingData: false,
-    categories: []
+    categories: [],
+    selectedJobId: null
+
 });
 const decodedToken = decodeJWT(localStorage.getItem('token'));
 
@@ -71,6 +76,14 @@ const loadKlusjesLazy = async (event) => {
     }
 };
 
+const showDialog = ref(false);
+
+const openDialog = (event) => {
+    state.selectedJobId = event.data._id;
+    console.log(state.selectedJobId);
+    showDialog.value = true;
+};
+
 
 onMounted(() => {
     loadInitialData();
@@ -83,16 +96,19 @@ onMounted(() => {
             <TabView>
                 <TabPanel header="Zelf Geplaatste Klusjes">
                     <DataTable v-if="state.totalDocumentCount > 0" scrollHeight="500px" :value="state.data" scrollable
-                        :virtualScrollerOptions="{
-                            lazy: true,
-                            onLazyLoad: loadKlusjesLazy,
-                            itemSize: 108,
-                            delay: 200,
-                            showLoader: true,
-                            loading: state.isLoadingData,
-                            numToleratedItems: 10,
+                    :virtualScrollerOptions="{
+                        lazy: true,
+                        onLazyLoad: loadKlusjesLazy,
+                        itemSize: 108,
+                        delay: 200,
+                        showLoader: true,
+                        loading: state.isLoadingData,
+                        numToleratedItems: 10
+                    }"
+                    class="p-datatable-sm table-jobs-self"
+                    @row-click.native="openDialog">
+                                    
 
-                        }" class="p-datatable-sm table-jobs-self">
 
                         <Column header="" class="col-image">
                             <template #body="slotProps">

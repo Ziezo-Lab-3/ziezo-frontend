@@ -6,14 +6,24 @@ import Carousel from 'primevue/carousel';
 
 const emit = defineEmits(['close']);
 const props = defineProps({
-  visible: Boolean,
-  klusjeId: {
-    type: String,
-    required: true,
-  },
+    visible: Boolean,
+    jobId: {
+        type: String,
+        required: true,
+    },
 });
 
 const selectedKlusje = ref(null);
+
+const dummyNames = [
+  { firstName: 'Sam', lastName: 'De Backer' },
+  { firstName: 'Maarten', lastName: 'Vanwesenmael' },
+  { firstName: 'Anna', lastName: 'Devis' },
+  { firstName: 'Jef', lastName: 'Van den Broeck',
+
+}
+  // Add more dummy names as needed
+];
 
 const carouselImages = ref([
   { src: 'https://picsum.photos/200/300' },
@@ -37,20 +47,19 @@ const getStateText = () => {
 
 
 onMounted(async () => {
-  if (props.klusjeId) {
-    try {
-      const klusje = await getKlusjeById(localStorage.getItem('token'), props.klusjeId);
-      if (klusje.status === 'success') {
-        selectedKlusje.value = klusje.data;
-        console.log('Selected Klusje:', klusje.data); // Log the job details
-      
-      } else {
-        console.error('Error fetching klusje details:', klusje.message);
-      }
-    } catch (error) {
-      console.error('Error fetching klusje details:', error);
+    if (props.jobId) {
+        try {
+            const klusje = await getKlusjeById(localStorage.getItem('token'), props.jobId);
+            if (klusje.status === 'success') {
+                selectedKlusje.value = klusje.data;
+                console.log('Selected Klusje:', klusje.data);
+            } else {
+                console.error('Error fetching klusje details:', klusje.message);
+            }
+        } catch (error) {
+            console.error('Error fetching klusje details:', error);
+        }
     }
-  }
 });
 </script>
 
@@ -65,6 +74,7 @@ onMounted(async () => {
   >
     <div v-if="selectedKlusje" class="dialog-content">
       <div class="left-side">
+        <h3>{{ dummyNames[0].firstName }} {{ dummyNames[0].lastName }}</h3>
         <Carousel :value="carouselImages" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="3000" :autoplay="true" style="max-width: 600px">
           <template #item="{value}">
             <img :src="'https://picsum.photos/200/300'" style="width: 100%, height: 50%"/>
