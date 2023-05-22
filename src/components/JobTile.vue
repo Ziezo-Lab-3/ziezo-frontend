@@ -85,6 +85,7 @@ const truncateDescription = (description, limit) => {
   width: 280px;
   height: 186px;
   overflow: hidden;
+  background-color: grey;
 }
 
 .image-container img {

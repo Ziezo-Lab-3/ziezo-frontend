@@ -14,11 +14,35 @@ const props = defineProps({
 });
 
 const selectedKlusje = ref(null);
-const carouselImages = ref([]);
-const username = ref('');
+
+const dummyNames = [
+  { firstName: 'Sam', lastName: 'De Backer' },
+  { firstName: 'Maarten', lastName: 'Vanwesenmael' },
+  { firstName: 'Anna', lastName: 'Devis' },
+  { firstName: 'Jef', lastName: 'Van den Broeck',
+
+}
+  // Add more dummy names as needed
+];
+
+const carouselImages = ref([
+  { src: 'https://picsum.photos/200/300' },
+  { src: 'https://picsum.photos/200/300' },
+  { src: 'https://picsum.photos/200/300' },
+]);
+
+console.log('Carousel images:', carouselImages.value)
+
 
 const close = () => {
   emit('close');
+};
+
+const getStateText = () => {
+  if (selectedKlusje.value && selectedKlusje.value.state === 'open') {
+    return 'Niet uitgevoerd';
+  }
+  return '';
 };
 
 
@@ -29,8 +53,6 @@ onMounted(async () => {
       if (klusje.status === 'success') {
         selectedKlusje.value = klusje.data;
         console.log('Selected Klusje:', klusje.data); // Log the job details
-        carouselImages.value = klusje.data.images.map((image) => ({ src: image }));
-        console.log('Carousel Images:', carouselImages.value); // Log the carousel images
       
       } else {
         console.error('Error fetching klusje details:', klusje.message);
@@ -51,28 +73,91 @@ onMounted(async () => {
     :style="{ width: '832px' }"
     :breakpoints="{ '580px': 'calc(100vw - 1rem)' }"
   >
+    <div v-if="selectedKlusje" class="dialog-content">
+      <div class="left-side">
+        <h3>{{ dummyNames[0].firstName }} {{ dummyNames[0].lastName }}</h3>
+        <Carousel :value="carouselImages" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="3000" :autoplay="true" style="max-width: 600px">
+          <template #item="{value}">
+            <img :src="'https://picsum.photos/200/300'" style="width: 100%, height: 50%"/>
+          </template>
+        </Carousel>
+      </div>
+      <div class="right-side">
+        <h3>Beschrijving</h3>
+        <p>{{ selectedKlusje.description }}</p>
+        <h3>Adres</h3>
+        <p>{{ selectedKlusje.address }}</p>
+        <div class="details">
+          <div class="price-state">
+            <p class="p-state">X   {{ getStateText() }}</p>
+            <p class="p-price">{{ selectedKlusje.price }}€ / u</p>
 
-  <div v-if="selectedKlusje">
-      <p>{{ selectedKlusje.description }}</p>
-      <p>Price: €{{ selectedKlusje.price }}/u</p>
-      <p>Address: {{ selectedKlusje.address }}</p>
-      <p>State: {{ selectedKlusje.state }}</p>
+          </div>
+        </div>
+        
+      </div>
     </div>
-
-    <Carousel :value="carouselImages" style="max-height: 400px;">
-      <template #item="{ value: image }">
-        <img :src="image" alt="Carousel Image" style="max-height: 100%; max-width: 100%;" />
-      </template>
-    </Carousel>
 
     <template #footer>
       <div class="flex justify-content-between">
         <Button label="Cancel" @click="close" class="p-button-secondary" />
-        <Button label="Edit" />
-        <Button label="Mark as Completed" />
+        <div class="right-footer">
+          <Button class="p-button" label="Stuur bericht" />
+        </div>
       </div>
 
       <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
     </template>
   </Dialog>
 </template>
+
+<style>
+.dialog-content {
+  display: flex;
+}
+
+.left-side {
+  width: 40%;
+}
+
+.right-side {
+  width: 60%;
+}
+
+.right-footer {
+  display: flex;
+  gap: 1rem;
+}
+
+.p-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: green;
+}
+
+.p-state {
+  font-size: 1rem;
+  font-weight: bold;
+  color: red;
+}
+
+.details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.price-state {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2rem;
+}
+.p-carousel-content {
+  height: 200px;
+  overflow-y: hidden;
+}
+
+
+</style>
