@@ -119,7 +119,7 @@ onMounted(async () => {
         <div class="labelInput">
             <label>Beschrijving* <span :style="okDescription ? 'color: var(--primary)' : 'color: var(--gray-400)'">({{
                 okDescription ? 24 : state.description.length }}/24)</span></label>
-            <TextArea v-model="state.description" placeholder="Ik heb hulp nodig met..." autoResize style="resize: none"
+            <Textarea v-model="state.description" placeholder="Ik heb hulp nodig met..." autoResize style="resize: none"
                 :minlength="24" />
         </div>
         <div class="labelInput">

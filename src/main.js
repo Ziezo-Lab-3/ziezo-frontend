@@ -45,7 +45,7 @@ app.component('Calendar', Calendar);
 app.component('Checkbox', Checkbox);
 app.component('RadioButton', RadioButton);
 app.component('ProgressSpinner', ProgressSpinner);
-app.component('TextArea', TextArea);
+app.component('Textarea', TextArea);
 app.component('SplitButton', SplitButton);
 app.component('Card', Card);
 app.component('ConfirmDialog', ConfirmDialog);
