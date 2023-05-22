@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import Chat from "../../components/chat/Chat.vue";
 import ChatList from "../../components/chat/ChatList.vue";
 
@@ -7,9 +7,14 @@ const state = reactive({
     selectedChatGroup: null,
 });
 
-const updateSelection = (index) => {
-    state.selectedChatGroup = index;
+const updateSelection = (chatGroup) => {
+    state.selectedChatGroup = chatGroup;
+    console.log('updateSelection', showChat.value);
 }
+
+const showChat = computed(() => {
+    return state.selectedChatGroup !== null;
+});
 </script>
 <template>
     <Card class="p-m-4 p-major">
