@@ -42,12 +42,23 @@ const sendMessage = async () => {
     }
 }
 
+const sanitize = (messages) => {
+    // make sure each _id property only occurs once
+    const ids = [];
+    return messages.filter((message) => {
+        if (ids.includes(message._id)) return false;
+        ids.push(message._id);
+        return true;
+    });
+}
+
 const loadNewMessages = async (params) => {
     const result = await getMessages(localStorage.getItem("token"), params);
     if (result.status === "success") {
         // Combine the old messages with the new messages, and remove duplicates
-        state.messages = [...new Set([...state.messages, ...result.data])];
+        state.messages = sanitize([...state.messages, ...result.data]);
         state.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        console.log(state.messages);
     }
     else {
         console.error("Chat.vue onLazyLoad(): " + result.message);
@@ -59,21 +70,14 @@ onMounted(() => {
 });
 
 watch(() => props.chatGroup, async () => {
-    state.messages = [];
     state.chatGroup = props.chatGroup;
-});
-
-watch(() => state.messages, () => {
-    setTimeout(() => {
-        const message = document.querySelector(".chat__messages p:last-child");
-        if (!message) return;
-        const messageHeight = message.offsetHeight;
-        const chatMessages = document.querySelector(".chat__messages");
-        const scrollBottom = chatMessages.scrollHeight - chatMessages.scrollTop;
-        if (scrollBottom - chatMessages.offsetHeight <= messageHeight + 56) {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+    state.messages = [];loadNewMessages({
+        first: 0,
+        last: 10,
+        filter: {
+            chatGroup: props.chatGroup?._id
         }
-    }, 10);
+    });
 });
 </script>
 <template>
