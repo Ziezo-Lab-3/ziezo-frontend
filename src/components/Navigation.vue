@@ -3,10 +3,10 @@ import { RouterLink } from 'vue-router';
 </script>
 <template>
     <nav>
-        <div class="nav-logo">
+        <div class="nav-logo tablet-hide">
             <img src="/images/Logo.svg" alt="Ziezo Logo">
         </div>
-        <div class="spacing"></div>
+        <div class="spacing tablet-hide"></div>
         <div class="nav-menu">
             <ul>
                 <RouterLink to="/app/">
@@ -78,7 +78,6 @@ li {
 }
 
 li:hover {
-
     background: #374d6f;
 }
 
@@ -114,19 +113,28 @@ li:active {
 }
 
 @media screen and (max-width: 768px) {
-    .nav-logo {
-        display: none;
-    }
-
     nav {
         width: 100%;
         padding: 0;
         height: fit-content;
+        background-color: white;
     }
 
     ul::not(:last-child) {
         margin: 0;
         margin-bottom: 1rem;
+    }
+    .router-link-exact-active li {
+        background-color: var(--secondary);
+        color: white;
+    }
+
+    li {
+        color: var(--body);
+    }
+
+    li:hover {
+        background: var(--gray-200);
     }
 }
 </style>
