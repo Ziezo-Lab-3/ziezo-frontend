@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 import { getChatGroups } from '../../api/chatGroup';
 import Avatar from '../Avatar.vue';
 
@@ -35,7 +36,7 @@ onMounted(async () => {
             <p>Geen berichten</p>
         </div>
         <div v-else>
-            <div v-for="(instance, index) in state.instances" :key="instance.id" @click="() => selectChatGroup(index)" :class="`chat-link ${index === state.selectedChatGroup ? 'chat-link--selected' : ''}`">
+            <RouterLink v-for="(instance, index) in state.instances" :key="instance._id"  :to="`/app/message/${instance._id}`" class="chat-link">
                 <Avatar :src="instance.avatar" :name="instance.name || '!'" :width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>
@@ -44,7 +45,7 @@ onMounted(async () => {
                 <div v-if="instance.unreadMessages > 0" class="bubble-unread">
                     {{ instance.unreadMessages }}
                 </div> 
-            </div>
+            </RouterLink>
         </div>
     </div>
 </template>
@@ -57,6 +58,8 @@ onMounted(async () => {
     width: 100%;
 }
 .chat-link {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
     padding: .5rem;
     border-bottom: 1px solid var(--gray-200);
     align-items: center;

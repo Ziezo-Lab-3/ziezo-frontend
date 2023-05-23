@@ -34,7 +34,7 @@ const signin = () => {
             }
             else if (response.status === "fail") {
                 message.value = response.message;
-                console.log("error:" + response.message);
+                console.error("error:" + response.message);
             }
         });
 

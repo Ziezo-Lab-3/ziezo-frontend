@@ -15,6 +15,8 @@ import SignupView from "./views/auth/SignupView.vue";
 import NotFoundView from "./views/NotFoundView.vue";
 import TestView from "./views/TestView.vue";
 
+import Chat from "./components/chat/Chat.vue";
+
 const routes = [
     {
         path: "/",
@@ -34,6 +36,13 @@ const routes = [
                 path: "message",
                 name: "Berichten",
                 component: MessageView,
+                children: [
+                    {
+                        path: ":id",
+                        name: "Bericht",
+                        component: Chat,
+                    },
+                ],
             },
             {
                 path: "jobs",

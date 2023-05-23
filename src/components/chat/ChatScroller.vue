@@ -47,7 +47,6 @@ const onMessageScroll = (event) => {
     const element = event.target;
     if (element.scrollTop !== 0) return;
     if (props.hasOldest) return;
-    console.log("Requesting messages");
     emit("request-messages", {
         first: props.messages.length,
         last: props.messages.length + 10,
@@ -69,7 +68,6 @@ watch(() => props.messages, () => {
         const addedHeight = newElements.reduce((acc, cur) => acc + cur.offsetHeight, 0);
 
         const scrollBottom = chatMessages.scrollHeight - chatMessages.scrollTop;
-        console.log(`newCount: ${newCount},scrollBottom: ${scrollBottom}, addedHeight: ${addedHeight}`);
         if (scrollBottom - chatMessages.offsetHeight <= addedHeight) {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }

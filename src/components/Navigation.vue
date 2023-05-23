@@ -3,9 +3,10 @@ import { RouterLink } from 'vue-router';
 </script>
 <template>
     <nav>
-        <div class="nav-logo">
+        <div class="nav-logo tablet-hide">
             <img src="/images/Logo.svg" alt="Ziezo Logo">
         </div>
+        <div class="spacing tablet-hide"></div>
         <div class="nav-menu">
             <ul>
                 <RouterLink to="/app/">
@@ -24,7 +25,7 @@ import { RouterLink } from 'vue-router';
         </div>
         <div class="nav-details">
             <ul>
-                <a><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
+                <a class="help" ><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
                 <RouterLink to="/app/contact">
                     <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
                 </RouterLink>
@@ -47,9 +48,10 @@ nav {
     flex-direction: column;
     width: 220px;
     height: 100vh;
-    background: #FFFFFF;
+    background: #425a7f;
     padding: 1rem;
     justify-content: space-between;
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 ul {
@@ -61,19 +63,26 @@ ul {
 li {
     display: flex;
     flex: none;
-    border-radius: 20px;
+    border-radius: 2rem;
     align-items: center;
     gap: 1rem;
-    color: #172230;
+    color: white;
     padding: .5rem 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.router-link-active li {
-    background-color: var(--gray-100);
+.router-link-exact-active li {
+    background-color: white;
+    color: var(--body);
 }
 
 li:hover {
-    background: var(--primary-faded);
+    background: #374d6f;
+}
+
+.router-link-exact-active li:hover {
+    background-color: var(--gray-200);
 }
 
 li:active {
@@ -81,8 +90,12 @@ li:active {
 }
 
 .nav-logo {
-    width: 100%;
-    padding: 0rem 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 220px;
+    padding: 1rem 1rem;
+    background-color: white; 
 }
 
 .nav-logo img {
@@ -91,20 +104,38 @@ li:active {
     height: auto;
 }
 
-@media screen and (max-width: 768px) {
-    .nav-logo {
-        display: none;
-    }
+.spacing {
+    height: 140px;
+}
 
+.help {
+    cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
     nav {
         width: 100%;
         padding: 0;
         height: fit-content;
+        background-color: white;
+        box-shadow: none;
     }
 
     ul::not(:last-child) {
         margin: 0;
         margin-bottom: 1rem;
+    }
+    .router-link-exact-active li {
+        background-color: var(--secondary);
+        color: white;
+    }
+
+    li {
+        color: var(--body);
+    }
+
+    li:hover {
+        background: var(--gray-200);
     }
 }
 </style>

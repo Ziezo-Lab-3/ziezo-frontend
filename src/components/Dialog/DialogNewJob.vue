@@ -29,7 +29,6 @@ const close = () => {
 }
 
 const accept = async () => {
-    console.log(state);
     let res = await postKlusje({
         name: state.title,
         description: state.description,

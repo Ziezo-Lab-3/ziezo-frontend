@@ -40,17 +40,17 @@ const signup = () => {
                 }
                 else if (response.status === "fail") {
                     message.value = response.message;
-                    console.log("error:" + response.message);
+                    console.error("error:" + response.message);
                 }
             });
         }
         else{
-            console.log("passwords don't match");
+            console.error("passwords don't match");
             document.getElementById('password2--text').style.color = 'red';
         }
     }
     else{
-        console.log("terms and conditions not accepted");
+        console.error("terms and conditions not accepted");
         /**set text color of id checkbox--text to red  */
         document.getElementById('checkbox--text').style.color = 'red';   
     }

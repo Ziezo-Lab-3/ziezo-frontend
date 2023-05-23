@@ -13,7 +13,6 @@ const message = ref("");
 /**
 const $route = useRouter();
 const id = $route.query.id;
-console.log(id);
 */
 
 /**ajax */
@@ -43,7 +42,7 @@ const createProfile = () => {
         }
         else if (response.status === "fail") {
             message.value = response.message;
-            console.log("error:" + response.message);
+            console.error("error:" + response.message);
         }
     });
 };
