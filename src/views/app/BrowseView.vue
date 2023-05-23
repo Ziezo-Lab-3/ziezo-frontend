@@ -1,5 +1,5 @@
 <template>
-  <Card class="p-m-4 p-major">
+  <Card class="p-m-4 p-major browse__view">
     <template #title>Mijn Klusjes</template>
     <template #content>
       <InputText v-model="searchTerm" placeholder="Zoek een klusje" />
@@ -79,9 +79,19 @@ onMounted(fetchJobs);
 </script>
 
 <style>
-.job-tiles-container {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
+.browse__view .job-tiles-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.browse__view .p-card-content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.browse__view.p-card.p-major {
+    height:fit-content;
 }
 </style>
