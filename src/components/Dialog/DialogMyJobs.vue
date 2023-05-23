@@ -1,10 +1,12 @@
 <script setup>
-import { ref, defineProps, defineEmits, onMounted } from 'vue';
+import { ref, defineProps, defineEmits, onMounted, watch } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
 import { getPersonalInfo } from '../../api/user'; // Import the getPersonalInfo function
 import Carousel from 'primevue/carousel';
 
+
 const emit = defineEmits(['close']);
+
 const props = defineProps({
     visible: Boolean,
     jobId: {
@@ -33,7 +35,6 @@ const carouselImages = ref([
 
 console.log('Carousel images:', carouselImages.value)
 
-
 const close = () => {
   emit('close');
 };
@@ -45,11 +46,10 @@ const getStateText = () => {
   return '';
 };
 
-
-onMounted(async () => {
-    if (props.jobId) {
+watch(() => props.jobId, async(val) => {
+    if (val) {
         try {
-            const klusje = await getKlusjeById(localStorage.getItem('token'), props.jobId);
+            const klusje = await getKlusjeById(localStorage.getItem('token'), val);
             if (klusje.status === 'success') {
                 selectedKlusje.value = klusje.data;
                 console.log('Selected Klusje:', klusje.data);
@@ -61,6 +61,7 @@ onMounted(async () => {
         }
     }
 });
+
 </script>
 
 <template>
@@ -101,7 +102,8 @@ onMounted(async () => {
       <div class="flex justify-content-between">
         <Button label="Cancel" @click="close" class="p-button-secondary" />
         <div class="right-footer">
-          <Button class="p-button" label="Stuur bericht" />
+          <Button class="p-button-secondary" label="Bewerken" />
+          <Button class="p-button" label="Klusje uitgevoerd" />
         </div>
       </div>
 

@@ -143,6 +143,7 @@ onMounted(() => {
                         </Column>
 
                     </DataTable>
+                    <DialogMyJobs :visible="showDialog" :jobId="state.selectedJobId" @closeDialog="showDialog = false"/>
                 </TabPanel>
                 <TabPanel header="Uitgevoerde Klusjes">
                 </TabPanel>
