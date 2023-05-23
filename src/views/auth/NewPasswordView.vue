@@ -30,12 +30,12 @@ const requestcode = () => {
             }
             else if (response.status === "fail") {
                 message.value = response.message;
-                console.log("error:" + response.message);
+                console.error("error:" + response.message);
             }
         });
     }
     else{
-        console.log("passwords don't match");
+        console.error("passwords don't match");
         document.getElementById('check_password--text').style.color = 'red';
     }
 };

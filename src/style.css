@@ -98,4 +98,8 @@ a:has(.p-button) {
     #nav_mobile {
         display: inherit;
     }
+
+    .tablet-hide {
+        display: none !important;
+    }
 }

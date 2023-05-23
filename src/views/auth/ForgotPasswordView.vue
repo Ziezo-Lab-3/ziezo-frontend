@@ -5,10 +5,7 @@ const email = ref('');
 const password = ref('');
 
 const requestcode = () => {
-    console.log('requesting password reset code');
-    console.log(email.value);
-    console.log(password.value);
-    console.log(window.location.host + '/NewPassword');
+    console.warn("Not implemented yet");
 };
 
 </script>

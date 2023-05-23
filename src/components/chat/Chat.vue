@@ -55,7 +55,6 @@ const loadNewMessages = async (params) => {
         // Combine the old messages with the new messages, and remove duplicates
         state.messages = sanitize([...state.messages, ...result.data]);
         state.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-        console.log(state.messages);
     }
     else {
         console.error("Chat.vue onLazyLoad(): " + result.message);
