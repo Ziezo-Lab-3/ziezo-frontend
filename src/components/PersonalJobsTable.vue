@@ -1,12 +1,13 @@
 <script setup>
 import moment from 'moment';
-import { onMounted, reactive, computed } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import decodeJWT from '../js/decodeJWT';
 import { getKlusjes } from '../api/klusje';
 import { getCategories } from '../api/category';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
+import DialogMyJobs from './Dialog/DialogMyJobs.vue';
 
 const props = defineProps({
     executed: {
@@ -19,9 +20,18 @@ const state = reactive({
     data: [],
     initialized: false,
     isLoadingData: false,
-    categories: []
+    categories: [],
+    selectedJobId: null
 });
 const decodedToken = decodeJWT(localStorage.getItem('token'));
+
+const showDialog = ref(false);
+
+const openDialog = (event) => {
+    state.selectedJobId = event.data._id;
+    console.log(state.selectedJobId);
+    showDialog.value = true;
+};
 
 const getCategory = (id) => {
     const category = state.categories.find((category) => category._id == id);
@@ -84,7 +94,7 @@ onMounted(() => {
             showLoader: true,
             loading: state.isLoadingData,
             numToleratedItems: 10,
-        }" class="p-datatable-sm table-jobs-self">
+        }" class="p-datatable-sm table-jobs-self" @row-click.native="openDialog">
         <Column header="" class="col-image">
             <template #body="slotProps">
                 <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" class="job-image" />
@@ -115,6 +125,7 @@ onMounted(() => {
             </template>
         </Column>
     </DataTable>
+    <DialogMyJobs :visible="showDialog" :jobId="state.selectedJobId" @closeDialog="showDialog = false"/>
 </template>
 <style scoped>
 .description {
