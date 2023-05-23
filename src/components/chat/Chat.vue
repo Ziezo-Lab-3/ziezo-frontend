@@ -1,15 +1,12 @@
 <script setup>
-import { reactive, onMounted, watch,ref } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import decodeJWT from '../../js/decodeJWT';
 import { getMessages, postMessage } from '../../api/message';
+import { getChatGroups } from '../../api/chatGroup';
 import ChatScroller from './ChatScroller.vue';
 
-const props = defineProps({
-    chatGroup: {
-        type: Object,
-        required: true,
-    },
-});
+const router = useRouter();
 /**
   * @type {{
   * decodedJWT: { id: String, iat: Number, exp: Number } | null,
@@ -64,25 +61,45 @@ const loadNewMessages = async (params) => {
         console.error("Chat.vue onLazyLoad(): " + result.message);
     }
 }
+const updateChatGroup = async () => {
+    const result = await getChatGroups(localStorage.getItem("token"));
+    if (result.status === "success") {
+        // Get id from url
+        const id = router.currentRoute.value.params.id;
 
-onMounted(() => {
+        // Find the chatGroup with the id from the url
+        state.chatGroup = result.data.find((chatGroup) => chatGroup._id === id);
+    }
+    else {
+        console.error("Chat.vue onMounted(): " + result.message);
+    }
+}
+
+onMounted(async () => {
     state.decodedJWT = decodeJWT(localStorage.getItem("token"));
+    await updateChatGroup();
 });
 
-watch(() => props.chatGroup, async () => {
-    state.chatGroup = props.chatGroup;
-    state.messages = [];loadNewMessages({
+watch(() => router.currentRoute.value.params.id, async () => {
+    await updateChatGroup();
+});
+
+watch(() => state.chatGroup, async () => {
+    state.chatGroup = state.chatGroup;
+    state.messages = [];
+    loadNewMessages({
         first: 0,
         last: 10,
         filter: {
-            chatGroup: props.chatGroup?._id
+            chatGroup: state.chatGroup?._id
         }
     });
 });
+
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <div class="chat__header"><h2>{{ props.chatGroup ? props.chatGroup.name : "Chat" }}</h2></div>
+    <div class="chat__header"><h2>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">
         <InputText v-model="state.message" placeholder="Aa" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" />

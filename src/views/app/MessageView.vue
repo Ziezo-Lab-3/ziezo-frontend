@@ -1,15 +1,6 @@
 <script setup>
-import { reactive } from "vue";
-import Chat from "../../components/chat/Chat.vue";
+import { RouterView } from "vue-router";
 import ChatList from "../../components/chat/ChatList.vue";
-
-const state = reactive({
-    selectedChatGroup: null,
-});
-
-const updateSelection = (chatGroup) => {
-    state.selectedChatGroup = chatGroup;
-}
 </script>
 <template>
     <Card class="p-m-4 p-major">
@@ -17,7 +8,7 @@ const updateSelection = (chatGroup) => {
         <template #content>
             <div class="message__wrapper">
                 <ChatList @update-selection="updateSelection" />
-                <Chat :chatGroup="state.selectedChatGroup" />
+                <RouterView />
             </div>
         </template>
     </Card>
