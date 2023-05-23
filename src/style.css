@@ -48,7 +48,8 @@ a:has(.p-button) {
 
 #content {
     display: flex;
-    align-items: center;
+    align-items: top;
+    padding-top: 1rem;
     justify-content: center;
     height: calc(100vh);
     overflow-y: auto;

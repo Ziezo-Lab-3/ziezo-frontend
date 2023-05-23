@@ -37,11 +37,11 @@ onMounted(async () => {
             Loading...
         </div>
         <div v-else-if="state.instances.length === 0">
-            <p>Geen berichten</p>
+            <p>Geen chats gevonden</p>
         </div>
         <div v-else>
-            <RouterLink v-for="(instance, index) in state.instances" :key="instance._id"  :to="`/app/message/${instance._id}`" class="chat-link">
-                <Avatar :src="instance.avatar" :name="instance.name || '!'" :width="48" />
+            <RouterLink v-for="(instance) in state.instances" :key="instance._id"  :to="`/app/message/${instance._id}`" class="chat-link">
+                <Avatar :src="instance.picture" :name="instance.name || '!'" :width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>
                     <p>{{ instance.lastMessage }}</p>
@@ -72,6 +72,7 @@ onMounted(async () => {
     box-shadow: inset 0px 0px var(--primary);
     transition: background-color .2s linear, box-shadow .2s linear;
     margin-bottom: .5rem;
+    padding-left: 1rem;
 }
 
 .chat-link.router-link-active {
