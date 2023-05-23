@@ -18,19 +18,19 @@ import { RouterLink } from 'vue-router';
                 <RouterLink to="/app/jobs">
                     <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
                 </RouterLink>
-                <RouterLink to="/app/profile">
-                    <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
-                </RouterLink>
+                <a class="help" ><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
             </ul>
         </div>
         <div class="nav-details">
             <ul>
-                <a class="help" ><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
                 <RouterLink to="/app/contact">
                     <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
                 </RouterLink>
                 <RouterLink to="/app/settings">
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
+                </RouterLink>
+                <RouterLink to="/app/profile">
+                    <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
                 </RouterLink>
             </ul>
         </div>

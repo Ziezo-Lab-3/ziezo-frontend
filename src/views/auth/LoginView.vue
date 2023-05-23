@@ -27,7 +27,14 @@ const signin = () => {
         .then((response) => {
             if (response.status === "success") {
                 // Sla de token op in de localStorage
+                console.log(response.data);
                 localStorage.setItem("token", response.data.accessToken);
+                localStorage.setItem("userId", response.data.id);
+                localStorage.setItem("userEmail", response.data.email);
+                localStorage.setItem("userRole", JSON.stringify(response.data.roles));
+                localStorage.setItem("userFirstName", response.data.firstName);
+                localStorage.setItem("userLastName", response.data.lastName);
+                localStorage.setItem("userAvatar", response.data.avatar);
                 // Reset de velden
                 message.value = "";
                 router.push("/");
@@ -47,7 +54,7 @@ const loginKlusser = () => {
 };
 
 const loginHulpvrager = () => {
-    email.value = "hulpvrager@ziezo.be";
+    email.value = "hulpzoeker@ziezo.be";
     password.value = "123456";
     signin();
 }
