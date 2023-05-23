@@ -40,10 +40,41 @@ const signin = () => {
 
 };
 
+const loginKlusser = () => {
+    email.value = "klusser@ziezo.be";
+    password.value = "123456";
+    signin();
+};
+
+const loginHulpvrager = () => {
+    email.value = "hulpvrager@ziezo.be";
+    password.value = "123456";
+    signin();
+}
 
 </script>
 <template>
-    <div class="w-screen h-screen p-2 flex justify-content-center align-items-center">
+    <div class="login__wrapper w-screen h-screen flex flex-column justify-content-center align-items-center p-4">
+        <Card class="login__demo mb-4" @click="loginHulpvrager">
+            <template #content >
+                <div class="h-full w-full flex flex-column justify-content-center align-items-center px-4 text-center">
+                    <i class="pi pi-user" style="font-size: 6rem; color: var(--primary)"></i>
+                    <h3>Inloggen als hulpzoeker</h3>
+                </div>
+            </template>
+        </Card>
+        <Card class="login__demo" @click="loginKlusser">
+            <template #content>
+                <div class="h-full w-full flex flex-column justify-content-center align-items-center px-4 text-center">
+                    <i class="pi pi-wrench" style="font-size: 6rem; color: var(--secondary)"></i>
+                    <h3>Inloggen als klusser</h3>
+                </div>
+            </template>
+        </Card>
+    </div>
+
+    <!-- LOGIN DOOR JARNE-->
+    <!-- <div class="w-screen h-screen p-2 flex justify-content-center align-items-center">
         <Card class="max-w-full w-20rem h-fit">
             <template #header>
                 <div class="pb-2 pt-4 px-6">
@@ -72,9 +103,7 @@ const signin = () => {
                             <Button class="p-button-secondary" label="Account aanmaken" />
                         </RouterLink>
                     </div>
-                    <!--forgot password-->
                     <div class="labelInput">
-                        <!--div on click-->
                         <RouterLink to="/ForgotPassword">
                             <div class="link-simple">Wachtwoord vergeten?</div>
                         </RouterLink>
@@ -82,12 +111,29 @@ const signin = () => {
                 </div>
             </template>
         </Card>
-    </div>
+    </div> -->
 </template>
 
 <style scoped>
+.login__wrapper {
+    height: fit-content;
+    overflow: auto;
+}
+.login__demo {
+    width: 270px;
+    max-width: 100%;
+    min-height: 270px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
 
-.link-simple {
+.login__demo:hover {
+    transform: scale(1.05);
+}
+
+/* LOGIN DOOR JARNE */
+/* .link-simple {
     text-decoration: underline;
     color: var(--secondary);
     text-align: center;
@@ -95,5 +141,11 @@ const signin = () => {
 
 .link-simple:hover {
     color: var(--secondary-dark-1);
+} */
+</style>
+<style>
+.login__demo .p-card-body,
+.login__demo .p-card-content {
+    height: 100%;
 }
 </style>
