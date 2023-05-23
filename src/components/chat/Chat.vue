@@ -74,6 +74,10 @@ const updateChatGroup = async () => {
     }
 }
 
+const back = () => {
+    router.back();
+}
+
 onMounted(async () => {
     state.decodedJWT = decodeJWT(localStorage.getItem("token"));
     await updateChatGroup();
@@ -98,7 +102,7 @@ watch(() => state.chatGroup, async () => {
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <div class="chat__header"><h2>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
+    <div class="chat__header"><h2><i style="font-size: 2rem" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">
         <InputText v-model="state.message" placeholder="Aa" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" />
@@ -107,6 +111,10 @@ watch(() => state.chatGroup, async () => {
 </div>
 </template>
 <style scoped>
+h2 {
+    display: flex;
+    gap: 1rem;
+}
 .chat__wrapper {
     display: grid;
     grid-template-rows: auto 1fr auto;

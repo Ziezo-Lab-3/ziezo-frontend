@@ -9,12 +9,10 @@ const handleVisibleElements = () => {
     const chatContainer = document.querySelector(".message__chat-container");
     const chatGroupContainer = document.querySelector(".message__chat-group-container");
     if (router.currentRoute.value.params.id !== undefined) {
-        console.log("id is defined");
         chatContainer.classList.remove("tablet-hide");
         chatGroupContainer.classList.add("tablet-hide");
     }
     else {
-        console.log("id is undefined");
         chatContainer.classList.add("tablet-hide");
         chatGroupContainer.classList.remove("tablet-hide");
     }
