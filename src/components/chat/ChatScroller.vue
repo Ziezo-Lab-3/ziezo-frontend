@@ -95,6 +95,7 @@ onMounted(() => {
             :name="getUserByID(item.sender).name_first + ' ' + getUserByID(item.sender).name_last"
             :format="getMessageFormat(item)"
         />
+        <div class="chat__messages__empty" v-if="props.messages.length ===0">Stuur een bericht en start de conversatie!</div>
     </div>
 </template>
 <style scoped>
@@ -102,4 +103,10 @@ onMounted(() => {
     overflow-y: auto;
     scroll-behavior: smooth;
 }
+
+.chat__messages__empty {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--gray-400);
+    }
 </style>

@@ -1,5 +1,15 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import Avatar from './Avatar.vue';
+
+const name = ref("");
+const avatar = ref("");
+
+onMounted(() => {
+    name.value = localStorage.getItem("userFirstName") + " " + localStorage.getItem("userLastName");
+    avatar.value = localStorage.getItem("userAvatar");
+});
 </script>
 <template>
     <nav>
@@ -30,7 +40,7 @@ import { RouterLink } from 'vue-router';
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
                 </RouterLink>
                 <RouterLink to="/app/profile">
-                    <li><i class="pi pi-user" style="font-size: 1.4rem"></i>Profiel</li>
+                    <li class="nav__profile"><div><Avatar :name="name" :src="avatar" :width="32" />{{ name }}</div></li>
                 </RouterLink>
             </ul>
         </div>
@@ -70,6 +80,22 @@ li {
     padding: .5rem 1.25rem;
     margin-bottom: 0.25rem;
     transition: background-color 0.2s ease-in-out;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+li.nav__profile {
+    padding-left: 0.95rem;
+}
+
+li.nav__profile div {
+    max-width: 100%;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .router-link-exact-active li {
