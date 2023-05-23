@@ -47,7 +47,9 @@ a:has(.p-button) {
 }
 
 #content {
-    padding: 1rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: calc(100vh);
     overflow-y: auto;
     grid-column: 2;
@@ -85,7 +87,6 @@ a:has(.p-button) {
     }
 
     #content {
-        padding: 1rem;
         border-radius: 0;
         grid-column: 1;
     }
