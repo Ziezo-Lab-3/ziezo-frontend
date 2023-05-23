@@ -118,6 +118,7 @@ li:active {
         padding: 0;
         height: fit-content;
         background-color: white;
+        box-shadow: none;
     }
 
     ul::not(:last-child) {

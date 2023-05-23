@@ -8,7 +8,7 @@ let newJobDialog = ref(false);
 
 </script>
 <template>
-    <div class="w-full h-full flex justify-content-center align-items-center flex-wrap gap-4">
+    <div class="w-full h-full flex justify-content-center align-items-center flex-wrap gap-4 py-4">
         <Card class="p-m-4 mx-6" style="width: 360px">
             <template #header>
                 <img height="200" class="img-fit" src="../../assets/images/senior_group_gardening@w360.webp"
