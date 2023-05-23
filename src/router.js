@@ -8,6 +8,7 @@ import JobView from "./views/app/JobView.vue";
 import ProfileView from "./views/app/ProfileView.vue";
 import ContactView from "./views/app/ContactView.vue";
 import SettingsView from "./views/app/SettingsView.vue";
+import BrowseView from "./views/app/BrowseView.vue";
 
 import LoginView from "./views/auth/LoginView.vue";
 import SignupView from "./views/auth/SignupView.vue";
@@ -29,6 +30,11 @@ const routes = [
                 path: "",
                 name: "Home",
                 component: HomeView,
+            },
+            {
+                path: "browse",
+                name: "Browse",
+                component: BrowseView,
             },
             {
                 path: "message",
