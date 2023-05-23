@@ -1,9 +1,10 @@
 <script setup>
 import { reactive, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { getChatGroups } from '../../api/chatGroup';
 import Avatar from '../Avatar.vue';
 
+const router = useRouter();
 const emit = defineEmits(['update-selection']);
 
 const state = reactive({
@@ -14,15 +15,18 @@ const state = reactive({
 });
 
 const selectChatGroup = (index) => {
-    state.selectedChatGroup = index;
     emit('update-selection', state.instances[index]);
+    router.push(`/app/message/${state.instances[index]._id}`);
 }
 
 onMounted(async () => {
     state.isLoadingData = true;
     const chatGroups = await getChatGroups(localStorage.getItem('token'));
     state.instances = chatGroups.data;
-    if (chatGroups.data.length > 0) selectChatGroup(0);
+
+    if (screen.width > 768 && state.instances.length > 0) 
+        selectChatGroup(0);
+
     state.isLoadingData = false;
     state.initialized = true;
 });
@@ -61,16 +65,16 @@ onMounted(async () => {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
     padding: .5rem;
-    border-bottom: 1px solid var(--gray-200);
     align-items: center;
     display: flex;
     align-items: center;
     width: 100%;
     box-shadow: inset 0px 0px var(--primary);
     transition: background-color .2s linear, box-shadow .2s linear;
+    margin-bottom: .5rem;
 }
 
-.chat-link.chat-link--selected {
+.chat-link.router-link-active {
     box-shadow: inset 4px 0px var(--primary);
 }
 

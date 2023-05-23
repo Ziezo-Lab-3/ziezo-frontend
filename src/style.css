@@ -81,6 +81,10 @@ a:has(.p-button) {
     bottom: -4rem;
 }
 
+.tablet-show {
+    display: none !important;
+}
+
 @media (max-width: 768px) {
     #app {
         grid-template-columns: 1fr;
@@ -101,5 +105,9 @@ a:has(.p-button) {
 
     .tablet-hide {
         display: none !important;
+    }
+
+    .tablet-show {
+        display: initial !important;
     }
 }
