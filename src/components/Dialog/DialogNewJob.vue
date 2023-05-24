@@ -93,7 +93,8 @@ const state = reactive({
 });
 
 onMounted(async () => {
-    let res = await getCategories();
+    const token = localStorage.getItem('token');
+    let res = await getCategories(token);
     if (res.status === "success") {
         categories.value = res.data;
     }
