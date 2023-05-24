@@ -17,7 +17,7 @@ onMounted(() => {
     <div class="w-full h-full flex justify-content-center align-items-center flex-wrap gap-4 py-4">
         <Card class="p-m-4 mx-6" style="width: 360px">
             <template #header>
-                <img height="200" class="img-fit" src="../../assets/images/senior_group_gardening@w360.webp"
+                <img height="200" class="img-fit w-full" src="../../assets/images/senior_group_gardening@w360.webp"
                     alt="Senior group working in a garden">
             </template>
             <template #title>Hulp nodig?</template>
@@ -35,7 +35,7 @@ onMounted(() => {
         </Card>
         <Card v-if="roles.includes('ROLE_EMPLOYEE')" class="p-m-4 mx-6" style="width: 360px">
             <template #header>
-                <img height="200" class="img-fit" src="../../assets/images/senior_man_working@w360.webp"
+                <img height="200" class="img-fit w-full" src="../../assets/images/senior_man_working@w360.webp"
                     alt="Senior group working in a garden">
             </template>
             <template #title>Klusjes uitvoeren</template>
