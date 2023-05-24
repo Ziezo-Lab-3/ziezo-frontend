@@ -94,6 +94,7 @@ a:has(.p-button) {
     #content {
         border-radius: 0;
         grid-column: 1;
+        padding-top: 0;
     }
 
     #nav_sidebar {

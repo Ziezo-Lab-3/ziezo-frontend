@@ -36,7 +36,8 @@ const carouselImages = ref([
 console.log('Carousel images:', carouselImages.value)
 
 const close = () => {
-  emit('close');
+    console.log('emit:close')
+    emit('close');
 };
 
 const getStateText = () => {

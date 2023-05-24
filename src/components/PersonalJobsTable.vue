@@ -27,6 +27,11 @@ const decodedToken = decodeJWT(localStorage.getItem('token'));
 
 const showDialog = ref(false);
 
+const closeDialog = () => {
+    console.log("closeDialog");
+    showDialog.value = false;
+};
+
 const openDialog = (event) => {
     state.selectedJobId = event.data._id;
     console.log(state.selectedJobId);
@@ -125,7 +130,7 @@ onMounted(() => {
             </template>
         </Column>
     </DataTable>
-    <DialogMyJobs :visible="showDialog" :jobId="state.selectedJobId" @closeDialog="showDialog = false"/>
+    <DialogMyJobs :visible="showDialog" :jobId="state.selectedJobId" @close="closeDialog"/>
 </template>
 <style scoped>
 .description {
