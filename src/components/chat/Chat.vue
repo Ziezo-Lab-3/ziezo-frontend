@@ -105,7 +105,7 @@ watch(() => state.chatGroup, async () => {
     <div class="chat__header"><h2><i style="font-size: 2rem" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">
-        <InputText v-model="state.message" placeholder="Aa" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" />
+        <InputText v-model="state.message" placeholder="Bericht" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" />
         <Button icon="pi pi-send" aria-label="Send" :onclick="sendMessage" />
     </div>
 </div>

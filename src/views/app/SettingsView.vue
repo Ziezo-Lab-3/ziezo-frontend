@@ -25,8 +25,8 @@ watch(() => state.theme, (theme) => {
     <Card class="p-m-4 p-major">
         <template #title><h1>Instellingen</h1></template>
         <template #content>
+            <h2>Kleurenthema's</h2>
             <div class="flex flex-wrap flex-column">
-                <h2>Kleurenthema's</h2>
                 <div class="flex align-items-center">
                     <RadioButton v-model="state.theme" inputId="theme1" name="Default" value="default"/>
                     <label for="theme1" class="ml-2">Standaard</label>

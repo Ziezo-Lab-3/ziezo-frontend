@@ -7,10 +7,10 @@
       <div class="overlay-content">
         <div class="close-button" @click.stop="closeOverlay">×</div>
         <h1>{{ job.name }}</h1>
-        <h3>Beschrijving</h3>
+        <h2>Beschrijving</h2>
         <p>{{ job.description }}</p>
         <p>Prijs: €{{ job.price }}/ u</p>
-        <h3>Adres</h3>
+        <h2>Adres</h2>
         <p>{{ job.address }}</p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <Card class="p-m-4 p-major browse__view">
-    <template #title>Mijn Klusjes</template>
+    <template #title><h1>Mijn Klusjes</h1></template>
     <template #content>
       <InputText v-model="searchTerm" placeholder="Zoek een klusje" />
       <div v-if="jobs.length" class="job-tiles-container">

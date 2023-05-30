@@ -23,7 +23,7 @@ watch(() => router.currentRoute.value.params.id, () => handleVisibleElements());
 </script>
 <template>
     <Card class="p-m-4 p-major">
-        <template #title>Berichten</template>
+        <template #title><h1>Berichten</h1></template>
         <template #content>
             <div class="message__wrapper">
                 <div class="message__chat-group-container">

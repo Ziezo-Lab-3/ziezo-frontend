@@ -11,9 +11,16 @@ const logIngredient = () => { console.log(ingredient.value) }
 </script>
 <template>
     <Card class="p-m-4 p-major">
-        <template #title>Test Area</template>
+        <template #title><h1>Test Area</h1></template>
         <template #content>
             <div class="stack">
+                <h1>Header 1</h1>
+                <h2>Header 2</h2>
+                <h3>Header 3</h3>
+                <h4>Header 4</h4>
+                <h5>Header 5</h5>
+                <h6>Header 6</h6>
+                <p>Paragraph</p>
                 <Button class="p-button-secondary">Coole knop</Button>
                 <InputText placeholder="Voer hier je naam in" />
                 <InputNumber placeholder="Voer hier je leeftijd in" />
