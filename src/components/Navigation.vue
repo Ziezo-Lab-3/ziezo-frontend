@@ -58,7 +58,7 @@ nav {
     flex-direction: column;
     width: 220px;
     height: 100vh;
-    background: #425a7f;
+    background: var(--background-nav);
     padding: 1rem;
     justify-content: space-between;
     box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
