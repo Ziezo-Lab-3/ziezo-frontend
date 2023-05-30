@@ -41,7 +41,7 @@ onMounted(async () => {
             <p>Geen chats gevonden</p>
         </div>
         <div v-else>
-            <RouterLink v-for="(instance, index) in state.instances" :key="instance._id" :tabindex="index" :to="`/app/message/${instance._id}`" class="chat-link">
+            <RouterLink v-for="(instance, index) in state.instances" :key="instance._id" :tabindex="2" :to="`/app/message/${instance._id}`" class="chat-link">
                 <Avatar :src="instance.picture" :name="instance.name || '!'" :width="48" />
                 <div>
                     <h3>{{ instance.name }}</h3>

@@ -86,7 +86,7 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div class="chat__messages" @scroll="onMessageScroll">
+    <div class="chat__messages" @scroll="onMessageScroll" role="feed" aria-label="chat">
         <Message v-for="item in props.messages" :key="item.id"
             :text="item.message" 
             :avatar="getUserByID(item.sender)?.avatar || ''"
@@ -94,6 +94,7 @@ onMounted(() => {
             :date="item.createdAt"
             :name="getUserByID(item.sender).name_first + ' ' + getUserByID(item.sender).name_last"
             :format="getMessageFormat(item)"
+            tabindex="4"
         />
         <div class="chat__messages__empty" v-if="props.messages.length ===0">Stuur een bericht en start de conversatie!</div>
     </div>
