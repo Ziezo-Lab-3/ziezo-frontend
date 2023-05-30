@@ -19,27 +19,27 @@ onMounted(() => {
         <div class="spacing tablet-hide"></div>
         <div class="nav-menu">
             <ul>
-                <RouterLink to="/app/">
+                <RouterLink to="/app/" tabindex="1" >
                     <li><i class="pi pi-home" style="font-size: 1.4rem"></i> Thuispagina</li>
                 </RouterLink>
-                <RouterLink to="/app/message">
+                <RouterLink to="/app/message" tabindex="1" >
                     <li><i class="pi pi-comment" style="font-size: 1.4rem"></i>Berichten</li>
                 </RouterLink>
-                <RouterLink to="/app/jobs">
+                <RouterLink to="/app/jobs" tabindex="1" >
                     <li><i class="pi pi-wrench" style="font-size: 1.4rem"></i>Mijn Klusjes</li>
                 </RouterLink>
-                <a class="help" ><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
+                <a class="help" tabindex="1" ><li><i class="pi pi-question-circle" style="font-size: 1.4rem"></i>Hulp Nodig?</li></a>
             </ul>
         </div>
         <div class="nav-details">
             <ul>
-                <RouterLink to="/app/contact">
+                <RouterLink to="/app/contact" tabindex="1" >
                     <li><i class="pi pi-info-circle" style="font-size: 1.4rem"></i>Contact Info</li>
                 </RouterLink>
-                <RouterLink to="/app/settings">
+                <RouterLink to="/app/settings" tabindex="1" >
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
                 </RouterLink>
-                <RouterLink to="/app/profile">
+                <RouterLink to="/app/profile" tabindex="1" >
                     <li class="nav__profile"><div><Avatar :name="name" :src="avatar" :width="32" />{{ name }}</div></li>
                 </RouterLink>
             </ul>
