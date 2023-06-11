@@ -5,7 +5,7 @@ import PersonalJobsTable from '../../components/PersonalJobsTable.vue';
 </script>
 <template>
     <Card class="p-m-4 p-major">
-        <template #title>Mijn Klusjes</template>
+        <template #title><h1>Mijn Klusjes</h1></template>
         <template #content>
             <TabView>
                 <TabPanel header="Zelf Geplaatste Klusjes">

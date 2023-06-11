@@ -64,7 +64,7 @@ const signup = () => {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Account aanmaken</template>
+        <template #title><h1>Account aanmaken</h1></template>
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">

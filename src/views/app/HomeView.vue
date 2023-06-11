@@ -20,7 +20,7 @@ onMounted(() => {
                 <img height="200" class="img-fit w-full" src="../../assets/images/senior_group_gardening@w360.webp"
                     alt="Senior group working in a garden">
             </template>
-            <template #title>Hulp nodig?</template>
+            <template #title><h1>Hulp nodig?</h1></template>
             <template #content>
                 <p style="margin-top: 0px">
                     Onze klussers staan paraat! Door een klusje te plaatsen, kan je meteen zoeken
@@ -38,7 +38,7 @@ onMounted(() => {
                 <img height="200" class="img-fit w-full" src="../../assets/images/senior_man_working@w360.webp"
                     alt="Senior group working in a garden">
             </template>
-            <template #title>Klusjes uitvoeren</template>
+            <template #title><h1>Klusjes uitvoeren</h1></template>
             <template #content>
                 <p style="margin-top: 0px">
                     Kijk door onze lijst van klusjes om te zien of er iets is dat je kan doen. Er is altijd wel iemand die jouw hulp kan gebruiken!

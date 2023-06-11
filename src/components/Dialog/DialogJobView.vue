@@ -1,10 +1,11 @@
 <script setup>
-import { ref, defineProps, defineEmits, onMounted } from 'vue';
+import { ref, defineProps, defineEmits, onMounted, reactive } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
 import { getPersonalInfo } from '../../api/user'; // Import the getPersonalInfo function
-import Carousel from 'primevue/carousel';
+import Galleria from 'primevue/galleria';
 
 const emit = defineEmits(['close']);
+
 const props = defineProps({
   visible: Boolean,
   klusjeId: {
@@ -13,23 +14,19 @@ const props = defineProps({
   },
 });
 
-const selectedKlusje = ref(null);
-
-const carouselImages = ref([
-  { src: 'https://picsum.photos/200/300' },
-  { src: 'https://picsum.photos/200/300' },
-  { src: 'https://picsum.photos/200/300' },
-]);
-
-console.log('Carousel images:', carouselImages.value)
-
+/**
+ * @type {{ selectedKlusje: Object }}
+ */
+const state = reactive({
+    selectedKlusje: null,
+});
 
 const close = () => {
   emit('close');
 };
 
 const getStateText = () => {
-  if (selectedKlusje.value && selectedKlusje.value.state === 'open') {
+  if (state.selectedKlusje && state.selectedKlusje.state === 'open') {
     return 'Niet uitgevoerd';
   }
   return '';
@@ -41,9 +38,7 @@ onMounted(async () => {
     try {
       const klusje = await getKlusjeById(localStorage.getItem('token'), props.klusjeId);
       if (klusje.status === 'success') {
-        selectedKlusje.value = klusje.data;
-        console.log('Selected Klusje:', klusje.data); // Log the job details
-      
+        state.selectedKlusje = klusje.data;      
       } else {
         console.error('Error fetching klusje details:', klusje.message);
       }
@@ -58,28 +53,31 @@ onMounted(async () => {
   <Dialog
     :visible="props.visible"
     :closable="false"
-    :header="selectedKlusje ? selectedKlusje.name : ''"
+    :header="state.selectedKlusje ? state.selectedKlusje.name : ''"
     modal
     :style="{ width: '832px' }"
     :breakpoints="{ '580px': 'calc(100vw - 1rem)' }"
   >
-    <div v-if="selectedKlusje" class="dialog-content">
+    <div v-if="state.selectedKlusje" class="dialog-content">
       <div class="left-side">
-        <Carousel :value="carouselImages" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="3000" :autoplay="true" style="max-width: 600px">
-          <template #item="{value}">
-            <img :src="'https://picsum.photos/200/300'" style="width: 100%, height: 50%"/>
-          </template>
-        </Carousel>
+        <Galleria :value="state.selectedKlusje.images" numVisible="3" style="height: 200px" >
+            <template #item="image">
+                <img style="width: 100%; height: 100%; object-position: center; object-fit: fit;" :src="image.item" alt="Non-descript image uploaded by user" />
+            </template>
+            <template #thumbnail="image">
+                <img style="width: 100%; height: 100%; object-position: center; object-fit: cover;" :src="image.item" alt="Non-descript thumbnail uploaded by user" />
+            </template>
+        </Galleria>
       </div>
       <div class="right-side">
         <h3>Beschrijving</h3>
-        <p>{{ selectedKlusje.description }}</p>
+        <p>{{ state.selectedKlusje.description }}</p>
         <h3>Adres</h3>
-        <p>{{ selectedKlusje.address }}</p>
+        <p>{{ state.selectedKlusje.address }}</p>
         <div class="details">
           <div class="price-state">
             <p class="p-state">X   {{ getStateText() }}</p>
-            <p class="p-price">{{ selectedKlusje.price }}€ / u</p>
+            <p class="p-price">{{ state.selectedKlusje.price }}€ / u</p>
 
           </div>
         </div>

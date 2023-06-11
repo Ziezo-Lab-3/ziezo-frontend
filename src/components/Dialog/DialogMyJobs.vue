@@ -2,8 +2,7 @@
 import { ref, defineProps, defineEmits, onMounted, watch } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
 import { getPersonalInfo } from '../../api/user'; // Import the getPersonalInfo function
-import Carousel from 'primevue/carousel';
-
+import Galleria from 'primevue/galleria';
 
 const emit = defineEmits(['close']);
 
@@ -28,15 +27,12 @@ const dummyNames = [
 ];
 
 const carouselImages = ref([
-  { src: 'https://picsum.photos/200/300' },
-  { src: 'https://picsum.photos/200/300' },
-  { src: 'https://picsum.photos/200/300' },
+  'https://picsum.photos/200/300',
+  'https://picsum.photos/200/300',
+  'https://picsum.photos/200/300',
 ]);
 
-console.log('Carousel images:', carouselImages.value)
-
 const close = () => {
-    console.log('emit:close')
     emit('close');
 };
 
@@ -53,7 +49,7 @@ watch(() => props.jobId, async(val) => {
             const klusje = await getKlusjeById(localStorage.getItem('token'), val);
             if (klusje.status === 'success') {
                 selectedKlusje.value = klusje.data;
-                console.log('Selected Klusje:', klusje.data);
+                carouselImages.value = klusje.data.images;
             } else {
                 console.error('Error fetching klusje details:', klusje.message);
             }
@@ -69,19 +65,22 @@ watch(() => props.jobId, async(val) => {
   <Dialog
     :visible="props.visible"
     :closable="false"
-    :header="selectedKlusje ? selectedKlusje.name : ''"
     modal
     :style="{ width: '832px' }"
     :breakpoints="{ '580px': 'calc(100vw - 1rem)' }"
   >
+  <template #header ><h2>{{ selectedKlusje ? selectedKlusje.name : '' }}</h2></template>
     <div v-if="selectedKlusje" class="dialog-content">
       <div class="left-side">
         <h3>{{ dummyNames[0].firstName }} {{ dummyNames[0].lastName }}</h3>
-        <Carousel :value="carouselImages" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="3000" :autoplay="true" style="max-width: 600px">
-          <template #item="{value}">
-            <img :src="'https://picsum.photos/200/300'" style="width: 100%, height: 50%"/>
-          </template>
-        </Carousel>
+        <Galleria :value="carouselImages" numVisible="3" style="height: 200px" >
+            <template #item="image">
+                <img style="width: 100%; height: 100%; object-position: center; object-fit: fit;" :src="image.item" alt="Non-descript image uploaded by user" />
+            </template>
+            <template #thumbnail="image">
+                <img style="width: 100%; height: 100%; object-position: center; object-fit: cover;" :src="image.item" alt="Non-descript thumbnail uploaded by user" />
+            </template>
+        </Galleria>
       </div>
       <div class="right-side">
         <h3>Beschrijving</h3>
@@ -91,8 +90,7 @@ watch(() => props.jobId, async(val) => {
         <div class="details">
           <div class="price-state">
             <p class="p-state">X   {{ getStateText() }}</p>
-            <p class="p-price">{{ selectedKlusje.price }}€ / u</p>
-
+            <p class="p-price">{{ selectedKlusje.price }}€</p>
           </div>
         </div>
         
@@ -116,6 +114,7 @@ watch(() => props.jobId, async(val) => {
 <style>
 .dialog-content {
   display: flex;
+  gap: 1rem;
 }
 
 .left-side {

@@ -62,19 +62,20 @@ const loginHulpvrager = () => {
 </script>
 <template>
     <div class="login__wrapper w-screen h-screen flex flex-column justify-content-center align-items-center p-4">
-        <Card class="login__demo mb-4" @click="loginHulpvrager">
+        <h1 style="margin-bottom: 2rem">Welkom bij de Ziezo demo!</h1>
+        <Card class="login__demo mb-4" tabindex="1" @keyup.enter="loginHulpvrager" @click="loginHulpvrager">
             <template #content >
                 <div class="h-full w-full flex flex-column justify-content-center align-items-center px-4 text-center">
                     <i class="pi pi-user" style="font-size: 6rem; color: var(--primary)"></i>
-                    <h3>Inloggen als hulpzoeker</h3>
+                    <h2>Inloggen als hulpzoeker</h2>
                 </div>
             </template>
         </Card>
-        <Card class="login__demo" @click="loginKlusser">
+        <Card class="login__demo" tabindex="2" @keyup.enter="loginKlusser" @click="loginKlusser">
             <template #content>
                 <div class="h-full w-full flex flex-column justify-content-center align-items-center px-4 text-center">
                     <i class="pi pi-wrench" style="font-size: 6rem; color: var(--secondary)"></i>
-                    <h3>Inloggen als klusser</h3>
+                    <h2>Inloggen als klusser</h2>
                 </div>
             </template>
         </Card>

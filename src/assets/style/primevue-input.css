@@ -19,7 +19,7 @@
 .p-inputtext:enabled:active,
 .p-inputtext:enabled:focus,
 .p-inputtext:enabled:hover {
-    border-color: var(--primary);
+    border-color: var(--secondary);
 }
 
 .p-inputtext:enabled::placeholder,
@@ -29,7 +29,7 @@
 }
 
 .p-inputtext:enabled:focus {
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
 }
 
 .p-inputtext:enabled:invalid,
@@ -53,13 +53,13 @@
 
 .p-dropdown:not(.p-disabled):hover,
 .p-multiselect:not(.p-disabled):hover {
-    border-color: var(--primary);
+    border-color: var(--secondary);
 }
 
 .p-dropdown:not(.p-disabled).p-focus,
 .p-multiselect:not(.p-disabled).p-focus {
-    border-color: var(--primary-light-1);
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    border-color: var(--secondary-light-1);
+    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
 }
 
 .p-dropdown .p-dropdown-trigger,
@@ -75,7 +75,7 @@
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus.p-highlight,
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-focus.p-highlight {
-    background-color: var(--primary-faded);
+    background-color: var(--secondary-faded);
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover
@@ -85,7 +85,7 @@
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-dropdown-item.p-highlight:hover,
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-dropdown-item.p-highlight.p-focus:hover,
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-multiselect-item.p-highlight:hover {
-    background-color: var(--primary-faded-2);
+    background-color: var(--secondary-faded-2);
 }
 
 /* Checkbox */
