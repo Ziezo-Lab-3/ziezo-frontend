@@ -47,7 +47,7 @@ const requestcode = () => {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Nieuw wachtwoord</template>
+        <template #title><h1>Nieuw wachtwoord</h1></template>
         <template #content>
             <div class="p-fluid">
                 <div class="p-field">

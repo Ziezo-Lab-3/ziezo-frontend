@@ -5,7 +5,7 @@
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>In orde!</template>
+        <template #title><h1>In orde!</h1></template>
         <template #content>
             <div class="p-fluid">
                 Je wachtwoord is aangepast, je kan terug inloggen.

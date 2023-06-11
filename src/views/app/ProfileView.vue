@@ -8,7 +8,7 @@ const logout = () => {
 </script>
 <template>
     <Card class="p-m-4 p-major">
-        <template #title>Mijn Profiel</template>
+        <template #title><h1>Mijn Profiel</h1></template>
         <template #content>
             <Button label="Log uit" icon="pi pi-sign-out" @click="logout" />
         </template>

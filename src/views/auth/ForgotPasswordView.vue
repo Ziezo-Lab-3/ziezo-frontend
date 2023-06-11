@@ -16,7 +16,7 @@ const requestcode = () => {
                 <img src="/images/Logo.svg" alt="Ziezo Logo">
             </div>
         </template>
-        <template #title>Wachtwoord vergeten?</template>
+        <template #title><h1>Wachtwoord vergeten?</h1></template>
         <template #content>
             Geef je email adres, en we sturen je zo snel mogelijk een email om een nieuw wachtwoord in te stellen.
             <div class="p-fluid">

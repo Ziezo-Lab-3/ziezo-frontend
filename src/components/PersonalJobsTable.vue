@@ -32,11 +32,15 @@ const closeDialog = () => {
     showDialog.value = false;
 };
 
-const openDialog = (event) => {
-    state.selectedJobId = event.data._id;
-    console.log(state.selectedJobId);
-    showDialog.value = true;
+const onClickRow = (event) => {
+    openDialog(event.data._id);
 };
+
+const openDialog = (id) => {
+    console.log(id);
+    state.selectedJobId = id;
+    showDialog.value = true;
+}
 
 const getCategory = (id) => {
     const category = state.categories.find((category) => category._id == id);
@@ -99,7 +103,7 @@ onMounted(() => {
             showLoader: true,
             loading: state.isLoadingData,
             numToleratedItems: 10,
-        }" class="p-datatable-sm table-jobs-self" @row-click.native="openDialog">
+        }" class="p-datatable-sm table-jobs-self" @row-click.native="onClickRow">
         <Column header="" class="col-image">
             <template #body="slotProps">
                 <img :src="slotProps.data.images[0]" style="width: 120px; height: 80px;" class="job-image" />
@@ -108,7 +112,7 @@ onMounted(() => {
         <Column header="Klusje" class="col-job">
             <template #body="slotProps">
                 <div class="column description">
-                    <h2>{{ slotProps.data.name }}</h2>
+                    <h2 tabindex="2" @keyup.enter="() => openDialog(slotProps.data._id)">{{ slotProps.data.name }}</h2>
                     <p>{{ slotProps.data.description }}</p>
                 </div>
             </template>
