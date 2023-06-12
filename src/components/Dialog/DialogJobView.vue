@@ -1,150 +1,145 @@
 <script setup>
-import { ref, defineProps, defineEmits, onMounted, reactive } from 'vue';
+import { reactive, defineProps, onMounted, watch } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
-import { getPersonalInfo } from '../../api/user'; // Import the getPersonalInfo function
-import Galleria from 'primevue/galleria';
+import { getCategories } from '../../api/category';
+import { getUserById } from '../../api/user';
+import { VueperSlides, VueperSlide } from 'vueperslides';
+import moment from 'moment';
 
 const emit = defineEmits(['close']);
 
 const props = defineProps({
-  visible: Boolean,
-  klusjeId: {
-    type: String,
-    required: true,
-  },
+    visible: Boolean,
+    klusjeId: {
+        type: String,
+        required: true,
+    },
 });
 
 /**
- * @type {{ selectedKlusje: Object }}
+ * @type {{ job: Object }}
+ * @type {{ permission: number }}
  */
 const state = reactive({
-    selectedKlusje: null,
+    job: null,
+    permission: 0,
+    user: null,
+    helper: null,
+    category: null
 });
 
 const close = () => {
-  emit('close');
+    emit('close');
 };
 
-const getStateText = () => {
-  if (state.selectedKlusje && state.selectedKlusje.state === 'open') {
-    return 'Niet uitgevoerd';
-  }
-  return '';
-};
+const updateJob = async () => {
+    console.log(props.klusjeId)
+    if (props.klusjeId) {
+        try {
+            const userId = localStorage.getItem('userId');
+            let result = await getKlusjeById(localStorage.getItem('token'), props.klusjeId);
+            if (result.status === 'success') {
+                state.job = result.data;
+                if (state.job.user === userId) {
+                    state.permission = 30;
+                } else if (state.job.helper === userId) {
+                    state.permission = 20;
+                } else {
+                    state.permission = 10;
+                }
+            }
+            result = await getCategories(localStorage.getItem('token'));
+            if (result.status === 'success') {
+                state.category = result.data.find((category) => category._id === state.job.category).name;
+            }
 
-
-onMounted(async () => {
-  if (props.klusjeId) {
-    try {
-      const klusje = await getKlusjeById(localStorage.getItem('token'), props.klusjeId);
-      if (klusje.status === 'success') {
-        state.selectedKlusje = klusje.data;      
-      } else {
-        console.error('Error fetching klusje details:', klusje.message);
-      }
-    } catch (error) {
-      console.error('Error fetching klusje details:', error);
+            if (state.job.user) {
+                result = await getUserById(localStorage.getItem('token'), state.job.user);
+                if (result.status === 'success') {
+                    state.user = result.data;
+                }
+            }
+            console.error(result.message);
+        } catch (error) {
+            console.error(error);
+        }
     }
-  }
-});
+}
+
+watch(() => props.klusjeId, async () => await updateJob());
+onMounted(async () => await updateJob());
 </script>
 
 <template>
-  <Dialog
-    :visible="props.visible"
-    :closable="false"
-    :header="state.selectedKlusje ? state.selectedKlusje.name : ''"
-    modal
-    :style="{ width: '832px' }"
-    :breakpoints="{ '580px': 'calc(100vw - 1rem)' }"
-  >
-    <div v-if="state.selectedKlusje" class="dialog-content">
-      <div class="left-side">
-        <Galleria :value="state.selectedKlusje.images" numVisible="3" style="height: 200px" >
-            <template #item="image">
-                <img style="width: 100%; height: 100%; object-position: center; object-fit: fit;" :src="image.item" alt="Non-descript image uploaded by user" />
-            </template>
-            <template #thumbnail="image">
-                <img style="width: 100%; height: 100%; object-position: center; object-fit: cover;" :src="image.item" alt="Non-descript thumbnail uploaded by user" />
-            </template>
-        </Galleria>
-      </div>
-      <div class="right-side">
-        <h3>Beschrijving</h3>
-        <p>{{ state.selectedKlusje.description }}</p>
-        <h3>Adres</h3>
-        <p>{{ state.selectedKlusje.address }}</p>
-        <div class="details">
-          <div class="price-state">
-            <p class="p-state">X   {{ getStateText() }}</p>
-            <p class="p-price">{{ state.selectedKlusje.price }}€ / u</p>
-
-          </div>
+    <Dialog :visible="props.visible" :closable="false" :header="state.job ? state.job.name : ''" modal
+        :style="{ width: '832px' }" :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
+        <template #header>
+            <h2>{{ state.job?.name || '' }}</h2>
+        </template>
+        <div v-if="state.job" class="content">
+            <div class="content__main">
+                <h2>Beschrijving</h2>
+                <p>{{ state.job.description }}</p>
+                <template v-if="state.permission >= 20">
+                    <h2>Adres</h2>
+                    <p>{{ state.job.address }}</p>
+                </template>
+                <div class="content__category">{{ state.category }}</div>
+                <div class="content__price">€{{ state.job.price }}</div>
+                <div>{{  }}</div>
+            </div>
+            <div class="content__additional">
+                <VueperSlides v-if="state.job?.images" :slide-ratio="2/3">
+                    <VueperSlide v-for="(image, index) in state.job.images" :key="index" :image="image" :link="image" open-in-new>
+                    </VueperSlide>
+                </VueperSlides>
+            </div>
         </div>
-        
-      </div>
-    </div>
-
-    <template #footer>
-      <div class="flex justify-content-between">
-        <Button label="Cancel" @click="close" class="p-button-secondary" />
-        <div class="right-footer">
-          <Button class="p-button" label="Stuur bericht" />
-        </div>
-      </div>
-
-      <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
-    </template>
-  </Dialog>
+        <template #footer>
+            <div class="flex justify-content-between">
+                <Button label="Cancel" @click="close" class="p-button-secondary" />
+                <div class="right-footer">
+                    <Button class="p-button" label="Stuur bericht" />
+                </div>
+            </div>
+            <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
+        </template>
+    </Dialog>
 </template>
 
 <style>
-.dialog-content {
-  display: flex;
+.content {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-gap: 1rem;
 }
 
-.left-side {
-  width: 40%;
+.content__main {
+    grid-column: 2;
 }
 
-.right-side {
-  width: 60%;
+.content__additional {
+    grid-column: 1;
+    grid-row: 1 / span 2;
 }
 
-.right-footer {
-  display: flex;
-  gap: 1rem;
+.content__category {
+    font-size: 1.2em;
+    opacity: 0.5;
+    text-transform: uppercase;
 }
 
-.p-price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: green;
+.content__price {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: var(--success);
 }
 
-.p-state {
-  font-size: 1rem;
-  font-weight: bold;
-  color: red;
+@media screen and (max-width: 580px) {
+    .content {
+        grid-template-columns: 1fr;
+    }    
 }
-
-.details {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
-
-.price-state {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 2rem;
-}
-.p-carousel-content {
-  height: 200px;
-  overflow-y: hidden;
-}
-
-
 </style>
