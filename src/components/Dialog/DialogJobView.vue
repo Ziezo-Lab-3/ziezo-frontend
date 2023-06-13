@@ -113,9 +113,10 @@ onMounted(async () => await updateJob());
         <div v-if="state.job" class="content">
             <div class="content__main">
                 <div class="content__stats">
-                    <div class="content__category">{{ state.category }}</div>
+                    <div class="content__category">Categorie: {{ state.category }}</div>
                     <div class="content__posted">Posted {{ state.daysSincePosted }}</div>
                     <div class="content__price">€{{ state.job.price }}</div>
+                    <div class="content__price__label">Inclusief service kost</div>
                 </div>
                 <h2>Beschrijving</h2>
                 <p>{{ state.job.description }}</p>
@@ -172,30 +173,41 @@ onMounted(async () => await updateJob());
 .content__stats {
     display: grid;
     grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
 }
 
 .content__category {
-    font-size: 1.2em;
-    opacity: 0.6;
-    text-transform: uppercase;
-    grid-column: 2;
-    grid-row: 1;
-    text-align: right;
-}
-
-.content__posted {
-    opacity: 0.6;
+    opacity: 0.8;
     grid-column: 1;
     grid-row: 1;
 }
 
+.content__posted {
+    opacity: 0.8;
+    grid-column: 1;
+    grid-row: 2;
+}
+
 .content__price {
-    margin: .5rem 0;
     font-weight: bold;
     font-size: 2em;
-    color: var(--success);
+    color: var(--white);
+    background-color: var(--secondary);
+    border-radius: .125em;
+    text-align: center!important;
+    padding: .25em .5em;
+    height: fit-content;
+    width: fit-content;
+    margin-left: auto;
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1 / span 2;
+    text-align: right;
+}
+
+.content__price__label {
+    opacity: 0.8;
+    grid-column: 2;
+    grid-row: 3;
     text-align: right;
 }
 
