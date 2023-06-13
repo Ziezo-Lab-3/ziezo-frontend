@@ -3,11 +3,14 @@ import { reactive, defineProps, onMounted, watch } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
 import { getCategories } from '../../api/category';
 import { getUserByID } from '../../api/user';
+import { postChatGroup } from '../../api/chatGroup';
 import { VueperSlides, VueperSlide } from 'vueperslides';
+import { useRouter } from 'vue-router';
 import Avatar from '../Avatar.vue';
 import moment from 'moment';
 
 const emit = defineEmits(['close']);
+const router = useRouter();
 
 const props = defineProps({
     visible: Boolean,
@@ -40,8 +43,21 @@ const close = () => {
     emit('close');
 };
 
+const openChat = async () => {
+    const userId = localStorage.getItem('userId');
+    if (state.user && state.user._id !== userId) {
+        const chatGroup = {
+            name: state.user.name_first + ' ' + state.user.name_last,
+            users: [userId, state.user._id],
+        };
+        let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
+        if (result.status === 'success') {
+            router.push(`/app/message/${result.data._id}`);
+        } else console.error(result.message);
+    }
+};
+
 const updateJob = async () => {
-    console.log(props.klusjeId)
     if (props.klusjeId) {
         try {
             const userId = localStorage.getItem('userId');
@@ -76,13 +92,13 @@ const updateJob = async () => {
                     state.helper = result.data;
                 }
             } else console.error(result.message);
-            console.log(state);
-
         } catch (error) {
             console.error(error);
         }
     }
 }
+
+
 
 watch(() => props.klusjeId, async () => await updateJob());
 onMounted(async () => await updateJob());
@@ -114,13 +130,13 @@ onMounted(async () => await updateJob());
                     </VueperSlide>
                 </VueperSlides>
                 <div v-if="state.user" class="content__user">
-                    <Avatar :src="state.user.avatar" :name="state.helper.name_first + ' ' + state.user.name_last" :width="48" />
-                    <div><b>{{ state.user.name_first }} {{ state.user.name_last }}</b></div>
+                    <Avatar :src="state.user?.avatar" :name="state.helper?.name_first + ' ' + state.user?.name_last" :width="48" />
+                    <div><b>{{ state.user?.name_first }} {{ state.user?.name_last }}</b></div>
                     <div>Hulpzoeker</div>
                 </div>
                 <div v-if="state.helper && state.permission >= 20" class="content__user">
-                    <Avatar :src="state.helper.avatar" :name="state.helper.name_first + ' ' + state.helper.name_last" :width="48" />
-                    <div><b>{{ state.helper.name_first }} {{ state.helper.name_last }}</b></div>
+                    <Avatar :src="state.helper?.avatar" :name="state.helper?.name_first + ' ' + state.helper?.name_last" :width="48" />
+                    <div><b>{{ state.helper?.name_first }} {{ state.helper?.name_last }}</b></div>
                     <div>Klusser</div>
                 </div>
             </div>
@@ -129,7 +145,7 @@ onMounted(async () => await updateJob());
             <div class="flex justify-content-between">
                 <Button label="Cancel" @click="close" class="p-button-secondary" />
                 <div class="right-footer">
-                    <Button class="p-button" label="Stuur bericht" />
+                    <Button class="p-button" label="Stuur bericht" @click="openChat" />
                 </div>
             </div>
             <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
