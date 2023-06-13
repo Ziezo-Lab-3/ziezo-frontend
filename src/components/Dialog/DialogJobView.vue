@@ -2,8 +2,9 @@
 import { reactive, defineProps, onMounted, watch } from 'vue';
 import { getKlusjeById } from '../../api/klusje';
 import { getCategories } from '../../api/category';
-import { getUserById } from '../../api/user';
+import { getUserByID } from '../../api/user';
 import { VueperSlides, VueperSlide } from 'vueperslides';
+import Avatar from '../Avatar.vue';
 import moment from 'moment';
 
 const emit = defineEmits(['close']);
@@ -17,15 +18,22 @@ const props = defineProps({
 });
 
 /**
- * @type {{ job: Object }}
- * @type {{ permission: number }}
+ * @type {{ 
+ *      job: Object | null, 
+ *      permission: number, 
+ *      user: Object | null, 
+ *      helper: Object | null, 
+ *      category: string | null, 
+ *      daysSincePosted: string | null 
+ * }}
  */
 const state = reactive({
     job: null,
     permission: 0,
     user: null,
     helper: null,
-    category: null
+    category: null,
+    daysSincePosted: null,
 });
 
 const close = () => {
@@ -47,19 +55,29 @@ const updateJob = async () => {
                 } else {
                     state.permission = 10;
                 }
-            }
+                state.daysSincePosted = moment(state.job.createdAt).fromNow();
+            } else console.error(result.message);
             result = await getCategories(localStorage.getItem('token'));
+
             if (result.status === 'success') {
                 state.category = result.data.find((category) => category._id === state.job.category).name;
-            }
+            } else console.error(result.message);
 
             if (state.job.user) {
-                result = await getUserById(localStorage.getItem('token'), state.job.user);
+                result = await getUserByID(localStorage.getItem('token'), state.job.user);
                 if (result.status === 'success') {
                     state.user = result.data;
                 }
-            }
-            console.error(result.message);
+            } else console.error(result.message);
+
+            if (state.job.helper) {
+                result = await getUserByID(localStorage.getItem('token'), state.job.helper);
+                if (result.status === 'success') {
+                    state.helper = result.data;
+                }
+            } else console.error(result.message);
+            console.log(state);
+
         } catch (error) {
             console.error(error);
         }
@@ -78,21 +96,33 @@ onMounted(async () => await updateJob());
         </template>
         <div v-if="state.job" class="content">
             <div class="content__main">
+                <div class="content__stats">
+                    <div class="content__category">{{ state.category }}</div>
+                    <div class="content__posted">Posted {{ state.daysSincePosted }}</div>
+                    <div class="content__price">€{{ state.job.price }}</div>
+                </div>
                 <h2>Beschrijving</h2>
                 <p>{{ state.job.description }}</p>
                 <template v-if="state.permission >= 20">
                     <h2>Adres</h2>
                     <p>{{ state.job.address }}</p>
                 </template>
-                <div class="content__category">{{ state.category }}</div>
-                <div class="content__price">€{{ state.job.price }}</div>
-                <div>{{  }}</div>
             </div>
             <div class="content__additional">
                 <VueperSlides v-if="state.job?.images" :slide-ratio="2/3">
                     <VueperSlide v-for="(image, index) in state.job.images" :key="index" :image="image" :link="image" open-in-new>
                     </VueperSlide>
                 </VueperSlides>
+                <div v-if="state.user" class="content__user">
+                    <Avatar :src="state.user.avatar" :name="state.helper.name_first + ' ' + state.user.name_last" :width="48" />
+                    <div><b>{{ state.user.name_first }} {{ state.user.name_last }}</b></div>
+                    <div>Hulpzoeker</div>
+                </div>
+                <div v-if="state.helper && state.permission >= 20" class="content__user">
+                    <Avatar :src="state.helper.avatar" :name="state.helper.name_first + ' ' + state.helper.name_last" :width="48" />
+                    <div><b>{{ state.helper.name_first }} {{ state.helper.name_last }}</b></div>
+                    <div>Klusser</div>
+                </div>
             </div>
         </div>
         <template #footer>
@@ -123,18 +153,54 @@ onMounted(async () => await updateJob());
     grid-row: 1 / span 2;
 }
 
+.content__stats {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
 .content__category {
     font-size: 1.2em;
-    opacity: 0.5;
+    opacity: 0.6;
     text-transform: uppercase;
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+}
+
+.content__posted {
+    opacity: 0.6;
+    grid-column: 1;
+    grid-row: 1;
 }
 
 .content__price {
-    margin-top: 20px;
-    margin-bottom: 0;
+    margin: .5rem 0;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 2em;
     color: var(--success);
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+}
+
+.content__user {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    font-size: 1em;
+    line-height: 1em;
+    margin-top: 1em;
+}
+
+.content__user > img {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin-right: 1em;
+}
+
+.content__user > div:nth-child(3) {
+    grid-column: 2;
+    opacity: .8;
 }
 
 @media screen and (max-width: 580px) {
