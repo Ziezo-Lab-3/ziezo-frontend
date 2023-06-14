@@ -7,7 +7,7 @@ import { getCategories } from '../api/category';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Tag from 'primevue/tag';
-import DialogMyJobs from './Dialog/DialogMyJobs.vue';
+import DialogJobView from './Dialog/DialogJobView.vue';
 
 const props = defineProps({
     executed: {
@@ -134,7 +134,7 @@ onMounted(() => {
             </template>
         </Column>
     </DataTable>
-    <DialogMyJobs :visible="showDialog" :jobId="state.selectedJobId" @close="closeDialog"/>
+    <DialogJobView :visible="showDialog" :klusje-id="state.selectedJobId" @close="closeDialog"/>
 </template>
 <style scoped>
 .description {
