@@ -62,6 +62,7 @@ const openChatUser = async () => {
         };
         let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
         if (result.status === 'success') {
+            console.debug("Navigating to /app/message/" + result.data._id +"")
             router.push(`/app/message/${result.data._id}`);
         } else console.error(result.message);
     }
@@ -76,6 +77,7 @@ const openChatHelper = async () => {
         };
         let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
         if (result.status === 'success') {
+            console.debug("Navigating to /app/message/" + result.data._id +"")
             router.push(`/app/message/${result.data._id}`);
         } else console.error(result.message);
     }

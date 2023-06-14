@@ -73,3 +73,15 @@ export const addKlusjeCandidate = async (token, klusjeId, userId) => {
     });
     return await response.json();
 }
+
+export const putKlusje = async (token, klusjeId, klusje) => {
+    const response = await fetch(`${URL}/klusje/${klusjeId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token,
+        },
+        body: JSON.stringify(klusje),
+    });
+    return await response.json();
+}

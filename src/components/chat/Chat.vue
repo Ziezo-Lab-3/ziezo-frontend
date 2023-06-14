@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, onMounted, watch } from 'vue';
+import { reactive, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import decodeJWT from '../../js/decodeJWT';
 import { getMessages, postMessage } from '../../api/message';
 import { getChatGroups } from '../../api/chatGroup';
 import ChatScroller from './ChatScroller.vue';
+import ChatJobList from './ChatJobList.vue';
 
 const router = useRouter();
 /**
@@ -20,6 +21,7 @@ const state = reactive({
     messages: [],
     chatGroup: null,
     message: "",
+
 });
 
 const sendMessage = async () => {
@@ -69,14 +71,20 @@ const updateChatGroup = async () => {
         state.chatGroup = result.data.find((chatGroup) => chatGroup._id === id);
         if (state.chatGroup === undefined) {
             console.error("ChatGroup not found");
-            router.push("/app/message");
-            return;
+            //router.push("/app/message");
         }
     }
     else {
         console.error("Chat.vue onMounted(): " + result.message);
     }
 }
+
+const otherUser = computed(() => {
+    if (state.chatGroup === null) return;
+    if (state.chatGroup.members.length !== 2) return;
+
+    return state.chatGroup.members.find(member => member._id !== state.decodedJWT.id);
+});
 
 const back = () => {
     router.back();
@@ -105,6 +113,7 @@ watch(() => state.chatGroup, async () => {
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
+    <ChatJobList v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
     <div class="chat__header"><h2><i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">

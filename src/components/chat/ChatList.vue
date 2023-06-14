@@ -16,6 +16,7 @@ const state = reactive({
 
 const selectChatGroup = (index) => {
     emit('update-selection', state.instances[index]);
+    console.debug("Navigating to /app/message/" + state.instances[index]._id + "")
     router.push(`/app/message/${state.instances[index]._id}`);
 }
 

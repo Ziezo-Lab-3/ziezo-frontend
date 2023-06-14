@@ -115,6 +115,25 @@ a:has(.p-button) {
     display: none !important;
 }
 
+/* Style scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #8c939a7f;
+    border-radius: 3px;
+    width: 6px;
+    height: 6px;
+    transition: all 500 linear;
+}
+
+:hover::-webkit-scrollbar-thumb {
+    background-color: #8c939aff;
+}
+
 @media (max-width: 768px) {
     #app {
         grid-template-columns: 1fr;
