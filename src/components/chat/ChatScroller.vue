@@ -108,7 +108,7 @@ onMounted(() => {
 
 .chat__messages__empty {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1em;
     color: var(--gray-400);
     }
 </style>

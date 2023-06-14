@@ -8,6 +8,7 @@ import verifyToken from '../js/verifyToken';
 const router = useRouter();
 const menuOpen = ref(false);
 const content = ref(null);
+const touch = ref(false);
 
 const contentScroll = ref(0);
 
@@ -16,18 +17,42 @@ onMounted(() => {
         router.push('/login');
         return;
     }
-    content.value.addEventListener('scroll', () => {
-        const newScroll = content.value.scrollTop;
-        if (newScroll > contentScroll.value) {
-            document.getElementById('menu_toggle').classList.add('hidden');
-        } else {
-            document.getElementById('menu_toggle').classList.remove('hidden');
+    content.value.addEventListener("touchstart", (e) => {
+        touch.value = true;
+        // check if #menu_toggle is clicked
+        if (e.target.id === 'menu_toggle' || e.target.closest('#menu_toggle')) {
+            return;
         }
-        contentScroll.value = newScroll;
-    })
+
+        // if touchevent is active for more than 300ms, hide the menu
+        setTimeout(() => {
+            // check for updates to the touch event
+
+            if (touch.value) {
+                document.getElementById('menu_toggle').classList.add('menu_toggle--hidden');
+            }
+        }, 300);
+    }, false);
+
+    content.value.addEventListener("touchend", (e) => {
+        touch.value = false;
+
+        // check if #menu_toggle is clicked
+        if (e.target.id === 'menu_toggle' || e.target.closest('#menu_toggle')) {
+            return;
+        }
+        document.getElementById('menu_toggle').classList.remove('menu_toggle--hidden');
+    }, false);
 });
 
 onBeforeRouteUpdate((to, from, next) => {
+    const menuToggle = document.getElementById('menu_toggle');
+    if (to.matched.some(record => record.meta.menuRight)) {
+        menuToggle.classList.add('menu_toggle--right');
+    }
+    else {
+        menuToggle.classList.remove('menu_toggle--right');
+    }
     if (!verifyToken()) {
         router.push('/login');
         return;
@@ -45,7 +70,7 @@ onBeforeRouteUpdate((to, from, next) => {
     <div id="nav_mobile">
         <Sidebar v-model:visible="menuOpen" position="bottom" class="p-sidebar-md">
             <template #header>
-                <div class="nav-logo" >
+                <div class="nav-logo">
                     <img src="/images/Logo.svg" alt="Ziezo Logo">
                 </div>
             </template>

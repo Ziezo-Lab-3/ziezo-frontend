@@ -21,11 +21,11 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 110%;
     letter-spacing: 0.25px;
-    margin: 0 0 .5rem 0; 
+    margin: 0 0 .5em 0; 
 }
 
 * > h1:not(:first-child), * > h2:not(:first-child), * > h3:not(:first-child), * > h4:not(:first-child), * > h5:not(:first-child), * > h6:not(:first-child) {
-    margin-top: 1rem;
+    margin-top: 1em;
 }
 
 h1 { font-size: 2rem; }
@@ -43,7 +43,7 @@ label {
     display: flex;
     flex-direction: column;
     width: fit-content;
-    gap: 1rem;
+    gap: 1em;
 }
 
 .img-fit {
@@ -57,7 +57,7 @@ a:has(.p-button) {
 .labelInput {
     display: flex;
     flex-direction: column;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5em;
 }
 
 #app {
@@ -68,7 +68,7 @@ a:has(.p-button) {
 #content {
     display: flex;
     align-items: top;
-    padding-top: 1rem;
+    padding-top: 1em;
     justify-content: center;
     height: calc(100vh);
     overflow-y: auto;
@@ -81,24 +81,34 @@ a:has(.p-button) {
 
 #menu_toggle {
     position: fixed;
-    bottom: 1rem;
+    bottom: 1em;
     left: 50%;
     transform: translateX(-50%);
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3.5em;
+    height: 3.5em;
     z-index: 100;
     cursor: pointer;
     background-color: var(--secondary);
     border-radius: 50%;
-    padding: 1rem;
+    padding: 1em;
     color: white;
     opacity:100;
     transition: all .3s ease;
 }
 
-#menu_toggle.hidden {
-    opacity: 0;
-    bottom: -4rem;
+#menu_toggle.menu_toggle--hidden {
+    transform: translateX(-50%) scale(0.75) translateY(4.5em);
+}
+
+#menu_toggle.menu_toggle--right {
+    right: 1em;
+    bottom: 4em;
+    left: auto;
+    transform: none;
+}
+
+#menu_toggle.menu_toggle--right.menu_toggle--hidden {
+    transform: scale(0.75) translateX(4.5em);
 }
 
 .tablet-show {

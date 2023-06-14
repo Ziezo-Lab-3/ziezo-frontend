@@ -1,5 +1,5 @@
 .p-button {
-    border-radius: 2rem;
+    border-radius: 2em;
     background: var(--primary);
     border: 1px solid transparent;
     text-align: center;
@@ -15,7 +15,7 @@
 }
 .p-button:enabled:focus {
     background: var(--primary-light-1);
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: 0 0 0 0.2em var(--primary-faded);
 }
 .p-button:enabled:hover:focus {
     background: var(--primary-dark-1);
@@ -23,7 +23,7 @@
 }
 
 .p-button.p-button-danger {
-    border-radius: 2rem;
+    border-radius: 2em;
     background: var(--danger);
     border: 1px solid transparent;
 }
@@ -34,7 +34,7 @@
 }
 .p-button.p-button-danger:enabled:focus {
     background: var(--danger-focus);
-    box-shadow: 0 0 0 0.2rem var(--danger-faded);
+    box-shadow: 0 0 0 0.2em var(--danger-faded);
 }
 .p-button.p-button-danger:enabled:hover:focus {
     background: var(--danger-hover);
@@ -62,7 +62,7 @@
     background: var(--secondary);
     border: 1px solid var(--secondary);
     color: white;
-    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
+    box-shadow: 0 0 0 0.2em var(--secondary-faded);
 }
 
 .p-button.p-button-secondary:enabled:hover:focus {

@@ -52,7 +52,7 @@ const sanitize = (messages) => {
 const loadNewMessages = async (params) => {
     const result = await getMessages(localStorage.getItem("token"), params);
     if (result.status === "success") {
-        // Combine the old messages with the new messages, and remove duplicates
+        // Combine the old messages with the new messages, and emove duplicates
         state.messages = sanitize([...state.messages, ...result.data]);
         state.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     }
@@ -105,7 +105,7 @@ watch(() => state.chatGroup, async () => {
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <div class="chat__header"><h2><i style="font-size: 2rem" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
+    <div class="chat__header"><h2><i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">
         <InputText v-model="state.message" placeholder="Bericht" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" tabindex="2"/>
@@ -116,7 +116,7 @@ watch(() => state.chatGroup, async () => {
 <style scoped>
 h2 {
     display: flex;
-    gap: 1rem;
+    gap: 1em;
 }
 .chat__wrapper {
     display: grid;
@@ -126,21 +126,21 @@ h2 {
 }
 .chat__input {
     display: grid;
-    height: 3rem;
+    height: 3em;
     grid-template-columns: 1fr auto;
-    grid-gap: .5rem;
-    padding: .25rem;
+    grid-gap: .5em;
+    padding: .25em;
 }
 
 .chat__empty-message {
     text-align: center;
     margin: 0;
-    padding: 1rem;
+    padding: 1em;
     color: var(--secondary);
 }
 
 .chat__messages {
     overflow-y: auto;
-    padding: 1rem 0;
+    padding: 1em 0;
 }
 </style>

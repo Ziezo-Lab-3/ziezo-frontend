@@ -50,7 +50,7 @@ const wrapperClass = computed(() => {
     align-items: center;
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto auto;
-    margin-bottom: .5rem;
+    margin-bottom: .5em;
 }
 
 .message__wrapper--self {
@@ -67,9 +67,9 @@ const wrapperClass = computed(() => {
 
 .message__name {
     grid-area: name;
-    font-size: .75rem;
+    font-size: .75em;
     color: var(--gray-400);
-    margin: 0 1rem;
+    margin: 0 1em;
 }
 
 .message__wrapper--self .message__name {
@@ -83,20 +83,20 @@ const wrapperClass = computed(() => {
 
 .message__bubble {
     grid-area: bubble;
-    padding: .325rem .75rem .325rem .75rem;
+    padding: .325em .75em .325em .75em;
     background-color: var(--gray-200);
     color: var(--body);
     max-width: 80%;
-    margin: auto .5rem;
+    margin: auto .5em;
 }
 
 .message__wrapper--other .message__bubble {
-    border-radius: 1rem 1rem 1rem 0;
+    border-radius: 1em 1em 1em 0;
     margin-right: auto;
 }
 
 .message__wrapper--self .message__bubble {
-    border-radius: 1rem 1rem 0 1rem;
+    border-radius: 1em 1em 0 1em;
     background-color: var(--primary);
     color: var(--white);
     margin-left: auto;
