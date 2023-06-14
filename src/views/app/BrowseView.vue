@@ -4,11 +4,12 @@
     <template #content>
       <InputText v-model="searchTerm" placeholder="Zoek een klusje" />
       <div v-if="jobs.length" class="job-tiles-container">
-        <JobTile v-for="job in jobs" :key="job._id" :job="job" @details="showKlusjeDetails(job._id)" />
+        <JobTile v-for="job in jobs" :key="job._id" :job="job" @select-job="openJobModal(job._id)" />
       </div>
       <div v-else>
         Loading...
       </div>
+      <DialogJobView :visible="openDialog" :klusjeId="selectedKlusje" @close="openDialog = false" />
     </template>
   </Card>
 </template>
@@ -16,11 +17,13 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import JobTile from '../../components/JobTile.vue';
-import { getKlusjes, getKlusjeById } from '../../api/klusje';
+import DialogJobView from '../../components/Dialog/DialogJobView.vue';
+import { getKlusjes } from '../../api/klusje';
 
 const selectedKlusje = ref(null);
 const searchTerm = ref('');
 const jobs = ref([]);
+const openDialog = ref(false);
 
 // Fetch jobs from the API
 const fetchJobs = async () => {
@@ -29,7 +32,6 @@ const fetchJobs = async () => {
       first: 0,
       last: 10,
     });
-    console.log('API response:', result); // Add this line to log the response
 
     if (result.status === 'success') {
       jobs.value = result.data;
@@ -59,20 +61,9 @@ watch(searchTerm, async (newTerm) => {
   }
 });
 
-const showKlusjeDetails = async (klusjeId) => {
-  console.log("Klusje ID:", klusjeId);
-
-  try {
-    const response = await getKlusjeById(localStorage.getItem('token'), klusjeId);
-    if (response.status === 'success') {
-      selectedKlusje.value = response.data;
-      console.log('Selected Klusje:', response.data); // Add this line to log the job details
-    } else {
-      console.error('Error fetching klusje details:', response.message);
-    }
-  } catch (error) {
-    console.error('Error fetching klusje details:', error);
-  }
+const openJobModal = async (id) => {
+    selectedKlusje.value = id;
+    openDialog.value = true;
 };
 
 onMounted(fetchJobs);

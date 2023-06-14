@@ -26,6 +26,7 @@ import Steps from 'primevue/steps';
 
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
+import 'vueperslides/dist/vueperslides.css';
 import './style.css';
 import 'primeicons/primeicons.css';
 
@@ -50,6 +51,7 @@ app.component('SplitButton', SplitButton);
 app.component('Card', Card);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Dialog', Dialog);
+app.component('Steps', Steps);
 
 app.use(router);
 app.use(DialogService);

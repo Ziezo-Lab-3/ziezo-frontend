@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-
+import Editor from 'primevue/editor';
+const editorValue = ref("");
 const musicIsOn = ref(false);
 const fruitLijst = ref(['appel', 'banaan', 'peer']);
 const favFruit = ref('appel');
@@ -8,12 +9,15 @@ const mijnFruit = ref(['peer']);
 const isVegetarian = ref(false);
 const ingredient = ref("none");
 const logIngredient = () => { console.log(ingredient.value) }
+const logEditor = () => { console.log(editorValue) }
 </script>
 <template>
     <Card class="p-m-4 p-major">
         <template #title><h1>Test Area</h1></template>
         <template #content>
             <div class="stack">
+                <Editor v-model="editorValue" editorStyle="height: 320px" />
+                <Button @click="logEditor">Log</Button>
                 <h1>Header 1</h1>
                 <h2>Header 2</h2>
                 <h3>Header 3</h3>
