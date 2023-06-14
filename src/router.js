@@ -9,6 +9,7 @@ import ProfileView from "./views/app/ProfileView.vue";
 import ContactView from "./views/app/ContactView.vue";
 import SettingsView from "./views/app/SettingsView.vue";
 import BrowseView from "./views/app/BrowseView.vue";
+import UserProfileView from "./views/app/UserProfileView.vue";
 
 import LoginView from "./views/auth/LoginView.vue";
 import SignupView from "./views/auth/SignupView.vue";
@@ -59,6 +60,11 @@ const routes = [
                 path: "profile",
                 name: "Mijn Profiel",
                 component: ProfileView,
+            },
+            {
+                path: "profile/:id",
+                name: "Profiel",
+                component: UserProfileView,
             },
             {
                 path: "test",
