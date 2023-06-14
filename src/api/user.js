@@ -8,3 +8,12 @@ export const getPersonalInfo = async (token) => {
     });
     return await response.json();
 }
+
+export const getUserByID = async (token, id) => {
+    const response = await fetch(`${URL}/user/${id}`, {
+        headers: {
+            "x-access-token": token,
+        },
+    });
+    return await response.json();
+}
