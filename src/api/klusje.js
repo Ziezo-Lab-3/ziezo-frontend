@@ -63,3 +63,13 @@ export const getKlusjesCount = async (token, params) => {
     });
     return await response.json();
 }
+
+export const addKlusjeCandidate = async (token, klusjeId, userId) => {
+    const response = await fetch(`${URL}/klusje/${klusjeId}/candidates/${userId}`, {
+        method: "POST",
+        headers: {
+            "x-access-token": token,
+        },
+    });
+    return await response.json();
+}

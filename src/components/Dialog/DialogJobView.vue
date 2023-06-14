@@ -6,6 +6,7 @@ import { getUserByID } from '../../api/user';
 import { postChatGroup } from '../../api/chatGroup';
 import { VueperSlides, VueperSlide } from 'vueperslides';
 import { useRouter } from 'vue-router';
+import { addKlusjeCandidate } from '../../api/klusje';
 import Avatar from '../Avatar.vue';
 import moment from 'moment';
 
@@ -45,6 +46,15 @@ const close = () => {
 
 const openChatUser = async () => {
     const userId = localStorage.getItem('userId');
+
+    // if user is not a candidate
+    if (state.job.candidates.find((candidate) => candidate === userId) === undefined) {
+        const result = await addKlusjeCandidate(localStorage.getItem('token'), state.job._id, userId);
+        if (result.status === 'success') {
+            state.job.candidates.push(userId);
+        } else console.error(result.message);
+    }
+
     if (state.user && state.user._id !== userId) {
         const chatGroup = {
             name: state.user.name_first + ' ' + state.user.name_last,
