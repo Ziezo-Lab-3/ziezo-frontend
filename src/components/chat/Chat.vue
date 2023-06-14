@@ -65,9 +65,13 @@ const updateChatGroup = async () => {
     if (result.status === "success") {
         // Get id from url
         const id = router.currentRoute.value.params.id;
-
         // Find the chatGroup with the id from the url
         state.chatGroup = result.data.find((chatGroup) => chatGroup._id === id);
+        if (state.chatGroup === undefined) {
+            console.error("ChatGroup not found");
+            router.push("/app/message");
+            return;
+        }
     }
     else {
         console.error("Chat.vue onMounted(): " + result.message);
@@ -88,7 +92,6 @@ watch(() => router.currentRoute.value.params.id, async () => {
 });
 
 watch(() => state.chatGroup, async () => {
-    state.chatGroup = state.chatGroup;
     state.messages = [];
     loadNewMessages({
         first: 0,

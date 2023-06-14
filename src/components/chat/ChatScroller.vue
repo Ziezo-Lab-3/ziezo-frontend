@@ -37,7 +37,8 @@ const getMessageFormat = (message) => {
 }
 
 const getUserByID = (id) => {
-    if (props.chatGroup === null) return null;
+    if (!props.chatGroup) 
+        return null;
     let user = props.chatGroup.members.find((value) => value._id === id);
     return user;
 }

@@ -107,15 +107,15 @@ const updateJob = async () => {
                 result = await getUserByID(localStorage.getItem('token'), state.job.user);
                 if (result.status === 'success') {
                     state.user = result.data;
-                }
-            } else console.error(result.message);
+                } else console.error(result.message);
+            } 
 
             if (state.job.helper) {
                 result = await getUserByID(localStorage.getItem('token'), state.job.helper);
                 if (result.status === 'success') {
                     state.helper = result.data;
-                }
-            } else console.error(result.message);
+                } else console.error(result.message);
+            } 
         } catch (error) {
             console.error(error);
         }
