@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import Avatar from './Avatar.vue';
 
 const name = ref("");
@@ -9,7 +9,11 @@ const avatar = ref("");
 onMounted(() => {
     name.value = localStorage.getItem("userFirstName") + " " + localStorage.getItem("userLastName");
     avatar.value = localStorage.getItem("userAvatar");
+    console.log(localStorage);
 });
+
+const userId = computed(() => localStorage.getItem('userId'));
+
 </script>
 <template>
     <nav>
@@ -39,7 +43,7 @@ onMounted(() => {
                 <RouterLink to="/app/settings" tabindex="1" >
                     <li><i class="pi pi-cog" style="font-size: 1.4rem"></i>Instellingen</li>
                 </RouterLink>
-                <RouterLink to="/app/profile" tabindex="1" >
+                <RouterLink :to="`/app/profile/${userId}`" tabindex="1" >
                     <li class="nav__profile"><div><Avatar :name="name" :src="avatar" :width="32" />{{ name }}</div></li>
                 </RouterLink>
             </ul>

@@ -1,9 +1,12 @@
 <script setup>
 import { onMounted, reactive } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router"; // Import the useRouter function
 import { getProfileByUserId } from "../../api/profile";
 import { getUserByID } from "../../api/user";
+import Avatar from '../../components/Avatar.vue';
+
 const route = useRoute();
+const router = useRouter(); // Call the useRouter function
 const state = reactive({
     user: null,
     profile: null
@@ -75,6 +78,7 @@ onMounted(async () => {
                 <template #title><h1>Wie is {{ state.user.name_first }}?</h1></template>
                 <template #content>
                     <template v-if="state.profile">
+                        <Avatar :name="state.user.name_first + ' ' + state.user.name_last" :src="state.user.avatar" :width="64" />
                         <template v-for="(paragraph, index) in state.profile.formattedContent.split('\n')">
                             <template v-if="index % 2 === 0">
                             <h3>{{ paragraph }}</h3>
@@ -114,16 +118,22 @@ onMounted(async () => {
 
 /* give all the 3 cards custom vh */
 .profile-container .card-profile {
-    height: 50vh;
+    height: 40%;
+    min-height: 0; /* Reset the min-height if necessary */
+
 }
 
 .profile-container .card-about {
-    height: 50vh;
+    height: 50%;
+    min-height: 0; /* Reset the min-height if necessary */
+
 }
 
 .profile-container .card-reviews {
-    height: 30vh;
+    height: 25%;
     margin-bottom: 20px;
+    min-height: 0; /* Reset the min-height if necessary */
+
 }
 
 /* add some spacing under logout button */
