@@ -30,7 +30,7 @@ watch(() => router.currentRoute.value.params.id, () => handleVisibleElements());
                     <ChatList @update-selection="updateSelection" />
                 </div>
                 <div class="message__chat-container">
-                    <RouterView />
+                    <RouterView />  
                 </div>
             </div>
         </template>
