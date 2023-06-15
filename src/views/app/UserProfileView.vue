@@ -50,10 +50,9 @@ onMounted(async () => {
     <div class="profile-container">
         <div class="card-container">
             <Card v-if="state.user" class="p-m-4 p-major card-profile">
-                <template> 
-                <h1>{{ state.user.name_first }} {{ state.user.name_last }}</h1>
-                </template>
+                
                 <template #content>
+                    <h1>{{ state.user.name_first }} {{ state.user.name_last }}</h1>
                 <template v-if="state.profile">
                     <div class="profile-info">
                     <div class="left-column">
@@ -75,8 +74,8 @@ onMounted(async () => {
                 </template>
             </Card>
             <Card v-if="state.user" class="p-m-4 p-major card-about">
-                <template><h1>Wie is {{ state.user.name_first }}?</h1></template>
-                <template #content>
+                    <template #content>
+                    <h1>Wie is {{ state.user.name_first }}?</h1>
                     <template v-if="state.profile">
                         <Avatar :name="state.user.name_first + ' ' + state.user.name_last" :src="state.user.avatar" :width="64" />
                         <template v-for="(paragraph, index) in state.profile.formattedContent.split('\n')">
@@ -92,8 +91,9 @@ onMounted(async () => {
             </Card>
 
             <Card v-if="state.user" class="p-m-4 p-major card-reviews">
-                <template><h1>Reviews</h1></template>
+                
                 <template #content>
+                    <h1>Reviews</h1>
                     <template v-if="state.profile">
                         <h4>Algemene beoordeling</h4>
                         <img class="rating" src="../../assets/images/rating.png" alt="rating" />
@@ -159,6 +159,10 @@ onMounted(async () => {
     width: 100px;
     height: 20px;
     margin-top: 10px;
+}
+
+h1 {
+    padding-bottom: 30px;
 }
 
 
