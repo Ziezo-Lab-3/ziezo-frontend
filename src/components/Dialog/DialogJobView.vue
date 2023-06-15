@@ -114,14 +114,14 @@ const updateJob = async () => {
                 if (result.status === 'success') {
                     state.user = result.data;
                 } else console.error(result.message);
-            } 
+            } else state.user = null;
 
             if (state.job.helper) {
                 result = await getUserByID(localStorage.getItem('token'), state.job.helper);
                 if (result.status === 'success') {
                     state.helper = result.data;
                 } else console.error(result.message);
-            } 
+            } else state.helper = null;
         } catch (error) {
             console.error(error);
         }
@@ -188,9 +188,9 @@ onMounted(async () => await updateJob());
                 
                 <!-- Owner -->
                 <div class="right-footer" v-if="state.permission === 30">
-                    <Button class="p-button p-button-secondary" icon="pi pi-pencil" label="Bewerken" disabled />
                     <Button v-if="state.helper" class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatHelper" />
-                    <Button class="p-button" icon="pi pi-check" label="Markeer als gedaan" />
+                    <Button v-if="state.job.state === 'awaiting payment' || state.job.state === 'in progress'" class="p-button" icon="pi pi-check" label="Markeer als gedaan" />
+                    <Button v-if="state.job.state === 'awaiting payment'" class="p-button" icon="pi pi-times" label="Annuleer" />
                 </div>
             </div>
             <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>

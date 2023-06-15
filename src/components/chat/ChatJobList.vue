@@ -30,10 +30,9 @@ const confirmAction = (id) => {
 
 const acceptHelper = async () => {
     const token = localStorage.getItem('token');
-    const id = decodeJWT(token).id;
 
     const result = await putKlusje(token, state.selectedJob._id, {
-        helper: id,
+        helper: props.userId,
         state: 'in progress'
     });
     
