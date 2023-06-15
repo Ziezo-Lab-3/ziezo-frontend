@@ -6,6 +6,9 @@ import { getMessages, postMessage } from '../../api/message';
 import { getChatGroups } from '../../api/chatGroup';
 import ChatScroller from './ChatScroller.vue';
 import ChatJobList from './ChatJobList.vue';
+import Avatar from '../Avatar.vue';
+import { RouterLink } from 'vue-router';
+
 
 const router = useRouter();
 /**
@@ -128,16 +131,22 @@ watch(() => state.chatGroup, async () => {
 
 </script>
 <template>
-<div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <ChatJobList @on-accept="sendAcceptMessage" v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
-    <div class="chat__header"><h2><i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
-    <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
-    <div class="chat__input">
+    <div v-if="state.chatGroup !== null" class="chat__wrapper">
+      <ChatJobList @on-accept="sendAcceptMessage" v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
+        <div class="chat__header">
+            <router-link :to="'/app/profile/' + otherUser._id" class="avatar-name-container">
+                <Avatar :name="otherUser.name_first + ' ' + otherUser.name_last" :src="otherUser.avatar" :width="36" />
+                <h2>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2>
+            </router-link>
+            <i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>
+            </div>
+      <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
+      <div class="chat__input">
         <InputText v-model="state.message" placeholder="Bericht" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" tabindex="2"/>
         <Button icon="pi pi-send" aria-label="Send" :onclick="sendMessage" tabindex="2"/>
+      </div>
     </div>
-</div>
-</template>
+  </template>
 <style scoped>
 h2 {
     display: flex;
@@ -167,5 +176,15 @@ h2 {
 .chat__messages {
     overflow-y: auto;
     padding: 1em 0;
+}
+
+.avatar-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.avatar-name-container h2 {
+  margin: 0;
 }
 </style>

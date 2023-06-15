@@ -1,34 +1,170 @@
 <script setup>
 import { onMounted, reactive } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router"; // Import the useRouter function
 import { getProfileByUserId } from "../../api/profile";
 import { getUserByID } from "../../api/user";
+import Avatar from '../../components/Avatar.vue';
+
 const route = useRoute();
+const router = useRouter(); // Call the useRouter function
 const state = reactive({
     user: null,
     profile: null
 });
 
+const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+}
+
 onMounted(async () => {
-    const token = localStorage.getItem("token");
-    const userId = route.params.id;
-    let response = await getProfileByUserId(token, userId);
-    if (response.status === "success") {
-        state.profile = response.data;
-    } else console.error(response.message);
-    response = await getUserByID(token, userId);
-    if (response.status === "success") {
-        state.user = response.data;
-    } else console.error(response.message);
+  const token = localStorage.getItem("token");
+  const userId = route.params.id;
+  let response = await getProfileByUserId(token, userId);
+  if (response.status === "success") {
+    state.profile = response.data;
+    if (state.profile.content) {
+      const formattedContent = state.profile.content
+        .replace(/<br\s*\/?>/gi, '\n') // Replace <br> tags with newline character
+        .replace(/<\/p>/gi, '\n') // Replace closing </p> tags with newline character
+        .replace(/<\/h2>/gi, '</h2>\n') // Add a line break after each closing </h2> tag
+        .replace(/<\/?[^>]+(>|$)/g, ''); // Remove all other HTML tags
+
+      state.profile.formattedContent = formattedContent;
+    }
+  } else {
+    console.error(response.message);
+  }
+
+  response = await getUserByID(token, userId);
+  if (response.status === "success") {
+    state.user = response.data;
+  } else {
+    console.error(response.message);
+  }
+
+  console.log(state);
 });
 </script>
 <template>
-    <Card class="p-m-4 p-major">
-        <template #title v-if="state.user"><h1>{{ state.user.name_first }} {{ state.user.name_last }}</h1></template>
-        <template #content v-if="state.user">
-            <template v-if="state.profile">
-                <div>HIER MOET HTML KOMEN</div>
-            </template>
-        </template>
-    </Card>
+    <div class="profile-container">
+        <div class="card-container">
+            <Card v-if="state.user" class="p-m-4 p-major card-profile">
+                
+                <template #content>
+                    <h1>{{ state.user.name_first }} {{ state.user.name_last }}</h1>
+                <template v-if="state.profile">
+                    <div class="profile-info">
+                    <div class="left-column">
+                        <h3>Naam:</h3>  
+                        <p>{{ state.user.name_first }} {{ state.user.name_last }}</p>
+                        <h3>Email:</h3>
+                        <p>{{ state.user.email }}</p>
+                        <h3>Telefoon:</h3>
+                        <p>04/75 87 53 89</p>
+                    </div>
+                    <div class="right-column">
+                        <h3>Straat + Huisnummer:</h3>
+                        <p>{{ state.user.address.street }}, {{ state.user.address.number }}</p>
+                        <h3>Postcode + Stad:</h3>
+                        <p>{{ state.user.address.zip }}, {{ state.user.address.city }}</p>
+                    </div>
+                    </div>
+                </template>
+                </template>
+            </Card>
+            <Card v-if="state.user" class="p-m-4 p-major card-about">
+                    <template #content>
+                    <h1>Wie is {{ state.user.name_first }}?</h1>
+                    <template v-if="state.profile">
+                        <Avatar :name="state.user.name_first + ' ' + state.user.name_last" :src="state.user.avatar" :width="64" />
+                        <template v-for="(paragraph, index) in state.profile.formattedContent.split('\n')">
+                            <template v-if="index % 2 === 0">
+                            <h3>{{ paragraph }}</h3>
+                            </template>
+                            <template v-else>
+                            <p>{{ paragraph }}</p>
+                            </template>
+                        </template>
+                    </template>
+                </template>
+            </Card>
+
+            <Card v-if="state.user" class="p-m-4 p-major card-reviews">
+                
+                <template #content>
+                    <h1>Reviews</h1>
+                    <template v-if="state.profile">
+                        <h4>Algemene beoordeling</h4>
+                        <img class="rating" src="../../assets/images/rating.png" alt="rating" />
+                    </template>
+                </template>
+            </Card>
+        </div>
+        <Button label="Log uit" icon="pi pi-sign-out" @click="logout" />
+    </div>
+
+
 </template>
+
+<style scoped>
+
+/* put some margin between the 3 cards */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* give all the 3 cards custom vh */
+.profile-container .card-profile {
+    height: 40%;
+    min-height: 0; /* Reset the min-height if necessary */
+
+}
+
+.profile-container .card-about {
+    height: 50%;
+    min-height: 0; /* Reset the min-height if necessary */
+
+}
+
+.profile-container .card-reviews {
+    height: 25%;
+    margin-bottom: 20px;
+    min-height: 0; /* Reset the min-height if necessary */
+
+}
+
+/* add some spacing under logout button */
+.profile-container .p-button {
+    margin-bottom: 20px;
+}
+
+.profile-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-column,
+.right-column {
+  flex-basis: 50%;
+}
+
+.profile-info h3 {
+  margin-bottom: -10px;
+}
+
+.rating {
+    width: 100px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+h1 {
+    padding-bottom: 30px;
+}
+
+
+</style>
+

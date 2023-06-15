@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
+
 const image = ref(null);
 const props = defineProps({
     src: {
