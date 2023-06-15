@@ -50,6 +50,7 @@ const routes = [
                         component: Chat,
                     },
                 ],
+                meta: { menuRight: true }  
             },
             {
                 path: "jobs",

@@ -19,6 +19,10 @@ const props = defineProps({
     name: {
         type: String
     },
+    html: {
+        type: Boolean,
+        default: false,
+    },
     format: {
         type: String,
         default: "single",
@@ -41,7 +45,8 @@ const wrapperClass = computed(() => {
         <div v-if="!props.self" class="message__avatar">
             <Avatar :src="props.avatar" :name="props.name" :width="38"/>
         </div>
-        <div class="message__bubble">{{ props.text }}</div>
+        <div v-if="props.html" class="message__bubble" v-html="props.text"></div>
+        <div class="message__bubble" v-else>{{ props.text }}</div>
     </div>
 </template>
 <style scoped>
@@ -50,7 +55,7 @@ const wrapperClass = computed(() => {
     align-items: center;
     grid-template-columns: auto 1fr auto;
     grid-template-rows: auto auto;
-    margin-bottom: .5rem;
+    margin-bottom: .5em;
 }
 
 .message__wrapper--self {
@@ -67,9 +72,9 @@ const wrapperClass = computed(() => {
 
 .message__name {
     grid-area: name;
-    font-size: .75rem;
+    font-size: .75em;
     color: var(--gray-400);
-    margin: 0 1rem;
+    margin: 0 1em;
 }
 
 .message__wrapper--self .message__name {
@@ -83,20 +88,20 @@ const wrapperClass = computed(() => {
 
 .message__bubble {
     grid-area: bubble;
-    padding: .325rem .75rem .325rem .75rem;
-    background-color: var(--gray-200);
+    padding: .325em .75em .325em .75em;
+    background-color: var(--gray-100);
     color: var(--body);
     max-width: 80%;
-    margin: auto .5rem;
+    margin: auto .5em;
 }
 
 .message__wrapper--other .message__bubble {
-    border-radius: 1rem 1rem 1rem 0;
+    border-radius: 1em 1em 1em 0;
     margin-right: auto;
 }
 
 .message__wrapper--self .message__bubble {
-    border-radius: 1rem 1rem 0 1rem;
+    border-radius: 1em 1em 0 1em;
     background-color: var(--primary);
     color: var(--white);
     margin-left: auto;
@@ -111,5 +116,13 @@ const wrapperClass = computed(() => {
 .message__wrapper--bottom .message__name {
     display: none;
 }
-
+</style>
+<style>
+.message__bubble h3 {
+    margin-top: .5rem;
+}
+.message__bubble p {
+    margin: 0;
+    margin-bottom: .5rem;
+}
 </style>

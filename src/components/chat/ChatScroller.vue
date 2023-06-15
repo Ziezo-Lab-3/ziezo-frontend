@@ -37,7 +37,8 @@ const getMessageFormat = (message) => {
 }
 
 const getUserByID = (id) => {
-    if (props.chatGroup === null) return null;
+    if (!props.chatGroup) 
+        return null;
     let user = props.chatGroup.members.find((value) => value._id === id);
     return user;
 }
@@ -95,6 +96,7 @@ onMounted(() => {
             :name="getUserByID(item.sender).name_first + ' ' + getUserByID(item.sender).name_last"
             :format="getMessageFormat(item)"
             tabindex="4"
+            :html="item.html"
         />
         <div class="chat__messages__empty" v-if="props.messages.length ===0">Stuur een bericht en start de conversatie!</div>
     </div>
@@ -107,7 +109,7 @@ onMounted(() => {
 
 .chat__messages__empty {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1em;
     color: var(--gray-400);
     }
 </style>

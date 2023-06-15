@@ -6,6 +6,7 @@ import { getUserByID } from '../../api/user';
 import { postChatGroup } from '../../api/chatGroup';
 import { VueperSlides, VueperSlide } from 'vueperslides';
 import { useRouter } from 'vue-router';
+import { addKlusjeCandidate } from '../../api/klusje';
 import Avatar from '../Avatar.vue';
 import moment from 'moment';
 
@@ -43,8 +44,17 @@ const close = () => {
     emit('close');
 };
 
-const openChat = async () => {
+const openChatUser = async () => {
     const userId = localStorage.getItem('userId');
+
+    // if user is not a candidate
+    if (state.job.candidates.find((candidate) => candidate === userId) === undefined) {
+        const result = await addKlusjeCandidate(localStorage.getItem('token'), state.job._id, userId);
+        if (result.status === 'success') {
+            state.job.candidates.push(userId);
+        } else console.error(result.message);
+    }
+
     if (state.user && state.user._id !== userId) {
         const chatGroup = {
             name: state.user.name_first + ' ' + state.user.name_last,
@@ -52,6 +62,22 @@ const openChat = async () => {
         };
         let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
         if (result.status === 'success') {
+            console.debug("Navigating to /app/message/" + result.data._id +"")
+            router.push(`/app/message/${result.data._id}`);
+        } else console.error(result.message);
+    }
+};
+
+const openChatHelper = async () => {
+    const userId = localStorage.getItem('userId');
+    if (state.helper && state.helper._id !== userId) {
+        const chatGroup = {
+            name: state.helper.name_first + ' ' + state.helper.name_last,
+            users: [userId, state.helper._id],
+        };
+        let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
+        if (result.status === 'success') {
+            console.debug("Navigating to /app/message/" + result.data._id +"")
             router.push(`/app/message/${result.data._id}`);
         } else console.error(result.message);
     }
@@ -71,27 +97,27 @@ const updateJob = async () => {
                 } else {
                     state.permission = 10;
                 }
-                state.daysSincePosted = moment(state.job.createdAt).fromNow();
+                state.daysSincePosted = 0 - moment(state.job.createdAt).diff(moment(), 'days');
             } else console.error(result.message);
             result = await getCategories(localStorage.getItem('token'));
 
             if (result.status === 'success') {
-                state.category = result.data.find((category) => category._id === state.job.category).name;
+                state.category = result.data.find((category) => category._id === state.job.category)?.name;
             } else console.error(result.message);
 
             if (state.job.user) {
                 result = await getUserByID(localStorage.getItem('token'), state.job.user);
                 if (result.status === 'success') {
                     state.user = result.data;
-                }
-            } else console.error(result.message);
+                } else console.error(result.message);
+            } 
 
             if (state.job.helper) {
                 result = await getUserByID(localStorage.getItem('token'), state.job.helper);
                 if (result.status === 'success') {
                     state.helper = result.data;
-                }
-            } else console.error(result.message);
+                } else console.error(result.message);
+            } 
         } catch (error) {
             console.error(error);
         }
@@ -105,7 +131,7 @@ onMounted(async () => await updateJob());
 </script>
 
 <template>
-    <Dialog :visible="props.visible" :closable="false" :header="state.job ? state.job.name : ''" modal
+    <Dialog :visible="props.visible" :draggable="false" @update:visible="close" :header="state.job ? state.job.name : ''" modal 
         :style="{ width: '832px' }" :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
         <template #header>
             <h2>{{ state.job?.name || '' }}</h2>
@@ -113,9 +139,9 @@ onMounted(async () => await updateJob());
         <div v-if="state.job" class="content">
             <div class="content__main">
                 <div class="content__stats">
-                    <div class="content__category">Categorie: {{ state.category }}</div>
-                    <div class="content__posted">Posted {{ state.daysSincePosted }}</div>
-                    <div class="content__price">€{{ state.job.price }}</div>
+                    <div class="content__category" >Categorie: {{ state.category || "Onbekend" }}</div>
+                    <div class="content__posted">{{ state.daysSincePosted !== null ? state.daysSincePosted : "??" }} dagen geleden</div>
+                    <div class="content__price">€{{ state.job.price || "??"}}</div>
                     <div class="content__price__label">Inclusief service kost</div>
                 </div>
                 <h2>Beschrijving</h2>
@@ -143,10 +169,24 @@ onMounted(async () => await updateJob());
             </div>
         </div>
         <template #footer>
-            <div class="flex justify-content-between">
-                <Button label="Cancel" @click="close" class="p-button-secondary" />
-                <div class="right-footer">
-                    <Button class="p-button" label="Stuur bericht" @click="openChat" />
+            <div class="flex justify-content-between footer">
+                <Button icon="pi pi-times" label="Sluiten" @click="close" class="p-button-secondary close" />
+                
+                <!-- Viewer -->
+                <div class="right-footer" v-if="state.permission === 10">
+                    <Button class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatUser" />
+                </div>
+                
+                <!-- Helper -->
+                <div class="right-footer" v-if="state.permission === 20">
+                    <Button class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatUser" />
+                </div>
+                
+                <!-- Owner -->
+                <div class="right-footer" v-if="state.permission === 30">
+                    <Button class="p-button p-button-secondary" icon="pi pi-pencil" label="Bewerken" disabled />
+                    <Button v-if="state.helper" class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatHelper" />
+                    <Button class="p-button" icon="pi pi-check" label="Markeer als gedaan" />
                 </div>
             </div>
             <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
@@ -234,6 +274,28 @@ onMounted(async () => await updateJob());
 @media screen and (max-width: 580px) {
     .content {
         grid-template-columns: 1fr;
-    }    
+        grid-template-columns: auto auto;
+    }
+
+    .content__main {
+        grid-column: 1;
+    }
+
+    .content__additional {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .footer .right-footer {
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+    }
+
+    .footer .close {
+        max-height: 36.8px;
+        margin-top: auto!important;
+        margin-bottom: 0px!important;
+    }
 }
 </style>
