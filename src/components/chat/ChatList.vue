@@ -42,19 +42,19 @@ onMounted(async () => {
             <p>Geen chats gevonden</p>
         </div>
         <div v-else>
-            <RouterLink v-for="(instance, index) in state.instances" :key="instance._id" :tabindex="2" :to="`/app/message/${instance._id}`" class="chat-link">
-                <router-link :to="'/app/profile/' + otherUser._id" class="avatar-name-container">
-                    <Avatar :src="instance.picture" :name="instance.name || '!'" :width="48" />
-                </router-link>
-                <div>
-                    <h3>{{ instance.name }}</h3>
-                    <p>{{ instance.lastMessage }}</p>
-                </div> 
-                <div v-if="instance.unreadMessages > 0" class="bubble-unread">
-                    {{ instance.unreadMessages }}
-                </div> 
-            </RouterLink>
-        </div>
+        <RouterLink v-for="(instance, index) in state.instances" :key="instance._id" :tabindex="2" :to="`/app/message/${instance._id}`" class="chat-link">
+            <div class="avatar-name-container" @click="$router.push(`/app/profile/${otherUser._id}`)">
+            <Avatar :src="instance.picture" :name="instance.name || '!'" :width="48" />
+            </div>
+            <div>
+            <h3>{{ instance.name }}</h3>
+            <p>{{ instance.lastMessage }}</p>
+            </div>
+            <div v-if="instance.unreadMessages > 0" class="bubble-unread">
+            {{ instance.unreadMessages }}
+            </div>
+        </RouterLink>
+</div>
     </div>
 </template>
 <style scoped>
