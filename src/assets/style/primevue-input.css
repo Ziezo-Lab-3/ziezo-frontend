@@ -146,3 +146,12 @@
 .p-inputswitch.p-focus .p-inputswitch-slider {
     box-shadow: 0 0 0 0.2em var(--primary-faded);
 }
+
+/* Rating */
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+    color: var(--primary)!important;
+}
+
+.p-rating .p-rating-item.p-focus {
+    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
+}

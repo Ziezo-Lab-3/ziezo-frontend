@@ -42,6 +42,13 @@ const openDialog = (id) => {
     showDialog.value = true;
 }
 
+const updateJob = (job) => {
+    const index = state.data.findIndex((element) => element._id == job._id);
+    if (index != -1) {
+        state.data[index] = job;
+    }
+}
+
 const getCategory = (id) => {
     const category = state.categories.find((category) => category._id == id);
     return category ? category.name : "Onbekend";
@@ -134,7 +141,7 @@ onMounted(() => {
             </template>
         </Column>
     </DataTable>
-    <DialogJobView :visible="showDialog" :klusje-id="state.selectedJobId" @close="closeDialog"/>
+    <DialogJobView :visible="showDialog" :klusje-id="state.selectedJobId" @close="closeDialog" @update="updateJob"/>
 </template>
 <style scoped>
 .description {

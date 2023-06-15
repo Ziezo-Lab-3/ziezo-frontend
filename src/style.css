@@ -46,6 +46,10 @@ label {
     gap: 1em;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .img-fit {
     object-fit: cover;
 }
