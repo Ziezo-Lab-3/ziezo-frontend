@@ -50,7 +50,7 @@ onMounted(async () => {
     <div class="profile-container">
         <div class="card-container">
             <Card v-if="state.user" class="p-m-4 p-major card-profile">
-                <template #title> 
+                <template> 
                 <h1>{{ state.user.name_first }} {{ state.user.name_last }}</h1>
                 </template>
                 <template #content>
@@ -75,7 +75,7 @@ onMounted(async () => {
                 </template>
             </Card>
             <Card v-if="state.user" class="p-m-4 p-major card-about">
-                <template #title><h1>Wie is {{ state.user.name_first }}?</h1></template>
+                <template><h1>Wie is {{ state.user.name_first }}?</h1></template>
                 <template #content>
                     <template v-if="state.profile">
                         <Avatar :name="state.user.name_first + ' ' + state.user.name_last" :src="state.user.avatar" :width="64" />
@@ -92,7 +92,7 @@ onMounted(async () => {
             </Card>
 
             <Card v-if="state.user" class="p-m-4 p-major card-reviews">
-                <template #title><h1>Reviews</h1></template>
+                <template><h1>Reviews</h1></template>
                 <template #content>
                     <template v-if="state.profile">
                         <h4>Algemene beoordeling</h4>
