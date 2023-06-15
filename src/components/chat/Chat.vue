@@ -41,6 +41,22 @@ const sendMessage = async () => {
     }
 }
 
+const sendAcceptMessage = async (job) => {
+    const message = `<h3>Klusje geaccepteerd! ✅</h3><p>Je bent aangenomen om het klusje "${job.name}" uit te voeren!</p>`;
+    const result = await postMessage(localStorage.getItem("token"), {
+        message: message,
+        sender: state.decodedJWT.id,
+        chatGroup: state.chatGroup._id,
+        html: true,
+    });
+    if (result.status === "success") {
+        state.messages.push(result.data);
+    }
+    else {
+        console.error("Chat.vue sendAcceptMessage(): " + result.message);
+    }
+}
+
 const sanitize = (messages) => {
     // make sure each _id property only occurs once
     const ids = [];
@@ -113,7 +129,7 @@ watch(() => state.chatGroup, async () => {
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <ChatJobList v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
+    <ChatJobList @on-accept="sendAcceptMessage" v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
     <div class="chat__header"><h2><i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">

@@ -19,6 +19,10 @@ const props = defineProps({
     name: {
         type: String
     },
+    html: {
+        type: Boolean,
+        default: false,
+    },
     format: {
         type: String,
         default: "single",
@@ -41,7 +45,8 @@ const wrapperClass = computed(() => {
         <div v-if="!props.self" class="message__avatar">
             <Avatar :src="props.avatar" :name="props.name" :width="38"/>
         </div>
-        <div class="message__bubble">{{ props.text }}</div>
+        <div v-if="props.html" class="message__bubble" v-html="props.text"></div>
+        <div class="message__bubble" v-else>{{ props.text }}</div>
     </div>
 </template>
 <style scoped>
@@ -84,7 +89,7 @@ const wrapperClass = computed(() => {
 .message__bubble {
     grid-area: bubble;
     padding: .325em .75em .325em .75em;
-    background-color: var(--gray-200);
+    background-color: var(--gray-100);
     color: var(--body);
     max-width: 80%;
     margin: auto .5em;
@@ -111,5 +116,13 @@ const wrapperClass = computed(() => {
 .message__wrapper--bottom .message__name {
     display: none;
 }
-
+</style>
+<style>
+.message__bubble h3 {
+    margin-top: .5rem;
+}
+.message__bubble p {
+    margin: 0;
+    margin-bottom: .5rem;
+}
 </style>

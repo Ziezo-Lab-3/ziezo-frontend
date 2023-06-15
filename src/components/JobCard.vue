@@ -17,7 +17,9 @@ const state = reactive({
     job: {
         name: '',
         avatar: '',
-        id: null
+        id: null,
+        taken: false,
+        status: '',
     }
 });
 
@@ -29,6 +31,8 @@ onMounted(() => {
     state.job.name = props.job.name || 'Job';
     state.job.avatar = props.job.images[0] || null;
     state.job.id = props.job._id;
+    state.job.status = props.job.state;
+    state.job.taken = !!props.job.helper;
 });
 
 const getClass = () => {
@@ -43,7 +47,8 @@ const getClass = () => {
         <img v-if="state.job.avatar" height="72" width="72" :src="state.job.avatar" />
         <p><b>{{ state.job.name }}</b></p>
         <div class="job-card__button-wrapper">
-            <Button v-if="props.owner" label="Selecteer" @click="click" />
+            <Button v-if="props.owner && !state.job.taken" label="Geven" @click="click" />
+            <div v-else class="job-card__status">{{ state.job.status }}</div>
         </div>
     </div>
 </template>
@@ -57,7 +62,7 @@ const getClass = () => {
     grid-template-rows: auto auto;
     grid-template-areas: 
         "image name"
-        "image button";
+        "image other";
     gap: .5em;
     width: fit-content;
     height: fit-content;
@@ -92,7 +97,13 @@ job-card:hover {
 }
 
 .job-card__button-wrapper {
-    grid-area: button;
+    grid-area: other;
     justify-self: end;
+}
+
+.job-card__status {
+    grid-area: other;
+    justify-self: end;
+    text-transform: capitalize;
 }
 </style>

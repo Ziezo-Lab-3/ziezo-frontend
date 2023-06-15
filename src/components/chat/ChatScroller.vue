@@ -96,6 +96,7 @@ onMounted(() => {
             :name="getUserByID(item.sender).name_first + ' ' + getUserByID(item.sender).name_last"
             :format="getMessageFormat(item)"
             tabindex="4"
+            :html="item.html"
         />
         <div class="chat__messages__empty" v-if="props.messages.length ===0">Stuur een bericht en start de conversatie!</div>
     </div>

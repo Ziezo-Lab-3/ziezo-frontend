@@ -4,6 +4,8 @@ import { getKlusjes, putKlusje } from '../../api/klusje';
 import decodeJWT from '../../js/decodeJWT';
 import JobCard from '../JobCard.vue';
 
+const emit = defineEmits(['on-accept']);
+
 const props = defineProps({
     userId: {
         type: String,
@@ -40,11 +42,15 @@ const acceptHelper = async () => {
         state.selectedJob = null;
     }
     else console.error(result.message);
+
+    emit('on-accept', result.data);
+    getJobs();
 }
 
 const getJobs = async () => {
     const token = localStorage.getItem('token');
     const id = decodeJWT(token).id;
+    let jobs = [];
 
     let result = await getKlusjes(localStorage.getItem('token'), {
         filter: {
@@ -53,7 +59,7 @@ const getJobs = async () => {
         }
     });
     if (result.status === 'success') {
-        state.jobs = result.data;
+        jobs = result.data;
     }
     else console.error(result.message);
 
@@ -64,13 +70,15 @@ const getJobs = async () => {
         }
     });
     if (result.status === 'success') {
-        state.jobs = [...state.jobs, ...result.data];
+        jobs = [...jobs, ...result.data];
     }
     else console.error(result.message);
-    state.jobs.forEach((job) => {
+    jobs.forEach((job) => {
         job.owner = job.user === id;
     })
-    state.jobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    jobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    jobs.sort((a, b) => b.__priority - a.__priority);
+    state.jobs = jobs;
 }
 
 onMounted(getJobs);
@@ -78,7 +86,7 @@ watch(() => props.userId, getJobs);
 </script>
 <template>
     <div class="job-list" v-if="state.jobs.length > 0">
-        <div><b>Selecteer een klusje om te geven:</b></div>
+        <div><b>Gemeenschappelijke klusjes:</b></div>
         <div class="job-list__scroll">
             <JobCard v-for="job in state.jobs" :key="job._id" :job="job" :owner="job.owner" @click="confirmAction"/>
         </div>
