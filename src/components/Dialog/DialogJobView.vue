@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router';
 import { addKlusjeCandidate } from '../../api/klusje';
 import Avatar from '../Avatar.vue';
 import moment from 'moment';
+import { RouterLink } from 'vue-router';
 
 const emit = defineEmits(['close']);
 const router = useRouter();
@@ -160,16 +161,20 @@ onMounted(async () => await updateJob());
                     <VueperSlide v-for="(image, index) in state.job.images" :key="index" :image="image" :link="image" open-in-new>
                     </VueperSlide>
                 </VueperSlides>
-                <div v-if="state.user" class="content__user">
+                <router-link v-if="state.user" :to="'/app/profile/' + state.user._id" class="content__user">
                     <Avatar :src="state.user?.avatar" :name="state.helper?.name_first + ' ' + state.user?.name_last" :width="48" />
-                    <div><b>{{ state.user?.name_first }} {{ state.user?.name_last }}</b></div>
-                    <div>Hulpzoeker</div>
-                </div>
-                <div v-if="state.helper && state.permission >= 20" class="content__user">
+                    <div>
+                        <b><span class="name no-link">{{ state.user?.name_first }}</span> <span class="name no-link">{{ state.user?.name_last }}</span></b>
+                    </div>
+                    <div><span class="name no-link">Hulpzoeker</span></div>
+                    </router-link>
+                    <router-link v-if="state.helper && state.permission >= 20" :to="'/app/profile/' + state.helper._id" class="content__user">
                     <Avatar :src="state.helper?.avatar" :name="state.helper?.name_first + ' ' + state.helper?.name_last" :width="48" />
-                    <div><b>{{ state.helper?.name_first }} {{ state.helper?.name_last }}</b></div>
-                    <div>Klusser</div>
-                </div>
+                    <div>
+                        <b><span class="name no-link">{{ state.user?.name_first }}</span> <span class="name no-link">{{ state.user?.name_last }}</span></b>
+                    </div>
+                    <div><span class="name no-link">Klusser</span></div>
+                    </router-link>
             </div>
         </div>
         <template #footer>
@@ -301,5 +306,11 @@ onMounted(async () => await updateJob());
         margin-top: auto!important;
         margin-bottom: 0px!important;
     }
+
+    .content__user  {
+        text-decoration: none !important; /* Remove underline */
+        color: inherit !important; /* Use the default text color */
+        cursor: default !important; /* Use the default cursor */
+        }
 }
 </style>
