@@ -23,7 +23,6 @@ const state = reactive({
 });
 
 const confirmAction = (id) => {
-    console.log(id);
     state.selectedJob = state.jobs.find((job) => job._id === id);
     state.showConfirmDialog = true;
 }
@@ -37,6 +36,9 @@ const acceptHelper = async () => {
     });
     
     if (result.status === 'success') {
+        const index = state.jobs.findIndex((job) => job._id === state.selectedJob._id);
+        state.jobs = [...state.jobs.slice(0, index), ...state.jobs.slice(index + 1)];
+
         state.showConfirmDialog = false;
         state.selectedJob = null;
     }
