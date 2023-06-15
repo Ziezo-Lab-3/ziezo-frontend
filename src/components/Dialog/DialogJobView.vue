@@ -83,13 +83,21 @@ const handlePayment = async () => {
     } else console.error(result.message);
 };
 
+const rateAndClose = async () => {
+    // Mock for now, should be replaced with actual rating
+    setTimeout(() => {
+        console.log("Rating: " + state.rating + ", Review: " + state.review.trim())
+        state.showPaymentDialog = false;
+    }, 200);
+};
+
 const openChatUser = async () => {
     const userId = localStorage.getItem('userId');
 
     if (!state.job.candidates) {
         state.job.candidates = [];
     }
-    
+
     // if user is not a candidate
     if (state.job.candidates.find((candidate) => candidate === userId) === undefined) {
         const result = await addKlusjeCandidate(localStorage.getItem('token'), state.job._id, userId);
@@ -105,7 +113,7 @@ const openChatUser = async () => {
         };
         let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
         if (result.status === 'success') {
-            console.debug("Navigating to /app/message/" + result.data._id +"")
+            console.debug("Navigating to /app/message/" + result.data._id + "")
             router.push(`/app/message/${result.data._id}`);
         } else console.error(result.message);
     }
@@ -120,7 +128,7 @@ const openChatHelper = async () => {
         };
         let result = await postChatGroup(localStorage.getItem('token'), chatGroup);
         if (result.status === 'success') {
-            console.debug("Navigating to /app/message/" + result.data._id +"")
+            console.debug("Navigating to /app/message/" + result.data._id + "")
             router.push(`/app/message/${result.data._id}`);
         } else console.error(result.message);
     }
@@ -174,17 +182,19 @@ onMounted(async () => await updateJob());
 </script>
 
 <template>
-    <Dialog :visible="props.visible && !state.showPaymentDialog" :draggable="false" @update:visible="close" :header="state.job ? state.job.name : ''" modal 
-        :style="{ width: '832px' }" :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
+    <Dialog :visible="props.visible && !state.showPaymentDialog" :draggable="false" @update:visible="close"
+        :header="state.job ? state.job.name : ''" modal :style="{ width: '832px' }"
+        :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
         <template #header>
             <h2>{{ state.job?.name || '' }}</h2>
         </template>
         <div v-if="state.job" class="content">
             <div class="content__main">
                 <div class="content__stats">
-                    <div class="content__category" >Categorie: {{ state.category || "Onbekend" }}</div>
-                    <div class="content__posted">{{ state.daysSincePosted !== null ? state.daysSincePosted : "??" }} dagen geleden</div>
-                    <div class="content__price">€{{ state.job.price || "??"}}</div>
+                    <div class="content__category">Categorie: {{ state.category || "Onbekend" }}</div>
+                    <div class="content__posted">{{ state.daysSincePosted !== null ? state.daysSincePosted : "??" }} dagen
+                        geleden</div>
+                    <div class="content__price">€{{ state.job.price || "??" }}</div>
                     <div class="content__price__label">Inclusief service kost</div>
                 </div>
                 <h2>Beschrijving</h2>
@@ -195,17 +205,20 @@ onMounted(async () => await updateJob());
                 </template>
             </div>
             <div class="content__additional">
-                <VueperSlides v-if="state.job?.images" :slide-ratio="2/3">
-                    <VueperSlide v-for="(image, index) in state.job.images" :key="index" :image="image" :link="image" open-in-new>
+                <VueperSlides v-if="state.job?.images" :slide-ratio="2 / 3">
+                    <VueperSlide v-for="(image, index) in state.job.images" :key="index" :image="image" :link="image"
+                        open-in-new>
                     </VueperSlide>
                 </VueperSlides>
                 <div v-if="state.user" class="content__user">
-                    <Avatar :src="state.user?.avatar" :name="state.helper?.name_first + ' ' + state.user?.name_last" :width="48" />
+                    <Avatar :src="state.user?.avatar" :name="state.helper?.name_first + ' ' + state.user?.name_last"
+                        :width="48" />
                     <div><b>{{ state.user?.name_first }} {{ state.user?.name_last }}</b></div>
                     <div>Hulpzoeker</div>
                 </div>
                 <div v-if="state.helper && state.permission >= 20" class="content__user">
-                    <Avatar :src="state.helper?.avatar" :name="state.helper?.name_first + ' ' + state.helper?.name_last" :width="48" />
+                    <Avatar :src="state.helper?.avatar" :name="state.helper?.name_first + ' ' + state.helper?.name_last"
+                        :width="48" />
                     <div><b>{{ state.helper?.name_first }} {{ state.helper?.name_last }}</b></div>
                     <div>Klusser</div>
                 </div>
@@ -214,23 +227,25 @@ onMounted(async () => await updateJob());
         <template #footer>
             <div class="flex justify-content-between footer">
                 <Button icon="pi pi-times" label="Sluiten" @click="close" class="p-button-secondary close" />
-                
+
                 <!-- Viewer -->
                 <div class="right-footer" v-if="state.permission === 10">
                     <Button class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatUser" />
                 </div>
-                
+
                 <!-- Helper -->
                 <div class="right-footer" v-if="state.permission === 20">
                     <Button class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatUser" />
                 </div>
-                
+
                 <!-- Owner -->
                 <div class="right-footer" v-if="state.permission === 30">
-                    <Button v-if="state.helper" class="p-button" icon="pi pi-send" label="Stuur bericht" @click="openChatHelper" />
-                    <Button v-if="state.job.state === 'awaiting payment' || state.job.state === 'in progress'" 
-                        icon="pi pi-check" label="Markeer als gedaan" @click="openConfirmDialog"/>
-                    <Button v-if="state.job.state === 'awaiting payment'" class="p-button" icon="pi pi-times" label="Sluiten" />
+                    <Button v-if="state.helper" class="p-button" icon="pi pi-send" label="Stuur bericht"
+                        @click="openChatHelper" />
+                    <Button v-if="state.job.state === 'awaiting payment' || state.job.state === 'in progress'"
+                        icon="pi pi-check" label="Markeer als gedaan" @click="openConfirmDialog" />
+                    <Button v-if="state.job.state === 'awaiting payment'" class="p-button" icon="pi pi-times"
+                        label="Sluiten" />
                 </div>
             </div>
             <div v-if="message !== ''" style="color: var(--danger)">{{ message }}</div>
@@ -241,17 +256,19 @@ onMounted(async () => await updateJob());
             <h2>Klusje afronden</h2>
         </template>
         <div>
-            <div class="p-mb-3">Weet je zeker dat je dit klusje wilt afronden? Deze actie kan niet ongedaan gemaakt worden.</div>
+            <div class="p-mb-3">Weet je zeker dat je dit klusje wilt afronden? Deze actie kan niet ongedaan gemaakt worden.
+            </div>
         </div>
         <template #footer>
             <div class="p-d-flex p-flex-row p-ai-center">
-                <Button class="p-button p-button-secondary p-mr-3" label="Annuleer" @click="state.showAcceptDialog = false" />
+                <Button class="p-button p-button-secondary p-mr-3" label="Annuleer"
+                    @click="state.showAcceptDialog = false" />
                 <Button class="p-button p-button-primary modal" label="Bevestig" @click="openPaymentDialog" />
             </div>
         </template>
     </Dialog>
-    <Dialog :visible="state.showPaymentDialog" modal :draggable="false" :closable="false"
-        :style="{ width: '832px' }" :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
+    <Dialog :visible="state.showPaymentDialog" modal :draggable="false" :closable="false" :style="{ width: '832px' }"
+        :breakpoints="{ '580px': 'calc(100vw - 1rem)' }">
         <template #header>
             <h2>{{ state.job?.name || '' }}</h2>
         </template>
@@ -273,7 +290,7 @@ onMounted(async () => await updateJob());
                         <p>Servicekosten <b class="clickable" @click="showOverlay">?</b></p>
                         <p><b>€ 3</b></p>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="pay-dialog__overview">
                         <p>Totaal</p>
                         <p><b>€ {{ state.job.price + 3 }}</b></p>
@@ -285,30 +302,36 @@ onMounted(async () => await updateJob());
                         <img src="../../assets/images/Mastercard.svg" alt="Mastercard logo" width="40" />
                     </div>
                 </div>
-                <OverlayPanel ref="op">De servicekost word aangerekend door Ziezo, en wordt gebruikt om ons platform te ondersteunen.</OverlayPanel>
+                <OverlayPanel ref="op">De servicekost word aangerekend door Ziezo, en wordt gebruikt om ons platform te
+                    ondersteunen.</OverlayPanel>
             </template>
             <template v-else-if="state.job.state === 'done'">
                 <div class="pay-dialog__display">
                     <img src="../../assets/Ziezo.svg" alt="ZieZo logo" width="234" />
-                    <Avatar :src="state.helper.avatar" :name="state.helper.name_first + ' ' + state.helper.name_last" width="80" />
+                    <Avatar :src="state.helper.avatar" :name="state.helper.name_first + ' ' + state.helper.name_last"
+                        width="80" />
                     <h2>{{ state.helper.name_first }} is betaald</h2>
                 </div>
                 <div class="pay-dialog__details">
                     <h2>Hoe goed is het klusje uitgevoerd?</h2>
                     <p class="pay-dialog__subtitle">Geef een rating om door te gaan.</p>
-                    <Rating v-model="state.rating"  :cancel="false" />
-                <div class="labelInput mt-2">
-                    <label for="review">Beoordeling</label>
-                    <Textarea name="review" placeholder="Heb je opmerkingen bij het klusje?" rows="5" cols="30" style="resize: none; overflow-y: auto"/>
-                </div>
+                    <Rating v-model="state.rating" :cancel="false" />
+                    <div class="labelInput mt-2">
+                        <label for="review">Beoordeling</label>
+                        <Textarea v-model="state.review" :disabled="state.rating === 0" name="review"
+                            placeholder="Heb je opmerkingen bij het klusje?" rows="5" cols="30"
+                            style="resize: none; overflow-y: auto" />
+                    </div>
                 </div>
             </template>
             <template v-else>Something went wrong, please try again later.</template>
         </div>
         <template #footer>
             <div class="p-d-flex p-flex-row p-ai-center">
-                <Button class="p-button p-button-secondary p-mr-3" label="Sluiten" @click="state.showPaymentDialog = false" />
-                <Button :disabled="state.rating === 0" class="p-button p-button-primary modal" label="Klaar" />
+                <Button :disabled="state.job.state === 'done' && state.rating === 0"
+                    class="p-button p-button-secondary p-mr-3" label="Sluiten" @click="state.showPaymentDialog = false" />
+                <Button :disabled="state.rating === 0" class="p-button p-button-primary modal" label="Klaar"
+                    @click="rateAndClose" />
             </div>
         </template>
     </Dialog>
@@ -354,7 +377,7 @@ onMounted(async () => await updateJob());
     color: var(--white);
     background-color: var(--secondary);
     border-radius: .125em;
-    text-align: center!important;
+    text-align: center !important;
     padding: .25em .5em;
     height: fit-content;
     width: fit-content;
@@ -380,13 +403,13 @@ onMounted(async () => await updateJob());
     margin-top: 1em;
 }
 
-.content__user > img {
+.content__user>img {
     grid-column: 1;
     grid-row: 1 / span 2;
     margin-right: 1em;
 }
 
-.content__user > div:nth-child(3) {
+.content__user>div:nth-child(3) {
     grid-column: 2;
     opacity: .8;
 }
@@ -403,19 +426,19 @@ onMounted(async () => await updateJob());
     align-items: center;
     justify-content: center;
 }
- 
+
 .pay-dialog__display p {
     margin: .25em 0;
 }
 
-.pay-dialog__display > img:first-of-type {
+.pay-dialog__display>img:first-of-type {
     margin-bottom: 1em;
 }
 
 .pay-dialog__price {
     font-weight: bold;
     font-size: 3em;
-    text-align: center!important;
+    text-align: center !important;
     height: fit-content;
     width: fit-content;
     margin-left: auto;
@@ -484,12 +507,11 @@ onMounted(async () => await updateJob());
 
     .footer .close {
         max-height: 36.8px;
-        margin-top: auto!important;
-        margin-bottom: 0px!important;
+        margin-top: auto !important;
+        margin-bottom: 0px !important;
     }
 
     .pay-dialog__content {
         grid-template-columns: 1fr;
     }
-}
-</style>
+}</style>
