@@ -167,14 +167,14 @@ onMounted(async () => await updateJob());
                         <b><span class="name no-link">{{ state.user?.name_first }}</span> <span class="name no-link">{{ state.user?.name_last }}</span></b>
                     </div>
                     <div><span class="name no-link">Hulpzoeker</span></div>
-                    </router-link>
-                    <router-link v-if="state.helper && state.permission >= 20" :to="'/app/profile/' + state.helper._id" class="content__user">
+                </router-link>
+                <router-link v-if="state.helper && state.permission >= 20" :to="'/app/profile/' + state.helper._id" class="content__user">
                     <Avatar :src="state.helper?.avatar" :name="state.helper?.name_first + ' ' + state.helper?.name_last" :width="48" />
                     <div>
                         <b><span class="name no-link">{{ state.user?.name_first }}</span> <span class="name no-link">{{ state.user?.name_last }}</span></b>
                     </div>
                     <div><span class="name no-link">Klusser</span></div>
-                    </router-link>
+                </router-link>
             </div>
         </div>
         <template #footer>
