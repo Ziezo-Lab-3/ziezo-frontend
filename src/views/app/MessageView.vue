@@ -40,14 +40,14 @@ watch(() => router.currentRoute.value.params.id, () => handleVisibleElements());
 .message__wrapper {
     display: grid;
     grid-template-columns: 250px 1fr;
-    grid-gap: 1rem;
-    height: calc(100vh - 10.5rem);
+    grid-gap: 1em;
+    height: calc(100vh - 10.5em);
 }
 
 .message__chat-container {
     display: grid;
     grid-template-columns: 1fr;
-    height: calc(100vh - 10.5rem);
+    height: calc(100vh - 10.5em);
 }
 
 @media screen and (max-width: 1210px) {
@@ -59,6 +59,12 @@ watch(() => router.currentRoute.value.params.id, () => handleVisibleElements());
 @media screen and (max-width: 768px) {
     .message__wrapper {
         grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 586px) {
+    .message__wrapper, .message__chat-container {
+        height: calc(100vh - 6.5em);
     }
 }
 </style>

@@ -1,36 +1,36 @@
 /* Primevue Card */
 .p-card {
-    border-radius: 1rem;
+    border-radius: 1em;
     box-shadow: var(--box-shadow-card);
     overflow: hidden;
 }
 
 .p-card.p-major {
     width: 1180px;
-    height: calc(100vh - 2rem);
+    height: calc(100vh - 2em);
 }
 
 .p-card.p-major .p-card-title,
 .p-card.p-major .p-card-subtitle,
 .p-card.p-major .p-card-footer,
 .p-card.p-major .p-card-content {
-    padding: 1rem 2rem
+    padding: 1em 2em;
 }
 
 /* Primevue Dialog */
 .p-dialog .p-dialog-header {
     border-bottom: 1px solid var(--gray-100);
-    padding: 1rem;
+    padding: 1em;
 }
 
 .p-dialog .p-dialog-content {
     max-height: 400px;
-    padding: 1rem 1.5rem;
+    padding: 1em 1.5em;
 }
 
 .p-dialog .p-dialog-footer {
     border-top: 1px solid var(--gray-100);
-    padding: 1rem;
+    padding: 1em;
 }
 
 /* Primevue TabView */
@@ -48,7 +48,7 @@
 }
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
-    box-shadow: inset 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: inset 0 0 0 0.2em var(--primary-faded);
 }
 
 .p-tabview .p-tabview-panels {
@@ -84,6 +84,6 @@
     .p-card.p-major .p-card-subtitle,
     .p-card.p-major .p-card-footer,
     .p-card.p-major .p-card-content {
-        padding: .5rem;
+        padding: .5em;
     }
 }

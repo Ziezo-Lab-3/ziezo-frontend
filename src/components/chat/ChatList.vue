@@ -16,6 +16,7 @@ const state = reactive({
 
 const selectChatGroup = (index) => {
     emit('update-selection', state.instances[index]);
+    console.debug("Navigating to /app/message/" + state.instances[index]._id + "")
     router.push(`/app/message/${state.instances[index]._id}`);
 }
 
@@ -65,15 +66,15 @@ onMounted(async () => {
 .chat-link {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
-    padding: .5rem;
+    padding: .5em;
     align-items: center;
     display: flex;
     align-items: center;
     width: 100%;
     box-shadow: inset 0px 0px var(--primary);
     transition: background-color .2s linear, box-shadow .2s linear;
-    margin-bottom: .5rem;
-    padding-left: 1rem;
+    margin-bottom: .5em;
+    padding-left: 1em;
 }
 
 .chat-link.router-link-active {
@@ -90,8 +91,8 @@ onMounted(async () => {
 }
 
 .chat-link > div {
-    margin-left: .5rem;
-    width: calc(100% - 4.5rem); /* subtract the width of the image and padding from the container */
+    margin-left: .5em;
+    width: calc(100% - 4.5em); /* subtract the width of the image and padding from the container */
    
 }
 
@@ -108,15 +109,15 @@ onMounted(async () => {
     background-color: var(--primary);
     border-radius: 50%;
     color: var(--white);
-    font-size: .75rem;
+    font-size: .75em;
     font-weight: bold;
-    height: 1.5rem;
+    height: 1.5em;
     aspect-ratio: 1/1;
     text-align: center;
-    line-height: 1.5rem;
+    line-height: 1.5em;
 
     position: relative;
-    right: 1.5rem;
-    top: -1rem;
+    right: 1.5em;
+    top: -1em;
 }
 </style>

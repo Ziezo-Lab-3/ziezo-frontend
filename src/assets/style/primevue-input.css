@@ -5,13 +5,13 @@
 /* Input Fields */
 .p-inputtext {
     font-family: 'figtree';
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
+    border-radius: 2em;
+    padding: 0.5em 1em;
 }
 
 .p-inputtextarea {
-    border-radius: 1.5rem;
-    padding: 1rem;
+    border-radius: 1.5em;
+    padding: 1em;
     resize: vertical;
     min-height: 100px;
 }
@@ -29,7 +29,7 @@
 }
 
 .p-inputtext:enabled:focus {
-    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
+    box-shadow: 0 0 0 0.2em var(--secondary-faded);
 }
 
 .p-inputtext:enabled:invalid,
@@ -48,7 +48,7 @@
 .p-dropdown,
 .p-multiselect {
     font-family: 'figtree';
-    border-radius: 2rem;
+    border-radius: 2em;
 }
 
 .p-dropdown:not(.p-disabled):hover,
@@ -59,16 +59,16 @@
 .p-dropdown:not(.p-disabled).p-focus,
 .p-multiselect:not(.p-disabled).p-focus {
     border-color: var(--secondary-light-1);
-    box-shadow: 0 0 0 0.2rem var(--secondary-faded);
+    box-shadow: 0 0 0 0.2em var(--secondary-faded);
 }
 
 .p-dropdown .p-dropdown-trigger,
 .p-multiselect .p-multiselect-trigger {
-    width: 3rem;
+    width: 3em;
 }
 
 .p-multiselect .p-multiselect-label {
-    padding: 0.5rem 1rem;
+    padding: 0.5em 1em;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight,
@@ -105,11 +105,11 @@
 
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: 0 0 0 0.2em var(--primary-faded);
 }
 
 .p-radiobutton {
-    margin: 0 0.5rem 0 0;
+    margin: 0 0.5em 0 0;
 }
 
 .p-radiobutton .p-radiobutton-box.p-highlight {
@@ -119,7 +119,7 @@
 
 .p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: 0 0 0 0.2em var(--primary-faded);
 }
 
 .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
@@ -144,5 +144,5 @@
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
-    box-shadow: 0 0 0 0.2rem var(--primary-faded);
+    box-shadow: 0 0 0 0.2em var(--primary-faded);
 }

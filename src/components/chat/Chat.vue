@@ -1,10 +1,11 @@
 <script setup>
-import { reactive, onMounted, watch } from 'vue';
+import { reactive, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import decodeJWT from '../../js/decodeJWT';
 import { getMessages, postMessage } from '../../api/message';
 import { getChatGroups } from '../../api/chatGroup';
 import ChatScroller from './ChatScroller.vue';
+import ChatJobList from './ChatJobList.vue';
 
 const router = useRouter();
 /**
@@ -20,6 +21,7 @@ const state = reactive({
     messages: [],
     chatGroup: null,
     message: "",
+
 });
 
 const sendMessage = async () => {
@@ -39,6 +41,22 @@ const sendMessage = async () => {
     }
 }
 
+const sendAcceptMessage = async (job) => {
+    const message = `<h3>Klusje geaccepteerd! ✅</h3><p>Je bent aangenomen om het klusje "${job.name}" uit te voeren!</p>`;
+    const result = await postMessage(localStorage.getItem("token"), {
+        message: message,
+        sender: state.decodedJWT.id,
+        chatGroup: state.chatGroup._id,
+        html: true,
+    });
+    if (result.status === "success") {
+        state.messages.push(result.data);
+    }
+    else {
+        console.error("Chat.vue sendAcceptMessage(): " + result.message);
+    }
+}
+
 const sanitize = (messages) => {
     // make sure each _id property only occurs once
     const ids = [];
@@ -52,7 +70,7 @@ const sanitize = (messages) => {
 const loadNewMessages = async (params) => {
     const result = await getMessages(localStorage.getItem("token"), params);
     if (result.status === "success") {
-        // Combine the old messages with the new messages, and remove duplicates
+        // Combine the old messages with the new messages, and emove duplicates
         state.messages = sanitize([...state.messages, ...result.data]);
         state.messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     }
@@ -65,14 +83,24 @@ const updateChatGroup = async () => {
     if (result.status === "success") {
         // Get id from url
         const id = router.currentRoute.value.params.id;
-
         // Find the chatGroup with the id from the url
         state.chatGroup = result.data.find((chatGroup) => chatGroup._id === id);
+        if (state.chatGroup === undefined) {
+            console.error("ChatGroup not found");
+            //router.push("/app/message");
+        }
     }
     else {
         console.error("Chat.vue onMounted(): " + result.message);
     }
 }
+
+const otherUser = computed(() => {
+    if (state.chatGroup === null) return;
+    if (state.chatGroup.members.length !== 2) return;
+
+    return state.chatGroup.members.find(member => member._id !== state.decodedJWT.id);
+});
 
 const back = () => {
     router.back();
@@ -88,7 +116,6 @@ watch(() => router.currentRoute.value.params.id, async () => {
 });
 
 watch(() => state.chatGroup, async () => {
-    state.chatGroup = state.chatGroup;
     state.messages = [];
     loadNewMessages({
         first: 0,
@@ -102,7 +129,8 @@ watch(() => state.chatGroup, async () => {
 </script>
 <template>
 <div v-if="state.chatGroup !== null" class="chat__wrapper">
-    <div class="chat__header"><h2><i style="font-size: 2rem" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
+    <ChatJobList @on-accept="sendAcceptMessage" v-if="state.chatGroup.members.length === 2" :username="`${otherUser.name_first} ${otherUser.name_last}`" :user-id="state.chatGroup.members.find(member => member._id !== state.decodedJWT.id)?._id" />
+    <div class="chat__header"><h2><i style="font-size: 2em" class="pi pi-arrow-left tablet-show" @click="back"></i>{{ state.chatGroup ? state.chatGroup.name : "Chat" }}</h2></div>
     <ChatScroller :messages="state.messages" :chat-group="state.chatGroup" @request-messages="loadNewMessages" />
     <div class="chat__input">
         <InputText v-model="state.message" placeholder="Bericht" :onkeypress="e => { if (e.key === 'Enter') sendMessage() }" tabindex="2"/>
@@ -113,7 +141,7 @@ watch(() => state.chatGroup, async () => {
 <style scoped>
 h2 {
     display: flex;
-    gap: 1rem;
+    gap: 1em;
 }
 .chat__wrapper {
     display: grid;
@@ -123,21 +151,21 @@ h2 {
 }
 .chat__input {
     display: grid;
-    height: 3rem;
+    height: 3em;
     grid-template-columns: 1fr auto;
-    grid-gap: .5rem;
-    padding: .25rem;
+    grid-gap: .5em;
+    padding: .25em;
 }
 
 .chat__empty-message {
     text-align: center;
     margin: 0;
-    padding: 1rem;
+    padding: 1em;
     color: var(--secondary);
 }
 
 .chat__messages {
     overflow-y: auto;
-    padding: 1rem 0;
+    padding: 1em 0;
 }
 </style>
