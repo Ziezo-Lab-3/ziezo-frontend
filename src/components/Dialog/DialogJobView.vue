@@ -47,6 +47,10 @@ const close = () => {
 const openChatUser = async () => {
     const userId = localStorage.getItem('userId');
 
+    if (!state.job.candidates) {
+        state.job.candidates = [];
+    }
+    
     // if user is not a candidate
     if (state.job.candidates.find((candidate) => candidate === userId) === undefined) {
         const result = await addKlusjeCandidate(localStorage.getItem('token'), state.job._id, userId);
