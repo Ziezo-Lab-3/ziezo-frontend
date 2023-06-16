@@ -49,7 +49,7 @@ const onClick = () => {
 .job-tile {
     cursor: pointer;
     width: 280px;
-    margin: 0 1em 1em 0;
+    margin: 1em;
     transition: transform 0.3s ease-in-out;
     border-radius: 1em;
 }

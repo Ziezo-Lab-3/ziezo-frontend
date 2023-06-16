@@ -68,7 +68,7 @@ const fetchJobs = async () => {
 };
 
 // Watch for changes in the search term
-watch(searchTerm, async (newTerm) => {
+watch(searchTerm, async () => {
     try {
         jobs.value = [];
         await fetchJobs();
