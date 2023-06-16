@@ -4,9 +4,14 @@
             <h1>Mijn Klusjes</h1>
         </template>
         <template #content>
-            <InputText v-model="searchTerm" placeholder="Zoek een klusje" />
+            <div class="w-full flex justify-content-center">
+                <span class="p-input-icon-left search">
+                    <i class="pi pi-search" />
+                    <InputText v-model="searchTerm" placeholder="Zoek een klusje" style="width: 400px; max-width: calc(100vw - 2em);" />
+                </span>
+            </div>
             <div v-if="jobs.length" class="job-tiles-container">
-                <JobTile v-for="job in jobs" :key="job._id" :job="job" @select-job="openJobModal(job._id)" />
+                <JobTile v-for="job in jobs" :key="job._id" :job="job" @select-job="openJobModal(job._id)" :categories="categories" />
             </div>
             <div v-else>
                 Loading...
@@ -21,10 +26,12 @@ import { ref, onMounted, watch } from 'vue';
 import JobTile from '../../components/JobTile.vue';
 import DialogJobView from '../../components/Dialog/DialogJobView.vue';
 import { getKlusjes } from '../../api/klusje';
+import { getCategories } from '../../api/category';
 
 const selectedKlusje = ref(null);
 const searchTerm = ref('');
 const jobs = ref([]);
+const categories = ref([]);
 const openDialog = ref(false);
 
 // Fetch jobs from the API
@@ -32,7 +39,7 @@ const fetchJobs = async () => {
     try {
         const result = await getKlusjes(localStorage.getItem('token'), {
             first: jobs.value.length,
-            last: jobs.value.length + 10,
+            last: jobs.value.length + 18,
             filter: JSON.stringify({
                 $and: [
                     { user: { $ne: localStorage.getItem('userId') } },
@@ -75,15 +82,23 @@ const openJobModal = async (id) => {
     openDialog.value = true;
 };
 
-onMounted(fetchJobs);
+onMounted(async () => {
+    const result = await getCategories(localStorage.getItem('token'));
+    if (result.status === 'success') {
+        categories.value = result.data;
+        fetchJobs();
+    } else {
+        console.error('BrowseView.vue onMounted(): ' + result.message);
+    }
+});
 </script>
 
-<style>
+<style scoped>
 .browse__view .job-tiles-container {
-    margin-top: 30px;
+    margin: 1em auto 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .browse__view .p-card-content {
@@ -93,5 +108,12 @@ onMounted(fetchJobs);
 
 .browse__view.p-card.p-major {
     height: fit-content;
+}
+</style>
+<style>
+.browse__view .p-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 </style>
