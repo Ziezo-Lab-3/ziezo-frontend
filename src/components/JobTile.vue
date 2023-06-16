@@ -1,27 +1,25 @@
 <template>
-    <div class="job-tile" :style="{ width: tileWidth + 'px' }" @click="onClick">
-        <div class="image-with-details"
-            :style="{ width: imageWidth + 'px', height: imageHeight + 'px', borderRadius: borderRadius + 'px' }">
-            <div class="image-container">
-                <img :src="job.images[0]" alt="Job Image" :style="{ borderRadius: borderRadius + 'px' }" />
+    <Card class="job-tile" :style="{ width: tileWidth + 'px' }" @click="onClick">
+        <template #header>
+            <img :src="job.images[0]" alt="Job Image" />
+        </template>
+        <template #title>{{ job.name }}</template>
+        <template #subtitle>{{ category.name }}</template>
+        <template #content>
+            <p>{{ job.description }}</p>
+        </template>
+        <template #footer>
+            <div class="flex justify-content-between mt-2">
+                <p class="price">€ {{ job.price }}</p>
+                <Button label="Details" />
             </div>
-            <div class="details-container">
-                <div class="details-inner">
-                    <h2>{{ job.name }}</h2>
-                    <p>{{ truncateDescription(job.description, 75) }}</p>
-                    <div class="price-and-button">
-                        <p class="price">€{{ job.price }}</p>
-                        <Button label="Details" class="p-button-secondary" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        </template>
         <DialogJobView v-if="showDialog" @close="showDialog = false" :visible="showDialog" :klusjeId="selectedJobId" />
-    </div>
+    </Card>
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, computed } from 'vue';
 import DialogJobView from "../components/Dialog/DialogJobView.vue";
 
 const showDialog = ref(false);
@@ -33,116 +31,73 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    tileWidth: {
-        type: Number,
-        default: 300,
+    categories: {
+        type: Array,
+        required: true,
     },
-    imageWidth: {
-        type: Number,
-        default: 280,
-    },
-    imageHeight: {
-        type: Number,
-        default: 186,
-    },
-    borderRadius: {
-        type: Number,
-        default: 10,
-    },
+});
+
+const category = computed(() => {
+    return props.categories.find((category) => category._id === props.job.category);
 });
 
 const onClick = () => {
     emit('selectJob', props.job._id);
 };
-
-const truncateDescription = (description, limit) => {
-    if (description && description.length > limit) {
-        return description.slice(0, limit) + '...';
-    }
-    return description;
-};
 </script>
-<style>
+<style scoped>
 .job-tile {
     cursor: pointer;
-    display: inline-block;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 30%;
-    /* Adjust the margin-bottom value as needed */
-}
-
-.image-with-details {
-    position: relative;
-    overflow: visible;
-    text-align: left;
-    margin-bottom: 10px;
-    margin-top: 0;
-    height: auto;
-}
-
-.image-container {
-    display: inline-block;
-    vertical-align: middle;
-    margin-top: 0px;
     width: 280px;
-    height: 186px;
-    overflow: hidden;
-    background-color: grey;
-}
-
-.image-container img {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    position: relative;
-    z-index: 1;
-    border-radius: 10px;
-    transform: translateY(-50%);
-    top: 50%;
-}
-
-.details-container {
-    position: relative;
-    width: 100%;
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
+    margin: 0 1em 1em 0;
     transition: transform 0.3s ease-in-out;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
+    border-radius: 1em;
 }
 
-.details-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.job-tile:hover {
+    transform: scale(1.025);
 }
 
-.details-inner h2,
-.details-inner h3,
-.details-inner p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    text-align: left;
+.job-tile img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1em;
 }
 
-.details-inner .price {
-    margin-top: 20px;
-    margin-bottom: 0;
+p {
+    margin: 0;
+    line-height: 1.5em;
+}
+
+.price {
+    height: fit-content;
+    margin: auto 0;
+    font-size: 1.2em;
     font-weight: bold;
+    color: var(--primary);
+}
+</style>
+<style>
+.p-card.p-major .job-tile .p-card-title,
+.p-card.p-major .job-tile .p-card-subtitle,
+.p-card.p-major .job-tile .p-card-content,
+.p-card.p-major .job-tile .p-card-footer {
+    padding: 0;
 }
 
-.details-inner .price-and-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.p-card.p-major .job-tile .p-card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.price-and-button .price {
-    margin-top: 0;
-    color: var(--success);
-    font-size: 1.2rem;
+.p-card.p-major .job-tile .p-card-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 </style>
